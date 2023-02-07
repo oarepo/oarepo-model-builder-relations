@@ -1,0 +1,2 @@
+black oarepo_model_builder_relations tests --target-version py310
+isort oarepo_model_builder_relations tests

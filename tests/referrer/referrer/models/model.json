@@ -1,0 +1,288 @@
+{
+    "model": {
+        "type": "object",
+        "generate-record-pid-field": true,
+        "record-services-package": "referrer.services.records",
+        "record-prefix-snake": "referrer",
+        "record-blueprints-setup-cfg": "referrer",
+        "extension-suffix": "referrer",
+        "record-resource-blueprint-name": "Referrer",
+        "collection-url": "/referrer/",
+        "marshmallow": {
+            "schema-class": "referrer.services.records.schema.ReferrerSchema",
+            "base-classes": [
+                "InvenioBaseRecordSchema"
+            ],
+            "generate": true
+        },
+        "record-service-config-generate-links": true,
+        "create-blueprint-from-app": "referrer.views.create_blueprint_from_app_referrer",
+        "record-schema-metadata-class": "referrer.services.records.schema.ReferrerMetadataSchema",
+        "model-name": "referrer",
+        "record-resource-class": "referrer.resources.records.resource.ReferrerResource",
+        "invenio-record-object-schema-extra-code": "",
+        "invenio-record-search-options-extra-code": "",
+        "record-schema-metadata-setup-cfg": "referrer",
+        "record-api-blueprints-setup-cfg": "referrer",
+        "record-records-package": "referrer.records",
+        "schema-version": "1.0.0",
+        "record-resources-package": "referrer.resources.records",
+        "ext-class": "referrer.ext.ReferrerExt",
+        "record-service-bases": [
+            "invenio_records_resources.services.RecordService"
+        ],
+        "plugins": {
+            "builder": {
+                "disable": [
+                    "script_sample_data",
+                    "invenio_record_search"
+                ]
+            }
+        },
+        "index-name": "referrer-referrer-1.0.0",
+        "invenio-record-resource-extra-code": "",
+        "config-service-config-key": "REFERRER_SERVICE_CONFIG_REFERRER",
+        "invenio-proxies-extra-code": "",
+        "invenio-record-permissions-extra-code": "",
+        "service-id": "referrer",
+        "record-metadata-class": "referrer.records.models.ReferrerMetadata",
+        "jsonschemas-package": "referrer.records.jsonschemas",
+        "invenio-record-dumper-extra-code": "",
+        "record-class": "referrer.records.api.ReferrerRecord",
+        "invenio-views-extra-code": "",
+        "invenio-version-extra-code": "",
+        "flask-extension-name": "referrer",
+        "record-bases": [
+            "invenio_records_resources.records.api.Record"
+        ],
+        "record-metadata-table-name": "referrer_metadata",
+        "kebap-package": "referrer",
+        "invenio-record-metadata-extra-code": "",
+        "record-resource-config-bases": [
+            "invenio_records_resources.resources.RecordResourceConfig"
+        ],
+        "invenio-record-schema-extra-code": "",
+        "config-resource-register-blueprint-key": "REFERRER_REGISTER_BLUEPRINT",
+        "record-permissions-class": "referrer.services.records.permissions.ReferrerPermissionPolicy",
+        "config-resource-class-key": "REFERRER_RESOURCE_CLASS_REFERRER",
+        "config-resource-config-key": "REFERRER_RESOURCE_CONFIG_REFERRER",
+        "proxies-current-service": "referrer.proxies.current_service",
+        "record-dumper-extensions": [],
+        "record-resource-bases": [
+            "invenio_records_resources.resources.RecordResource"
+        ],
+        "oarepo-models-setup-cfg": "referrer",
+        "package-base-upper": "REFERRER",
+        "invenio-record-service-config-extra-code": "",
+        "config-package": "referrer.config",
+        "record-facets-class": "referrer.services.records.facets.Test",
+        "invenio-record-extra-code": "",
+        "invenio-ext-extra-code": "",
+        "package-base": "referrer",
+        "record-service-class": "referrer.services.records.service.ReferrerService",
+        "record-jsonschemas-setup-cfg": "referrer",
+        "invenio-record-service-extra-code": "",
+        "invenio-record-resource-config-extra-code": "",
+        "record-prefix": "Referrer",
+        "record-service-config-bases": [
+            "invenio_records_resources.services.RecordServiceConfig"
+        ],
+        "record-resource-config-class": "referrer.resources.records.config.ReferrerResourceConfig",
+        "flask-commands-setup-cfg": "referrer",
+        "proxies-current-resource": "referrer.proxies.current_resource",
+        "config-service-class-key": "REFERRER_SERVICE_CLASS_REFERRER",
+        "record-schema-metadata-alembic": "referrer",
+        "package-path": "referrer",
+        "properties": {
+            "metadata": {
+                "marshmallow": {
+                    "schema-class": "referrer.services.records.schema.ReferrerMetadataSchema",
+                    "base-classes": [
+                        "ma.Schema"
+                    ],
+                    "generate": true,
+                    "field-class": "ma_fields.Nested",
+                    "validators": [],
+                    "imports": []
+                },
+                "type": "object",
+                "properties": {
+                    "ref": {
+                        "marshmallow": {
+                            "field-class": "ma_fields.Nested",
+                            "validators": [],
+                            "schema-class": "referrer.services.records.schema.RefSchema",
+                            "imports": []
+                        },
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "marshmallow": {
+                                    "field-class": "ma_fields.String",
+                                    "validators": [],
+                                    "imports": []
+                                },
+                                "sample": {
+                                    "skip": true
+                                },
+                                "type": "keyword"
+                            },
+                            "metadata": {
+                                "marshmallow": {
+                                    "generate": true,
+                                    "base-classes": [
+                                        "ma.Schema"
+                                    ],
+                                    "schema-class": "RefReferredMetadataSchema",
+                                    "field-class": "ma_fields.Nested",
+                                    "validators": [],
+                                    "imports": []
+                                },
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "marshmallow": {
+                                            "field-class": "ma_fields.String",
+                                            "validators": [],
+                                            "imports": []
+                                        },
+                                        "type": "fulltext"
+                                    }
+                                }
+                            },
+                            "@v": {
+                                "marshmallow": {
+                                    "field-name": "_version",
+                                    "field-class": "ma_fields.String",
+                                    "validators": [],
+                                    "imports": []
+                                },
+                                "type": "keyword"
+                            }
+                        },
+                        "relation": {
+                            "name": "ref",
+                            "model": "referred",
+                            "keys": [
+                                "id",
+                                "metadata.title"
+                            ],
+                            "model-class": "ReferredRecord",
+                            "schema-prefix": "Ref",
+                            "relation-classes": {
+                                "list": "PIDListRelation",
+                                "nested": "PIDNestedListRelation",
+                                "single": "PIDRelation"
+                            },
+                            "relation-class": null,
+                            "relation-args": {},
+                            "imports": [
+                                {
+                                    "import": "invenio_records_resources.records.systemfields.relations.PIDRelation"
+                                },
+                                {
+                                    "import": "invenio_records_resources.records.systemfields.relations.PIDNestedListRelation"
+                                },
+                                {
+                                    "import": "invenio_records_resources.records.systemfields.relations.PIDListRelation"
+                                },
+                                {
+                                    "import": "referred.records.api.ReferredRecord"
+                                }
+                            ],
+                            "pid-field": "ReferredRecord.pid"
+                        }
+                    }
+                }
+            },
+            "id": {
+                "marshmallow": {
+                    "read": false,
+                    "write": false,
+                    "field-class": "ma_fields.String",
+                    "validators": [],
+                    "imports": []
+                },
+                "type": "keyword",
+                "sample": {
+                    "skip": true
+                }
+            },
+            "created": {
+                "marshmallow": {
+                    "read": true,
+                    "write": false,
+                    "field-class": "ma_fields.String",
+                    "validators": [
+                        "validate_date('%Y:%m:%d')"
+                    ],
+                    "imports": [
+                        {
+                            "import": "oarepo_runtime.validation.validate_date"
+                        }
+                    ]
+                },
+                "type": "date",
+                "sample": {
+                    "skip": true
+                }
+            },
+            "updated": {
+                "marshmallow": {
+                    "read": true,
+                    "write": false,
+                    "field-class": "ma_fields.String",
+                    "validators": [
+                        "validate_date('%Y:%m:%d')"
+                    ],
+                    "imports": [
+                        {
+                            "import": "oarepo_runtime.validation.validate_date"
+                        }
+                    ]
+                },
+                "type": "date",
+                "sample": {
+                    "skip": true
+                }
+            },
+            "$schema": {
+                "marshmallow": {
+                    "read": false,
+                    "write": false,
+                    "field-class": "ma_fields.String",
+                    "validators": [],
+                    "imports": []
+                },
+                "type": "keyword",
+                "sample": {
+                    "skip": true
+                }
+            }
+        },
+        "config-dummy-class": "referrer.config.DummyClass",
+        "invenio-config-extra-code": "",
+        "script-import-sample-data": "data/sample_data.yaml",
+        "record-dumper-class": "referrer.records.dumper.ReferrerDumper",
+        "profile-package": "records",
+        "record-schema-class": "referrer.services.records.schema.ReferrerSchema",
+        "schema-file": "referrer/records/jsonschemas/referrer-1.0.0.json",
+        "mapping-file": "referrer/records/mappings/os-v2/referrer/referrer-1.0.0.json",
+        "record-service-config-class": "referrer.services.records.config.ReferrerServiceConfig",
+        "schema-name": "referrer-1.0.0.json",
+        "package": "referrer",
+        "schema-server": "local://",
+        "record-search-options-class": "referrer.services.records.search.ReferrerSearchOptions",
+        "record-mapping-setup-cfg": "referrer",
+        "invenio-record-facets-extra-code": "",
+        "mapping-package": "referrer.records.mappings",
+        "saved-model-file": "referrer/models/model.json",
+        "cli-function": "referrer.cli.group",
+        "known-classes": {
+            "referrer.services.records.schema.ReferrerSchema": "b'{\"cli-function\": \"referrer.cli.group\", \"collection-url\": \"/referrer/\", \"config-dummy-class\": \"referrer.config.DummyClass\", \"config-package\": \"referrer.config\", \"config-resource-class-key\": \"REFERRER_RESOURCE_CLASS_REFERRER\", \"config-resource-config-key\": \"REFERRER_RESOURCE_CONFIG_REFERRER\", \"config-resource-register-blueprint-key\": \"REFERRER_REGISTER_BLUEPRINT\", \"config-service-class-key\": \"REFERRER_SERVICE_CLASS_REFERRER\", \"config-service-config-key\": \"REFERRER_SERVICE_CONFIG_REFERRER\", \"create-blueprint-from-app\": \"referrer.views.create_blueprint_from_app_referrer\", \"ext-class\": \"referrer.ext.ReferrerExt\", \"extension-suffix\": \"referrer\", \"flask-commands-setup-cfg\": \"referrer\", \"flask-extension-name\": \"referrer\", \"generate-record-pid-field\": true, \"index-name\": \"referrer-referrer-1.0.0\", \"invenio-config-extra-code\": \"\", \"invenio-ext-extra-code\": \"\", \"invenio-proxies-extra-code\": \"\", \"invenio-record-dumper-extra-code\": \"\", \"invenio-record-extra-code\": \"\", \"invenio-record-facets-extra-code\": \"\", \"invenio-record-metadata-extra-code\": \"\", \"invenio-record-object-schema-extra-code\": \"\", \"invenio-record-permissions-extra-code\": \"\", \"invenio-record-resource-config-extra-code\": \"\", \"invenio-record-resource-extra-code\": \"\", \"invenio-record-schema-extra-code\": \"\", \"invenio-record-search-options-extra-code\": \"\", \"invenio-record-service-config-extra-code\": \"\", \"invenio-record-service-extra-code\": \"\", \"invenio-version-extra-code\": \"\", \"invenio-views-extra-code\": \"\", \"jsonschemas-package\": \"referrer.records.jsonschemas\", \"kebap-package\": \"referrer\", \"mapping-file\": \"referrer/records/mappings/os-v2/referrer/referrer-1.0.0.json\", \"mapping-package\": \"referrer.records.mappings\", \"marshmallow\": {\"base-classes\": [\"InvenioBaseRecordSchema\"], \"generate\": true, \"schema-class\": \"referrer.services.records.schema.ReferrerSchema\"}, \"model-name\": \"referrer\", \"oarepo-models-setup-cfg\": \"referrer\", \"package\": \"referrer\", \"package-base\": \"referrer\", \"package-base-upper\": \"REFERRER\", \"package-path\": \"PosixPath(\\'referrer\\')\", \"plugins\": {\"builder\": {\"disable\": [\"script_sample_data\", \"invenio_record_search\"]}}, \"profile-package\": \"records\", \"properties\": {\"$schema\": {\"marshmallow\": {\"read\": false, \"write\": false}, \"sample\": {\"skip\": true}, \"type\": \"keyword\"}, \"created\": {\"marshmallow\": {\"read\": true, \"write\": false}, \"sample\": {\"skip\": true}, \"type\": \"date\"}, \"id\": {\"marshmallow\": {\"read\": false, \"write\": false}, \"sample\": {\"skip\": true}, \"type\": \"keyword\"}, \"metadata\": {\"marshmallow\": {\"base-classes\": [\"ma.Schema\"], \"generate\": true, \"schema-class\": \"referrer.services.records.schema.ReferrerMetadataSchema\"}, \"properties\": {\"ref\": {\"imports\": [{\"import\": \"invenio_records_resources.records.systemfields.relations.PIDRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDNestedListRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDListRelation\"}], \"model\": \"referred\", \"relation-classes\": {\"list\": \"PIDListRelation\", \"nested\": \"PIDNestedListRelation\", \"single\": \"PIDRelation\"}, \"type\": \"relation\"}}, \"type\": \"object\"}, \"updated\": {\"marshmallow\": {\"read\": true, \"write\": false}, \"sample\": {\"skip\": true}, \"type\": \"date\"}}, \"proxies-current-resource\": \"referrer.proxies.current_resource\", \"proxies-current-service\": \"referrer.proxies.current_service\", \"record-api-blueprints-setup-cfg\": \"referrer\", \"record-bases\": [\"invenio_records_resources.records.api.Record\"], \"record-blueprints-setup-cfg\": \"referrer\", \"record-class\": \"referrer.records.api.ReferrerRecord\", \"record-dumper-class\": \"referrer.records.dumper.ReferrerDumper\", \"record-dumper-extensions\": [], \"record-facets-class\": \"referrer.services.records.facets.Test\", \"record-jsonschemas-setup-cfg\": \"referrer\", \"record-mapping-setup-cfg\": \"referrer\", \"record-metadata-class\": \"referrer.records.models.ReferrerMetadata\", \"record-metadata-table-name\": \"referrer_metadata\", \"record-permissions-class\": \"referrer.services.records.permissions.ReferrerPermissionPolicy\", \"record-prefix\": \"Referrer\", \"record-prefix-snake\": \"referrer\", \"record-records-package\": \"referrer.records\", \"record-resource-bases\": [\"invenio_records_resources.resources.RecordResource\"], \"record-resource-blueprint-name\": \"Referrer\", \"record-resource-class\": \"referrer.resources.records.resource.ReferrerResource\", \"record-resource-config-bases\": [\"invenio_records_resources.resources.RecordResourceConfig\"], \"record-resource-config-class\": \"referrer.resources.records.config.ReferrerResourceConfig\", \"record-resources-package\": \"referrer.resources.records\", \"record-schema-class\": \"referrer.services.records.schema.ReferrerSchema\", \"record-schema-metadata-alembic\": \"referrer\", \"record-schema-metadata-class\": \"referrer.services.records.schema.ReferrerMetadataSchema\", \"record-schema-metadata-setup-cfg\": \"referrer\", \"record-search-options-class\": \"referrer.services.records.search.ReferrerSearchOptions\", \"record-service-bases\": [\"invenio_records_resources.services.RecordService\"], \"record-service-class\": \"referrer.services.records.service.ReferrerService\", \"record-service-config-bases\": [\"invenio_records_resources.services.RecordServiceConfig\"], \"record-service-config-class\": \"referrer.services.records.config.ReferrerServiceConfig\", \"record-service-config-generate-links\": true, \"record-services-package\": \"referrer.services.records\", \"saved-model-file\": \"PosixPath(\\'referrer/models/model.json\\')\", \"schema-file\": \"referrer/records/jsonschemas/referrer-1.0.0.json\", \"schema-name\": \"referrer-1.0.0.json\", \"schema-server\": \"local://\", \"schema-version\": \"1.0.0\", \"script-import-sample-data\": \"data/sample_data.yaml\", \"service-id\": \"referrer\", \"type\": \"object\"}'",
+            "referrer.services.records.schema.ReferrerMetadataSchema": "b'{\"marshmallow\": {\"base-classes\": [\"ma.Schema\"], \"generate\": true, \"schema-class\": \"referrer.services.records.schema.ReferrerMetadataSchema\"}, \"properties\": {\"ref\": {\"imports\": [{\"import\": \"invenio_records_resources.records.systemfields.relations.PIDRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDNestedListRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDListRelation\"}], \"model\": \"referred\", \"relation-classes\": {\"list\": \"PIDListRelation\", \"nested\": \"PIDNestedListRelation\", \"single\": \"PIDRelation\"}, \"type\": \"relation\"}}, \"type\": \"object\"}'",
+            "referrer.services.records.schema.RefSchema": "b'{\"properties\": {\"@v\": {\"marshmallow\": {\"field-name\": \"_version\"}, \"type\": \"keyword\"}, \"id\": {\"marshmallow\": {\"field-class\": \"ma_fields.String\", \"imports\": [], \"validators\": []}, \"sample\": {\"skip\": true}, \"type\": \"keyword\"}, \"metadata\": {\"marshmallow\": {\"base-classes\": [\"ma.Schema\"], \"field-class\": \"ma_fields.Nested\", \"generate\": true, \"imports\": [], \"schema-class\": \"RefReferredMetadataSchema\", \"validators\": []}, \"properties\": {\"title\": {\"marshmallow\": {\"field-class\": \"ma_fields.String\", \"imports\": [], \"validators\": []}, \"type\": \"fulltext\"}}, \"type\": \"object\"}}, \"relation\": {\"imports\": [{\"import\": \"invenio_records_resources.records.systemfields.relations.PIDRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDNestedListRelation\"}, {\"import\": \"invenio_records_resources.records.systemfields.relations.PIDListRelation\"}, {\"import\": \"referred.records.api.ReferredRecord\"}], \"keys\": [\"id\", \"metadata.title\"], \"model\": \"referred\", \"model-class\": \"ReferredRecord\", \"name\": \"ref\", \"pid-field\": \"ReferredRecord.pid\", \"relation-args\": {}, \"relation-class\": null, \"relation-classes\": {\"list\": \"PIDListRelation\", \"nested\": \"PIDNestedListRelation\", \"single\": \"PIDRelation\"}, \"schema-prefix\": \"Ref\"}, \"type\": \"object\"}'",
+            "referrer.services.records.schema.RefReferredMetadataSchema": "b'{\"marshmallow\": {\"base-classes\": [\"ma.Schema\"], \"field-class\": \"ma_fields.Nested\", \"generate\": true, \"imports\": [], \"schema-class\": \"RefReferredMetadataSchema\", \"validators\": []}, \"properties\": {\"title\": {\"marshmallow\": {\"field-class\": \"ma_fields.String\", \"imports\": [], \"validators\": []}, \"type\": \"fulltext\"}}, \"type\": \"object\"}'"
+        }
+    }
+}

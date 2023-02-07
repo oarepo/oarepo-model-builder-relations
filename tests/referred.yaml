@@ -1,0 +1,10 @@
+model:
+    use: invenio
+    schema-server: 'local://'
+    properties:
+        metadata:
+            properties:
+                title: fulltext
+                description: fulltext
+                hint: keyword
+                price: float

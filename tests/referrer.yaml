@@ -1,0 +1,23 @@
+model:
+    schema-server: 'local://'
+    use: invenio
+    plugins:
+        builder:
+            disable: [script_sample_data, invenio_record_search]
+                
+    properties:
+        metadata:
+            properties:
+                ref:
+                    type: relation
+                    model: referred
+                    relation-classes:
+                        single: PIDRelation
+                        list: PIDListRelation
+                        nested: PIDNestedListRelation
+                    imports:
+                    - import: invenio_records_resources.records.systemfields.relations.PIDRelation
+                    - import: invenio_records_resources.records.systemfields.relations.PIDNestedListRelation
+                    - import: invenio_records_resources.records.systemfields.relations.PIDListRelation
+
+

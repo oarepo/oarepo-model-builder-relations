@@ -1,0 +1,35 @@
+{
+    "mappings": {
+        "properties": {
+            "metadata": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "text"
+                    },
+                    "description": {
+                        "type": "text"
+                    },
+                    "hint": {
+                        "type": "keyword"
+                    },
+                    "price": {
+                        "type": "float"
+                    }
+                }
+            },
+            "id": {
+                "type": "keyword"
+            },
+            "created": {
+                "type": "date"
+            },
+            "updated": {
+                "type": "date"
+            },
+            "$schema": {
+                "type": "keyword"
+            }
+        }
+    }
+}
