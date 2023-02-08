@@ -1,17 +1,23 @@
 #!/bin/bash
 
+set -e
+
+python3 -m venv .venv
+.venv/bin/pip install -U setuptools pip wheel
+.venv/bin/pip install -e .
+
+
 BUILDER=.venv/bin/oarepo-compile-model
 
 
 if true ; then
-    rm -rf tests/refreferred
-    rm -rf tests/referrer
+    test -d tests/referred && rm -rf tests/referred
+    test -d tests/referrer && rm -rf tests/referrer
     ${BUILDER} tests/referred.yaml --output-directory tests/referred -vvv
     ${BUILDER} tests/referrer.yaml --output-directory tests/referrer -vvv --include referred=tests/referred/referred/models/model.json
-    exit 1
 fi
 
-python3.9 -m venv .venv-tests
+python3 -m venv .venv-tests
 source .venv-tests/bin/activate
 
 pip install -U setuptools pip wheel
