@@ -50,6 +50,9 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
         relation["relation_args"] = {
             k.replace("-", "_"): v for k, v in relation["relation_args"].items()
         }
+        relation["name"] = relation["name"].replace(
+            "-", "_"
+        )  # TODO: add code to oarepo-model-builder for identifier generation
         self.relations.append(relation)
 
     def _get_relation_class(self, relation_classes, relation, relation_args):
@@ -58,14 +61,14 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
         path = ""
         top_is_array = False
         for stack_entry in self.stack.stack:
-            if stack_entry.key:
+            if stack_entry.schema_element_type == "property":
                 if path:
-                    path = f".{path}"
+                    path = f"{path}."
                 path += stack_entry.key
 
             if stack_entry.schema_element_type != "items":
                 top_is_array = False
-            if stack_entry.schema_element_type == "array":
+            else:
                 array_paths.append(path)
                 top_is_array = True
         if len(array_paths) > 1:
@@ -79,7 +82,9 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
         if top_is_array:
             return relation_classes["list"]
         # inside an array => return nested relation
-        relation_args.setdefault("relation_field", path[len(array_paths[0]) + 1 :])
+        relation_args.setdefault(
+            "relation_field", repr(path[len(array_paths[0]) + 1 :])
+        )
         relation.setdefault("path", array_paths[0])
         return relation_classes["nested"]
 

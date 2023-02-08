@@ -32,7 +32,7 @@ will generate:
         "type": "object",
         "properties": {
             "id": {"type": "string"},
-            "@v": {"type": "integer"},
+            "@v": {"type": "string"},
             "title": {},     // copied from registered article model
             "authors": {}    // copied from registered article model
         }

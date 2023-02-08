@@ -1,4 +1,5 @@
 import copy
+import re
 
 import marshmallow as ma
 from marshmallow import fields
@@ -31,6 +32,7 @@ class RelationSchema(ma.Schema):
     pid_field = fields.String(data_key="pid-field", required=False)
     # TODO: relation-args
     imports = fields.List(fields.Nested(ImportSchema), required=False)
+    flatten = fields.Boolean(required=False)
 
     class Meta:
         unknown = ma.RAISE
@@ -48,12 +50,26 @@ class RelationDataType(ObjectDataType):
         model_name = data.pop("model")
         keys = data.pop("keys", ["id", "metadata.title"])
         model_class = data.pop("model-class", None)
-        schema_prefix = data.pop("schema-prefix", self.key.title())
-        base_relation_classes = {
-            "list": "MetadataPIDListRelation",
-            "nested": "MetadataPIDNestedListRelation",
-            "single": "MetadataPIDRelation",
-        }
+        schema_prefix = data.pop("schema-prefix", None)
+        if self.stack.top.schema_element_type == "items":
+            schema_prefix = self.stack[-2].key.title() + "Item"
+        else:
+            schema_prefix = self.key.title()
+        schema_prefix = re.sub("\W", "", schema_prefix)
+        flatten = data.pop("flatten", False)
+        if flatten:
+            base_relation_classes = {
+                "list": "MetadataPIDListRelation",
+                "nested": "MetadataPIDListRelation",
+                "single": "MetadataPIDRelation",
+            }
+        else:
+            base_relation_classes = {
+                "list": "PIDListRelation",
+                "nested": "PIDListRelation",
+                "single": "PIDRelation",
+            }
+
         relation_classes = {
             **base_relation_classes,
             **data.pop("relation-classes", {}),
@@ -66,7 +82,14 @@ class RelationDataType(ObjectDataType):
         # import oarepo classes but only if used
         for rc_type, rc in base_relation_classes.items():
             if relation_classes[rc_type] == rc:
-                imports.append({"import": rc})
+                if flatten:
+                    imports.append({"import": f"oarepo_runtime.relations.{rc}"})
+                else:
+                    imports.append(
+                        {
+                            "import": f"invenio_records_resources.records.systemfields.relations.{rc}"
+                        }
+                    )
 
         try:
             model_data = self.schema._load(model_name)
@@ -84,10 +107,12 @@ class RelationDataType(ObjectDataType):
         # insert properties
         props = {}
         for fld in keys:
-            self._copy_field_definition(props, model_properties, fld, model_name)
+            self._copy_field_definition(
+                props, model_properties, fld, model_name, flatten
+            )
         props["@v"] = {"type": "keyword", "marshmallow": {"field-name": "_version"}}
 
-        self._prefix_marshmallow_classes(props, schema_prefix)
+        self._prefix_marshmallow_classes(props, schema_prefix.replace("-", ""))
 
         model["type"] = "object"
         model["properties"] = props
@@ -106,9 +131,9 @@ class RelationDataType(ObjectDataType):
 
         raise ReplaceElement({self.key: model})
 
-    def _copy_field_definition(self, props, included_props, fld, model_name):
+    def _copy_field_definition(self, props, included_props, fld, model_name, flatten):
         field_path = fld.split(".")
-        for parent in field_path[:-1]:
+        for parent_idx, parent in enumerate(field_path[:-1]):
             if parent not in included_props:
                 raise InvalidModelException(
                     f"Field path {field_path} is invalid within model {model_name}"
@@ -117,14 +142,15 @@ class RelationDataType(ObjectDataType):
                 included_props[parent].get("marshmallow", {})
             )
             included_props = included_props[parent]["properties"]
-            if parent not in props:
-                props[parent] = {
-                    "type": "object",
-                    "properties": {},
-                    "marshmallow": parent_marshmallow,
-                }
-                self._make_field_serializable(parent_marshmallow)
-            props = props[parent]["properties"]
+            if not flatten or parent_idx > 0:
+                if parent not in props:
+                    props[parent] = {
+                        "type": "object",
+                        "properties": {},
+                        "marshmallow": parent_marshmallow,
+                    }
+                    self._make_field_serializable(parent_marshmallow)
+                props = props[parent]["properties"]
         if field_path[-1] in included_props:
             included_model = copy.deepcopy(included_props[field_path[-1]])
             self._make_field_serializable(included_model.get("marshmallow", None))

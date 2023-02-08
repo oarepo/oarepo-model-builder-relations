@@ -2,9 +2,8 @@
     "mappings": {
         "properties": {
             "metadata": {
-                "type": "object",
                 "properties": {
-                    "ref": {
+                    "invenio-ref": {
                         "type": "object",
                         "properties": {
                             "id": {
@@ -22,8 +21,99 @@
                                 "type": "keyword"
                             }
                         }
+                    },
+                    "invenio-array": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "text"
+                                    }
+                                }
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "invenio-nested": {
+                        "properties": {
+                            "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "text"
+                                            }
+                                        }
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "ref": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "title": {
+                                "type": "text"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "array": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "title": {
+                                "type": "text"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "nested": {
+                        "properties": {
+                            "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "title": {
+                                        "type": "text"
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
                     }
-                }
+                },
+                "type": "object"
             },
             "id": {
                 "type": "keyword"

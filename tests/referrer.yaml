@@ -8,16 +8,34 @@ model:
     properties:
         metadata:
             properties:
+                invenio-ref:
+                    type: relation
+                    model: referred
+                invenio-array[]:
+                    type: relation
+                    model: referred
+                invenio-nested[]:
+                    type: "object"
+                    properties:
+                        ref:
+                            type: relation
+                            model: referred
+                            name: invenio-nested
                 ref:
                     type: relation
                     model: referred
-                    relation-classes:
-                        single: PIDRelation
-                        list: PIDListRelation
-                        nested: PIDNestedListRelation
-                    imports:
-                    - import: invenio_records_resources.records.systemfields.relations.PIDRelation
-                    - import: invenio_records_resources.records.systemfields.relations.PIDNestedListRelation
-                    - import: invenio_records_resources.records.systemfields.relations.PIDListRelation
-
+                    flatten: true
+                array[]:
+                    type: relation
+                    model: referred
+                    name: array
+                    flatten: true
+                nested[]:
+                    type: "object"
+                    properties:
+                        ref:
+                            type: relation
+                            model: referred
+                            name: nested
+                            flatten: true
 

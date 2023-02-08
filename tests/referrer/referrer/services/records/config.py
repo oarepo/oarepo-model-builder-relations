@@ -19,7 +19,7 @@ class ReferrerServiceConfig(RecordServiceConfig):
     permission_policy_cls = ReferrerPermissionPolicy
     schema = ReferrerSchema
 
-    # search = ReferrerSearchOptions
+    #     search = ReferrerSearchOptions
 
     record_cls = ReferrerRecord
     # todo should i leave this here?

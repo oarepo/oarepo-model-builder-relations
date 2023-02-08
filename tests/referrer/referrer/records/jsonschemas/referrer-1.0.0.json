@@ -2,9 +2,8 @@
     "type": "object",
     "properties": {
         "metadata": {
-            "type": "object",
             "properties": {
-                "ref": {
+                "invenio-ref": {
                     "type": "object",
                     "properties": {
                         "id": {
@@ -22,8 +21,111 @@
                             "type": "string"
                         }
                     }
+                },
+                "invenio-array": {
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "@v": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "type": "array"
+                },
+                "invenio-nested": {
+                    "items": {
+                        "properties": {
+                            "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "@v": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "ref": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "@v": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "array": {
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "@v": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "type": "array"
+                },
+                "nested": {
+                    "items": {
+                        "properties": {
+                            "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "@v": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
                 }
-            }
+            },
+            "type": "object"
         },
         "id": {
             "type": "string"
