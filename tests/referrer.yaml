@@ -3,7 +3,7 @@ model:
     use: invenio
     plugins:
         builder:
-            disable: [script_sample_data, invenio_record_search]
+            disable: [script_sample_data]
                 
     properties:
         metadata:
