@@ -42,10 +42,8 @@ class RelationDataType(ObjectDataType):
     model_type = "relation"
 
     def model_schema(self, **extras):
-        model = super().model_schema(**extras) or {}
-
         data = copy.deepcopy(self.definition)
-
+        data.pop("type", None)
         name = data.pop("name", self.key)
         model_name = data.pop("model")
         keys = data.pop("keys", ["id", "metadata.title"])
@@ -114,10 +112,10 @@ class RelationDataType(ObjectDataType):
 
         self._prefix_marshmallow_classes(props, schema_prefix.replace("-", ""))
 
-        model["type"] = "object"
-        model["properties"] = props
+        data["type"] = "object"
+        data["properties"] = props
 
-        relation_extension = model.setdefault("relation", {})
+        relation_extension = data.setdefault("relation", {})
         relation_extension["name"] = name
         relation_extension["model"] = model_name
         relation_extension["keys"] = keys
@@ -129,7 +127,7 @@ class RelationDataType(ObjectDataType):
         relation_extension["imports"] = imports
         relation_extension["pid-field"] = pid_field
 
-        raise ReplaceElement({self.key: model})
+        raise ReplaceElement({self.key: data})
 
     def _copy_field_definition(self, props, included_props, fld, model_name, flatten):
         field_path = fld.split(".")
