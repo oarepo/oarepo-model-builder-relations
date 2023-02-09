@@ -127,6 +127,8 @@ class RelationDataType(ObjectDataType):
         relation_extension["imports"] = imports
         relation_extension["pid-field"] = pid_field
 
+        self._remove_mapping_incompatibilities(data)
+
         raise ReplaceElement({self.key: data})
 
     def _copy_field_definition(self, props, included_props, fld, model_name, flatten):
@@ -172,6 +174,20 @@ class RelationDataType(ObjectDataType):
                     props["marshmallow"]["schema-class"] = schema_prefix + schema_class
         for v in props.values():
             self._prefix_marshmallow_classes(v, schema_prefix)
+
+    def _remove_mapping_incompatibilities(self, props, mapping_in_parent=False):
+        if not isinstance(props, dict):
+            return
+        if mapping_in_parent:
+            if "copy-to" in props:
+                del props["copy-to"]
+            if "copy_to" in props:
+                del props["copy_to"]
+
+        for k, v in props.items():
+            self._remove_mapping_incompatibilities(
+                v, mapping_in_parent or k == "mapping"
+            )
 
     class ModelSchema(RelationSchema, ObjectDataType.ModelSchema):
         relation = fields.Nested(RelationSchema, required=False)
