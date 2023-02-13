@@ -152,3 +152,55 @@ def test_metadata_nested_list_relation(app, db, search_clear, referred_records):
             referrer_record.data["metadata"]["nested"][i]["ref"]["title"]
             == referred_records[i].data["metadata"]["title"]
         )
+
+
+def test_invenio_nested_list_in_list_relation(app, db, search_clear, referred_records):
+
+    referrer_record = referrer_service.create(
+        system_identity,
+        {
+            "metadata": {
+                "invenio-array-nested": [
+                    {"ref-arr": [{"id": referred_record.id}]}
+                    for referred_record in referred_records
+                ]
+            }
+        },
+    )
+    for i in range(len(referred_records)):
+        assert (
+            referrer_record.data["metadata"]["invenio-array-nested"][i]["ref-arr"][0][
+                "id"
+            ]
+            == referred_records[i].id
+        )
+        assert (
+            referrer_record.data["metadata"]["invenio-array-nested"][i]["ref-arr"][0][
+                "metadata"
+            ]["title"]
+            == referred_records[i].data["metadata"]["title"]
+        )
+
+
+def test_metadata_nested_list_in_list_relation(app, db, search_clear, referred_records):
+
+    referrer_record = referrer_service.create(
+        system_identity,
+        {
+            "metadata": {
+                "array-nested": [
+                    {"ref-arr": [{"id": referred_record.id}]}
+                    for referred_record in referred_records
+                ]
+            }
+        },
+    )
+    for i in range(len(referred_records)):
+        assert (
+            referrer_record.data["metadata"]["array-nested"][i]["ref-arr"][0]["id"]
+            == referred_records[i].id
+        )
+        assert (
+            referrer_record.data["metadata"]["array-nested"][i]["ref-arr"][0]["title"]
+            == referred_records[i].data["metadata"]["title"]
+        )
