@@ -15,6 +15,7 @@ class RelationSchema(ma.Schema):
         list = fields.String(required=False)
         nested = fields.String(required=False)
         single = fields.String(required=False)
+        nested_array = fields.String(required=False, data_key="nested-array")
 
     class ImportSchema(ma.Schema):
         import_str = fields.String(data_key="import", required=True)
@@ -44,7 +45,12 @@ class RelationDataType(ObjectDataType):
     def model_schema(self, **extras):
         data = copy.deepcopy(self.definition)
         data.pop("type", None)
-        name = data.pop("name", self.key)
+        name = data.pop("name", None)
+        if not name:
+            if self.stack.top.schema_element_type == "items":
+                name = self.stack[-2].key + "_item"
+            else:
+                name = self.key
         model_name = data.pop("model")
         keys = data.pop("keys", ["id", "metadata.title"])
         model_class = data.pop("model-class", None)
@@ -60,12 +66,14 @@ class RelationDataType(ObjectDataType):
                 "list": "MetadataPIDListRelation",
                 "nested": "MetadataPIDListRelation",
                 "single": "MetadataPIDRelation",
+                "nested-array": "MetadataPIDNestedListRelation",
             }
         else:
             base_relation_classes = {
                 "list": "PIDListRelation",
                 "nested": "PIDListRelation",
                 "single": "PIDRelation",
+                "nested-array": "PIDNestedListRelation",
             }
 
         relation_classes = {

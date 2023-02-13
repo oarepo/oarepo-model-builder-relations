@@ -61,6 +61,24 @@ metadata_invenio_nested_ref__version = TermsFacet(
 metadata_invenio_nested = TermsFacet(field="metadata.invenio-nested")
 
 
+metadata_invenio_array_nested_ref_arr_id = TermsFacet(
+    field="metadata.invenio-array-nested.ref-arr.id"
+)
+
+
+metadata_invenio_array_nested_ref_arr__version = TermsFacet(
+    field="metadata.invenio-array-nested.ref-arr.@v"
+)
+
+
+metadata_invenio_array_nested_ref_arr = TermsFacet(
+    field="metadata.invenio-array-nested.ref-arr"
+)
+
+
+metadata_invenio_array_nested = TermsFacet(field="metadata.invenio-array-nested")
+
+
 metadata_ref_id = TermsFacet(field="metadata.ref.id")
 
 
@@ -83,6 +101,20 @@ metadata_nested_ref__version = TermsFacet(field="metadata.nested.ref.@v")
 
 
 metadata_nested = TermsFacet(field="metadata.nested")
+
+
+metadata_array_nested_ref_arr_id = TermsFacet(field="metadata.array-nested.ref-arr.id")
+
+
+metadata_array_nested_ref_arr__version = TermsFacet(
+    field="metadata.array-nested.ref-arr.@v"
+)
+
+
+metadata_array_nested_ref_arr = TermsFacet(field="metadata.array-nested.ref-arr")
+
+
+metadata_array_nested = TermsFacet(field="metadata.array-nested")
 
 
 _id = TermsFacet(field="id")

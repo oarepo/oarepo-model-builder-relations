@@ -6,9 +6,14 @@ from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
 from invenio_records_resources.records.systemfields.relations import (
     PIDListRelation,
+    PIDNestedListRelation,
     PIDRelation,
 )
-from oarepo_runtime.relations import MetadataPIDListRelation, MetadataPIDRelation
+from oarepo_runtime.relations import (
+    MetadataPIDListRelation,
+    MetadataPIDNestedListRelation,
+    MetadataPIDRelation,
+)
 from referred.records.api import ReferredRecord
 from referrer.records.dumper import ReferrerDumper
 from referrer.records.models import ReferrerMetadata
@@ -36,7 +41,7 @@ class ReferrerRecord(Record):
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
         ),
-        items=PIDListRelation(
+        invenio_array_item=PIDListRelation(
             "metadata.invenio-array",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
@@ -46,6 +51,12 @@ class ReferrerRecord(Record):
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
             relation_field="ref",
+        ),
+        ref_arr_item=PIDNestedListRelation(
+            "metadata.invenio-array-nested",
+            keys=["id", "metadata.title"],
+            pid_field=ReferredRecord.pid,
+            relation_field="ref-arr",
         ),
         ref=MetadataPIDRelation(
             "metadata.ref",
@@ -62,5 +73,11 @@ class ReferrerRecord(Record):
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
             relation_field="ref",
+        ),
+        ref_arr_item_1=MetadataPIDNestedListRelation(
+            "metadata.array-nested",
+            keys=["id", "metadata.title"],
+            pid_field=ReferredRecord.pid,
+            relation_field="ref-arr",
         ),
     )

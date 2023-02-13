@@ -2,7 +2,6 @@
     "type": "object",
     "properties": {
         "metadata": {
-            "type": "object",
             "properties": {
                 "title": {
                     "type": "string"
@@ -16,7 +15,8 @@
                 "price": {
                     "type": "number"
                 }
-            }
+            },
+            "type": "object"
         },
         "id": {
             "type": "string"

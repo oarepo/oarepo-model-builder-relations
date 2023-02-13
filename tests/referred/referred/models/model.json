@@ -1,96 +1,48 @@
 {
     "model": {
         "type": "object",
-        "ext-class": "referred.ext.ReferredExt",
-        "record-schema-class": "referred.services.records.schema.ReferredSchema",
-        "invenio-views-extra-code": "",
-        "config-service-config-key": "REFERRED_SERVICE_CONFIG_REFERRED",
-        "schema-version": "1.0.0",
-        "record-metadata-table-name": "referred_metadata",
-        "schema-file": "referred/records/jsonschemas/referred-1.0.0.json",
-        "flask-extension-name": "referred",
-        "service-id": "referred",
-        "invenio-record-search-options-extra-code": "",
-        "invenio-version-extra-code": "",
-        "record-mapping-setup-cfg": "referred",
-        "collection-url": "/referred/",
-        "record-records-package": "referred.records",
+        "invenio-record-metadata-extra-code": "",
         "record-service-config-generate-links": true,
-        "record-service-config-class": "referred.services.records.config.ReferredServiceConfig",
-        "record-dumper-extensions": [],
-        "config-resource-register-blueprint-key": "REFERRED_REGISTER_BLUEPRINT",
-        "invenio-record-extra-code": "",
-        "record-api-blueprints-setup-cfg": "referred",
-        "record-resource-bases": [
-            "invenio_records_resources.resources.RecordResource"
-        ],
-        "invenio-ext-extra-code": "",
-        "generate-record-pid-field": true,
-        "record-dumper-class": "referred.records.dumper.ReferredDumper",
-        "invenio-record-resource-extra-code": "",
-        "record-jsonschemas-setup-cfg": "referred",
-        "kebap-package": "referred",
-        "config-package": "referred.config",
-        "script-import-sample-data": "data/sample_data.yaml",
-        "record-search-options-class": "referred.services.records.search.ReferredSearchOptions",
-        "schema-name": "referred-1.0.0.json",
-        "create-blueprint-from-app": "referred.views.create_blueprint_from_app_referred",
-        "record-resource-config-bases": [
-            "invenio_records_resources.resources.RecordResourceConfig"
-        ],
-        "invenio-record-permissions-extra-code": "",
-        "record-service-bases": [
-            "invenio_records_resources.services.RecordService"
-        ],
+        "invenio-record-service-config-extra-code": "",
         "record-schema-metadata-setup-cfg": "referred",
-        "config-resource-config-key": "REFERRED_RESOURCE_CONFIG_REFERRED",
-        "invenio-proxies-extra-code": "",
-        "package": "referred",
-        "record-schema-metadata-class": "referred.services.records.schema.ReferredMetadataSchema",
-        "record-resource-class": "referred.resources.records.resource.ReferredResource",
-        "mapping-file": "referred/records/mappings/os-v2/referred/referred-1.0.0.json",
-        "invenio-record-dumper-extra-code": "",
-        "record-services-package": "referred.services.records",
         "record-service-config-bases": [
             "invenio_records_resources.services.RecordServiceConfig"
         ],
-        "marshmallow": {
-            "schema-class": "referred.services.records.schema.ReferredSchema",
-            "base-classes": [
-                "InvenioBaseRecordSchema"
-            ],
-            "generate": true
-        },
-        "record-facets-class": "referred.services.records.facets.Test",
-        "record-schema-metadata-alembic": "referred",
-        "package-path": "referred",
-        "record-service-class": "referred.services.records.service.ReferredService",
-        "invenio-config-extra-code": "",
-        "jsonschemas-package": "referred.records.jsonschemas",
-        "package-base-upper": "REFERRED",
-        "invenio-record-object-schema-extra-code": "",
-        "flask-commands-setup-cfg": "referred",
-        "record-prefix-snake": "referred",
-        "config-service-class-key": "REFERRED_SERVICE_CLASS_REFERRED",
-        "index-name": "referred-referred-1.0.0",
-        "cli-function": "referred.cli.group",
+        "record-dumper-class": "referred.records.dumper.ReferredDumper",
+        "schema-version": "1.0.0",
+        "proxies-current-resource": "referred.proxies.current_resource",
         "mapping-package": "referred.records.mappings",
-        "config-dummy-class": "referred.config.DummyClass",
+        "record-resource-config-class": "referred.resources.records.config.ReferredResourceConfig",
         "invenio-record-facets-extra-code": "",
-        "record-metadata-class": "referred.records.models.ReferredMetadata",
+        "record-prefix-snake": "referred",
+        "generate-record-pid-field": true,
+        "schema-name": "referred-1.0.0.json",
+        "index-name": "referred-referred-1.0.0",
+        "record-service-bases": [
+            "invenio_records_resources.services.RecordService"
+        ],
+        "kebap-package": "referred",
+        "invenio-record-dumper-extra-code": "",
+        "jsonschemas-package": "referred.records.jsonschemas",
+        "record-jsonschemas-setup-cfg": "referred",
+        "record-records-package": "referred.records",
+        "mapping-file": "referred/records/mappings/os-v2/referred/referred-1.0.0.json",
+        "record-resource-blueprint-name": "Referred",
+        "invenio-record-object-schema-extra-code": "",
+        "config-resource-config-key": "REFERRED_RESOURCE_CONFIG_REFERRED",
+        "record-facets-class": "referred.services.records.facets.Test",
         "properties": {
             "metadata": {
                 "marshmallow": {
+                    "generate": true,
                     "schema-class": "referred.services.records.schema.ReferredMetadataSchema",
                     "base-classes": [
                         "ma.Schema"
                     ],
-                    "generate": true,
                     "field-class": "ma_fields.Nested",
                     "validators": [],
                     "imports": []
                 },
-                "type": "object",
                 "properties": {
                     "title": {
                         "marshmallow": {
@@ -124,7 +76,8 @@
                         },
                         "type": "float"
                     }
-                }
+                },
+                "type": "object"
             },
             "id": {
                 "marshmallow": {
@@ -191,31 +144,78 @@
                 "type": "keyword"
             }
         },
+        "package-path": "referred",
+        "record-service-class": "referred.services.records.service.ReferredService",
+        "config-service-class-key": "REFERRED_SERVICE_CLASS_REFERRED",
+        "config-package": "referred.config",
+        "create-blueprint-from-app": "referred.views.create_blueprint_from_app_referred",
+        "record-service-config-class": "referred.services.records.config.ReferredServiceConfig",
+        "flask-commands-setup-cfg": "referred",
+        "invenio-record-extra-code": "",
+        "config-resource-register-blueprint-key": "REFERRED_REGISTER_BLUEPRINT",
+        "config-resource-class-key": "REFERRED_RESOURCE_CLASS_REFERRED",
+        "record-metadata-class": "referred.records.models.ReferredMetadata",
+        "script-import-sample-data": "data/sample_data.yaml",
+        "marshmallow": {
+            "generate": true,
+            "schema-class": "referred.services.records.schema.ReferredSchema",
+            "base-classes": [
+                "InvenioBaseRecordSchema"
+            ]
+        },
+        "invenio-version-extra-code": "",
+        "invenio-record-service-extra-code": "",
+        "package": "referred",
+        "profile-package": "records",
+        "config-service-config-key": "REFERRED_SERVICE_CONFIG_REFERRED",
+        "record-resource-config-bases": [
+            "invenio_records_resources.resources.RecordResourceConfig"
+        ],
+        "ext-class": "referred.ext.ReferredExt",
+        "invenio-record-schema-extra-code": "",
+        "record-mapping-setup-cfg": "referred",
+        "record-schema-class": "referred.services.records.schema.ReferredSchema",
+        "record-metadata-table-name": "referred_metadata",
+        "proxies-current-service": "referred.proxies.current_service",
+        "record-services-package": "referred.services.records",
+        "record-schema-metadata-alembic": "referred",
         "record-permissions-class": "referred.services.records.permissions.ReferredPermissionPolicy",
-        "extension-suffix": "referred",
+        "package-base-upper": "REFERRED",
+        "invenio-ext-extra-code": "",
+        "record-dumper-extensions": [],
         "schema-server": "local://",
+        "invenio-config-extra-code": "",
+        "invenio-record-resource-extra-code": "",
+        "record-api-blueprints-setup-cfg": "referred",
+        "record-resource-bases": [
+            "invenio_records_resources.resources.RecordResource"
+        ],
+        "record-class": "referred.records.api.ReferredRecord",
+        "invenio-record-search-options-extra-code": "",
+        "collection-url": "/referred/",
+        "record-blueprints-setup-cfg": "referred",
         "record-bases": [
             "invenio_records_resources.records.api.Record"
         ],
-        "invenio-record-metadata-extra-code": "",
-        "record-resource-config-class": "referred.resources.records.config.ReferredResourceConfig",
-        "invenio-record-schema-extra-code": "",
-        "oarepo-models-setup-cfg": "referred",
-        "record-prefix": "Referred",
-        "model-name": "referred",
-        "package-base": "referred",
-        "proxies-current-resource": "referred.proxies.current_resource",
-        "record-class": "referred.records.api.ReferredRecord",
-        "invenio-record-service-config-extra-code": "",
         "saved-model-file": "referred/models/model.json",
-        "invenio-record-service-extra-code": "",
-        "record-blueprints-setup-cfg": "referred",
-        "invenio-record-resource-config-extra-code": "",
+        "record-schema-metadata-class": "referred.services.records.schema.ReferredMetadataSchema",
         "record-resources-package": "referred.resources.records",
-        "profile-package": "records",
-        "proxies-current-service": "referred.proxies.current_service",
-        "config-resource-class-key": "REFERRED_RESOURCE_CLASS_REFERRED",
-        "record-resource-blueprint-name": "Referred",
+        "flask-extension-name": "referred",
+        "invenio-record-permissions-extra-code": "",
+        "oarepo-models-setup-cfg": "referred",
+        "service-id": "referred",
+        "package-base": "referred",
+        "record-prefix": "Referred",
+        "invenio-proxies-extra-code": "",
+        "extension-suffix": "referred",
+        "invenio-record-resource-config-extra-code": "",
+        "record-resource-class": "referred.resources.records.resource.ReferredResource",
+        "config-dummy-class": "referred.config.DummyClass",
+        "model-name": "referred",
+        "cli-function": "referred.cli.group",
+        "invenio-views-extra-code": "",
+        "schema-file": "referred/records/jsonschemas/referred-1.0.0.json",
+        "record-search-options-class": "referred.services.records.search.ReferredSearchOptions",
         "known-classes": {
             "referred.services.records.schema.ReferredSchema": "8875755aef5c0389dc3a396d017cf12a1f934e82511ac97c011e37a61e394838",
             "referred.services.records.schema.ReferredMetadataSchema": "a220c30ad340ec61d86754f0e69dc325081dc6e119ad461bfebc4101335524a3"

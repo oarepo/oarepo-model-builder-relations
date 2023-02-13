@@ -58,6 +58,30 @@ class InvenioNestedItemSchema(ma.Schema):
     ref = ma_fields.Nested(lambda: RefSchema())
 
 
+class RefArrItemReferredMetadataSchema(ma.Schema):
+    """RefArrItemReferredMetadataSchema schema."""
+
+    title = ma_fields.String()
+
+
+class RefArrItemSchema(ma.Schema):
+    """RefArrItemSchema schema."""
+
+    id = ma_fields.String()
+    metadata = ma_fields.Nested(lambda: RefArrItemReferredMetadataSchema())
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InvenioArrayNestedItemSchema(ma.Schema):
+    """InvenioArrayNestedItemSchema schema."""
+
+    ref_arr = ma_fields.List(
+        ma_fields.Nested(lambda: RefArrItemSchema()),
+        data_key="ref-arr",
+        attribute="ref-arr",
+    )
+
+
 class MetadataRefSchema(ma.Schema):
     """MetadataRefSchema schema."""
 
@@ -88,6 +112,24 @@ class NestedItemSchema(ma.Schema):
     ref = ma_fields.Nested(lambda: NestedRefSchema())
 
 
+class RefArrRefArrItemSchema(ma.Schema):
+    """RefArrRefArrItemSchema schema."""
+
+    id = ma_fields.String()
+    title = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class ArrayNestedItemSchema(ma.Schema):
+    """ArrayNestedItemSchema schema."""
+
+    ref_arr = ma_fields.List(
+        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
+        data_key="ref-arr",
+        attribute="ref-arr",
+    )
+
+
 class ReferrerMetadataSchema(ma.Schema):
     """ReferrerMetadataSchema schema."""
 
@@ -104,9 +146,19 @@ class ReferrerMetadataSchema(ma.Schema):
         data_key="invenio-nested",
         attribute="invenio-nested",
     )
+    invenio_array_nested = ma_fields.List(
+        ma_fields.Nested(lambda: InvenioArrayNestedItemSchema()),
+        data_key="invenio-array-nested",
+        attribute="invenio-array-nested",
+    )
     ref = ma_fields.Nested(lambda: MetadataRefSchema())
     array = ma_fields.List(ma_fields.Nested(lambda: ArrayItemSchema()))
     nested = ma_fields.List(ma_fields.Nested(lambda: NestedItemSchema()))
+    array_nested = ma_fields.List(
+        ma_fields.Nested(lambda: ArrayNestedItemSchema()),
+        data_key="array-nested",
+        attribute="array-nested",
+    )
 
 
 class ReferrerSchema(InvenioBaseRecordSchema):

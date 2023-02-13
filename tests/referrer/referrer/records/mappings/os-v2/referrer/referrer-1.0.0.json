@@ -65,6 +65,30 @@
                         },
                         "type": "object"
                     },
+                    "invenio-array-nested": {
+                        "properties": {
+                            "ref-arr": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "metadata": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "text"
+                                            }
+                                        }
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
                     "ref": {
                         "type": "object",
                         "properties": {
@@ -96,6 +120,25 @@
                     "nested": {
                         "properties": {
                             "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "title": {
+                                        "type": "text"
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "array-nested": {
+                        "properties": {
+                            "ref-arr": {
                                 "type": "object",
                                 "properties": {
                                     "id": {

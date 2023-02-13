@@ -21,6 +21,12 @@ model:
                             type: relation
                             model: referred
                             name: invenio-nested
+                invenio-array-nested[]:
+                    type: "object"
+                    properties:
+                        ref-arr[]:
+                            type: relation
+                            model: referred
                 ref:
                     type: relation
                     model: referred
@@ -37,5 +43,12 @@ model:
                             type: relation
                             model: referred
                             name: nested
+                            flatten: true
+                array-nested[]:
+                    type: "object"
+                    properties:
+                        ref-arr[]:
+                            type: relation
+                            model: referred
                             flatten: true
 

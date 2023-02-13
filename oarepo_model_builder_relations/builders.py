@@ -2,6 +2,7 @@ from oarepo_model_builder.builders import process
 from oarepo_model_builder.invenio.invenio_base import InvenioBaseClassPythonBuilder
 from oarepo_model_builder.validation import InvalidModelException
 from munch import unmunchify
+from oarepo_model_builder.utils.python_name import convert_name_to_python
 
 
 class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
@@ -50,9 +51,16 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
         relation["relation_args"] = {
             k.replace("-", "_"): v for k, v in relation["relation_args"].items()
         }
-        relation["name"] = relation["name"].replace(
-            "-", "_"
-        )  # TODO: add code to oarepo-model-builder for identifier generation
+        relation["name"] = convert_name_to_python(relation["name"])
+        for suffix in ("", *[f"_{i}" for i in range(1, 100)]):
+            name = relation["name"] + suffix
+            for rr in self.relations:
+                if name == rr["name"]:
+                    break
+            else:
+                relation["name"] = name
+                break
+
         self.relations.append(relation)
 
     def _get_relation_class(self, relation_classes, relation, relation_args):
@@ -72,12 +80,21 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
                 array_paths.append(path)
                 top_is_array = True
         if len(array_paths) > 1:
+            # array inside array => return nested array relation
+            if top_is_array:
+                relation_args.setdefault(
+                    "relation_field", repr(path[len(array_paths[0]) + 1 :])
+                )
+                relation.setdefault("path", array_paths[0])
+                return relation_classes["nested-array"]
+
             raise InvalidModelException(
                 "Related items in double arrays are not supported yet"
             )
         # not in array => return single relation
         if not array_paths:
             return relation_classes["single"]
+
         # array itself => return list relation
         if top_is_array:
             return relation_classes["list"]
