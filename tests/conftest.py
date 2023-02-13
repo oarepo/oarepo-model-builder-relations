@@ -23,7 +23,7 @@ def app_config(app_config):
     app_config["SEARCH_HOSTS"] = [
         {
             "host": os.environ.get("OPENSEARCH_HOST", "localhost"),
-            "port": os.environ.get("OPENSEARCH_PORT", "9400"),
+            "port": os.environ.get("OPENSEARCH_PORT", "9200"),
         }
     ]
     return app_config
