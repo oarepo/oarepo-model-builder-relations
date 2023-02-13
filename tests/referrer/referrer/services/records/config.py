@@ -7,8 +7,7 @@ from invenio_records_resources.services import pagination_links
 from referrer.records.api import ReferrerRecord
 from referrer.services.records.permissions import ReferrerPermissionPolicy
 from referrer.services.records.schema import ReferrerSchema
-
-# from referrer.services.records.search import ReferrerSearchOptions
+from referrer.services.records.search import ReferrerSearchOptions
 
 
 class ReferrerServiceConfig(RecordServiceConfig):
@@ -19,7 +18,7 @@ class ReferrerServiceConfig(RecordServiceConfig):
     permission_policy_cls = ReferrerPermissionPolicy
     schema = ReferrerSchema
 
-    #     search = ReferrerSearchOptions
+    search = ReferrerSearchOptions
 
     record_cls = ReferrerRecord
     # todo should i leave this here?

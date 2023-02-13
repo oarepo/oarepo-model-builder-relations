@@ -18,12 +18,6 @@ class ReferredSearchOptions(InvenioSearchOptions):
         "created": facets.created,
         "updated": facets.updated,
         "_schema": facets._schema,
-        "metadata_hint": facets.metadata_hint,
-        "metadata_price": facets.metadata_price,
-        "_id": facets._id,
-        "created": facets.created,
-        "updated": facets.updated,
-        "_schema": facets._schema,
     }
     sort_options = {
         **InvenioSearchOptions.sort_options,

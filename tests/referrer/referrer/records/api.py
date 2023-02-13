@@ -6,14 +6,9 @@ from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
 from invenio_records_resources.records.systemfields.relations import (
     PIDListRelation,
-    PIDNestedListRelation,
     PIDRelation,
 )
-from oarepo_runtime.relations import (
-    MetadataPIDListRelation,
-    MetadataPIDNestedListRelation,
-    MetadataPIDRelation,
-)
+from oarepo_runtime.relations import MetadataPIDListRelation, MetadataPIDRelation
 from referred.records.api import ReferredRecord
 from referrer.records.dumper import ReferrerDumper
 from referrer.records.models import ReferrerMetadata
