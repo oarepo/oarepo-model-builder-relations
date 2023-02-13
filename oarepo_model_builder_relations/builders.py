@@ -38,6 +38,7 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
         relation_args = relation["relation_args"]
         pid_field = relation["pid_field"]
 
+        keys = [x if isinstance(x, str) else x.key for x in keys]
         relation_args.setdefault("keys", repr(keys))
 
         relation_args.setdefault("pid_field", pid_field or f"{model_class}.pid")

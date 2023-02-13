@@ -1,6 +1,8 @@
 model:
     use: invenio
     schema-server: 'local://'
+    custom-fields:
+    - config: TEST_CF
     properties:
         metadata:
             properties:

@@ -80,4 +80,9 @@ class ReferrerRecord(Record):
             pid_field=ReferredRecord.pid,
             relation_field="ref-arr",
         ),
+        cf=MetadataPIDRelation(
+            "metadata.cf",
+            keys=["id", "metadata.title", "test"],
+            pid_field=ReferredRecord.pid,
+        ),
     )

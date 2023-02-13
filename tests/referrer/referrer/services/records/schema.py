@@ -130,6 +130,15 @@ class ArrayNestedItemSchema(ma.Schema):
     )
 
 
+class CfSchema(ma.Schema):
+    """CfSchema schema."""
+
+    id = ma_fields.String()
+    title = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
 class ReferrerMetadataSchema(ma.Schema):
     """ReferrerMetadataSchema schema."""
 
@@ -159,6 +168,7 @@ class ReferrerMetadataSchema(ma.Schema):
         data_key="array-nested",
         attribute="array-nested",
     )
+    cf = ma_fields.Nested(lambda: CfSchema())
 
 
 class ReferrerSchema(InvenioBaseRecordSchema):

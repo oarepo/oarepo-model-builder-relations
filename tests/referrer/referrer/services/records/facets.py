@@ -117,6 +117,15 @@ metadata_array_nested_ref_arr = TermsFacet(field="metadata.array-nested.ref-arr"
 metadata_array_nested = TermsFacet(field="metadata.array-nested")
 
 
+metadata_cf_id = TermsFacet(field="metadata.cf.id")
+
+
+metadata_cf_test = TermsFacet(field="metadata.cf.test")
+
+
+metadata_cf__version = TermsFacet(field="metadata.cf.@v")
+
+
 _id = TermsFacet(field="id")
 
 

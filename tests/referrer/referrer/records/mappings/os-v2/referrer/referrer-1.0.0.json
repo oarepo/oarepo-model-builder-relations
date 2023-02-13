@@ -2,6 +2,7 @@
     "mappings": {
         "properties": {
             "metadata": {
+                "type": "object",
                 "properties": {
                     "invenio-ref": {
                         "type": "object",
@@ -42,6 +43,7 @@
                         }
                     },
                     "invenio-nested": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -62,10 +64,10 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "invenio-array-nested": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -86,8 +88,7 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "ref": {
                         "type": "object",
@@ -118,6 +119,7 @@
                         }
                     },
                     "nested": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -133,10 +135,10 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "array-nested": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -152,11 +154,26 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
+                    },
+                    "cf": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "title": {
+                                "type": "text"
+                            },
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
                     }
-                },
-                "type": "object"
+                }
             },
             "id": {
                 "type": "keyword"

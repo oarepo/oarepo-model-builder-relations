@@ -2,6 +2,7 @@
     "type": "object",
     "properties": {
         "metadata": {
+            "type": "object",
             "properties": {
                 "invenio-ref": {
                     "type": "object",
@@ -46,6 +47,7 @@
                 },
                 "invenio-nested": {
                     "items": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -66,13 +68,13 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "type": "array"
                 },
                 "invenio-array-nested": {
                     "items": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "items": {
@@ -96,8 +98,7 @@
                                 },
                                 "type": "array"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "type": "array"
                 },
@@ -134,6 +135,7 @@
                 },
                 "nested": {
                     "items": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -149,13 +151,13 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "type": "array"
                 },
                 "array-nested": {
                     "items": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "items": {
@@ -174,13 +176,28 @@
                                 },
                                 "type": "array"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "type": "array"
+                },
+                "cf": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        },
+                        "test": {
+                            "type": "string"
+                        },
+                        "@v": {
+                            "type": "string"
+                        }
+                    }
                 }
-            },
-            "type": "object"
+            }
         },
         "id": {
             "type": "string"

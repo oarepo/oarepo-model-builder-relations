@@ -1,8 +1,10 @@
 from invenio_pidstore.providers.recordid_v2 import RecordIdProviderV2
 from invenio_records.systemfields import ConstantField
 from invenio_records_resources.records.api import Record
+from invenio_records_resources.records.dumpers import CustomFieldsDumperExt
 from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
+from oarepo_runtime.cf import CustomFields, InlinedCustomFields
 from referred.records.dumper import ReferredDumper
 from referred.records.models import ReferredMetadata
 
@@ -18,5 +20,9 @@ class ReferredRecord(Record):
         create=True, provider=RecordIdProviderV2, context_cls=PIDFieldContext
     )
 
-    dumper_extensions = []
+    dumper_extensions = [
+        CustomFieldsDumperExt("TEST_CF"),
+    ]
     dumper = ReferredDumper(extensions=dumper_extensions)
+
+    inlined_custom_fields = InlinedCustomFields("TEST_CF")

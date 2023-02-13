@@ -1,7 +1,9 @@
 {
     "mappings": {
+        "dynamic": true,
         "properties": {
             "metadata": {
+                "type": "object",
                 "properties": {
                     "title": {
                         "type": "text"
@@ -15,8 +17,7 @@
                     "price": {
                         "type": "float"
                     }
-                },
-                "type": "object"
+                }
             },
             "id": {
                 "type": "keyword"

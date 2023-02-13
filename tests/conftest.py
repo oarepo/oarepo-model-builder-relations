@@ -26,4 +26,10 @@ def app_config(app_config):
             "port": os.environ.get("OPENSEARCH_PORT", "9200"),
         }
     ]
+
+    # install custom fields
+    from invenio_records_resources.services.custom_fields.text import KeywordCF
+
+    app_config["TEST_CF"] = [KeywordCF("test")]
+
     return app_config

@@ -14,7 +14,8 @@ def referred_record(app, db, search_clear):
                 "description": "First referred record",
                 "hint": "Just a random string",
                 "price": 1,
-            }
+            },
+            "test": "cf",
         },
     )
 
@@ -30,7 +31,8 @@ def referred_records(app, db, search_clear):
                     "description": f"Referred record # {idx} description",
                     "hint": f"Just a random string",
                     "price": idx,
-                }
+                },
+                "test": f"cf # {idx}",
             },
         )
         for idx in range(1, 11)
@@ -204,3 +206,13 @@ def test_metadata_nested_list_in_list_relation(app, db, search_clear, referred_r
             referrer_record.data["metadata"]["array-nested"][i]["ref-arr"][0]["title"]
             == referred_records[i].data["metadata"]["title"]
         )
+
+
+def test_custom_fields(app, db, search_clear, referred_record):
+    referrer_record = referrer_service.create(
+        system_identity, {"metadata": {"cf": {"id": referred_record.id}}}
+    )
+    assert referrer_record.data["metadata"]["cf"]["id"] == referred_record.id
+    assert (
+        referrer_record.data["metadata"]["cf"]["test"] == referred_record.data["test"]
+    )

@@ -51,4 +51,13 @@ model:
                             type: relation
                             model: referred
                             flatten: true
-
+                cf:
+                    type: relation
+                    model: referred
+                    flatten: true
+                    keys: 
+                    - id
+                    - metadata.title
+                    - key: test
+                      model: 
+                          type: keyword
