@@ -14,6 +14,10 @@ class ReferredSearchOptions(InvenioSearchOptions):
     facets = {
         "metadata_hint": facets.metadata_hint,
         "metadata_price": facets.metadata_price,
+        "metadata_arr": facets.metadata_arr,
+        "metadata_objarr": facets.metadata_objarr,
+        "metadata_arrarr_title": facets.metadata_arrarr_title,
+        "metadata_arrarr": facets.metadata_arrarr,
         "_id": facets._id,
         "created": facets.created,
         "updated": facets.updated,

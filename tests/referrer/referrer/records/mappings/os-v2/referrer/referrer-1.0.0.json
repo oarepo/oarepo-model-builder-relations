@@ -78,28 +78,23 @@
                             }
                         }
                     },
-                    "internal-nested": {
+                    "internal-array-ref-array": {
+                        "type": "object",
                         "properties": {
-                            "ref": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "keyword"
-                                    },
-                                    "test": {
-                                        "type": "keyword"
-                                    },
-                                    "@v": {
-                                        "type": "keyword"
-                                    }
-                                }
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "@v": {
+                                "type": "keyword"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "internal-array-nested": {
                         "properties": {
-                            "ref-arr": {
+                            "ref": {
                                 "type": "object",
                                 "properties": {
                                     "id": {

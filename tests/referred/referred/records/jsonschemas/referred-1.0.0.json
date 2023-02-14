@@ -3,7 +3,6 @@
     "additionalProperties": true,
     "properties": {
         "metadata": {
-            "type": "object",
             "properties": {
                 "title": {
                     "type": "string"
@@ -16,8 +15,45 @@
                 },
                 "price": {
                     "type": "number"
+                },
+                "arr": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "objarr": {
+                    "items": {
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "arrarr": {
+                    "items": {
+                        "properties": {
+                            "title": {
+                                "items": {
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
                 }
-            }
+            },
+            "type": "object"
         },
         "id": {
             "type": "string"

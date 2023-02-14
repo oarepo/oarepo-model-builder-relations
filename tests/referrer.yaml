@@ -24,6 +24,9 @@ model:
                     properties:
                         test: keyword
                         id: keyword
+
+                # internal references outside array that point
+                # to single object, array or object array
                 internal-ref:
                     type: relation
                     model: "#anchor-obj"
@@ -39,18 +42,17 @@ model:
                     model: "#anchor-arrobj"
                     keys: [id, test]
 
-                internal-nested[]:
-                    type: "object"
-                    properties:
-                        ref:
-                            type: relation
-                            model: "#anchor-arr"
-                            keys: [id, test]
+                # array referencing array
+                internal-array-ref-array[]:
+                    type: relation
+                    model: "#anchor-arr"
+                    keys: [id, test]
 
+                # object inside array
                 internal-array-nested[]:
                     type: "object"
                     properties:
-                        ref-arr[]:
+                        ref:
                             type: relation
                             model: "#anchor-arr"
                             keys: [id, test]

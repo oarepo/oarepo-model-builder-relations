@@ -84,7 +84,24 @@
                         }
                     }
                 },
-                "internal-nested": {
+                "internal-array-ref-array": {
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "test": {
+                                "type": "string"
+                            },
+                            "@v": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "type": "array"
+                },
+                "internal-array-nested": {
                     "items": {
                         "properties": {
                             "ref": {
@@ -100,31 +117,6 @@
                                         "type": "string"
                                     }
                                 }
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
-                },
-                "internal-array-nested": {
-                    "items": {
-                        "properties": {
-                            "ref-arr": {
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "test": {
-                                            "type": "string"
-                                        },
-                                        "@v": {
-                                            "type": "string"
-                                        }
-                                    }
-                                },
-                                "type": "array"
                             }
                         },
                         "type": "object"

@@ -10,9 +10,9 @@ from invenio_records_resources.records.systemfields.relations import (
     PIDRelation,
 )
 from oarepo_runtime.relations import (
-    # InternalListRelation,
-    # InternalNestedListRelation,
-    # InternalRelation,
+    InternalListRelation,
+    InternalNestedListRelation,
+    InternalRelation,
     MetadataPIDListRelation,
     MetadataPIDNestedListRelation,
     MetadataPIDRelation,
@@ -20,81 +20,6 @@ from oarepo_runtime.relations import (
 from referred.records.api import ReferredRecord
 from referrer.records.dumper import ReferrerDumper
 from referrer.records.models import ReferrerMetadata
-
-
-from invenio_records.systemfields.relations import (
-    RelationResult,
-    RelationListResult,
-    RelationNestedListResult,
-    RelationBase,
-)
-
-from invenio_records.dictutils import dict_lookup, dict_set
-
-
-class InternalResult(RelationResult):
-    def _lookup_id(self):
-        return (super()._lookup_id(), self.record)
-
-    def _dereference_one(self, data, keys, attrs):
-        """Dereference a single object into a dict."""
-
-        # Get related record
-        obj = self.resolve((data[self.field._value_key_suffix], self.record))
-        # Inject selected key/values from related record into
-        # the current record.
-
-        # From record dictionary
-        if keys is None:
-            data.update({k: v for k, v in obj.items()})
-        else:
-            new_obj = {}
-            for k in keys:
-                try:
-                    val = dict_lookup(obj, k)
-                    if val:
-                        dict_set(new_obj, k, val)
-                except KeyError:
-                    pass
-            data.update(new_obj)
-
-        # From record attributes (i.e. system fields)
-        for a in attrs:
-            data[a] = getattr(obj, a)
-
-        return data
-
-
-class InternalRelation(RelationBase):
-    result_cls = InternalResult
-
-    def __init__(self, *args, pid_field=None, **kwargs):
-        """Initialize the PK relation."""
-        self.pid_field = pid_field
-        super().__init__(*args, **kwargs)
-
-    def resolve(self, id_):
-        pid_field = self.pid_field
-        if not id_:
-            return None
-        field_or_array = dict_lookup(id_[1], pid_field)
-        if not field_or_array:
-            return None
-
-        if isinstance(field_or_array, dict):
-            field_or_array = [field_or_array]
-        if not isinstance(field_or_array, list):
-            raise KeyError(
-                f"PID field {pid_field} does not point to an object or array of objects"
-            )
-        for f in field_or_array:
-            if not isinstance(f, dict):
-                raise KeyError(
-                    f"PID field {pid_field} does not point to an array of objects - array member is {type(f)}: {f}"
-                )
-            if id_[0] == f.get("id", None):
-                return f
-        return None
 
 
 class ReferrerRecord(Record):
@@ -129,18 +54,17 @@ class ReferrerRecord(Record):
             keys=["id", "test"],
             pid_field="metadata.arrobj",
         ),
-        # ref=InternalListRelation(
-        #     "metadata.internal-nested",
-        #     keys=["id", "test"],
-        #     pid_field="metadata.arr",
-        #     relation_field="ref",
-        # ),
-        # ref_arr_item=InternalNestedListRelation(
-        #     "metadata.internal-array-nested",
-        #     keys=["id", "test"],
-        #     pid_field="metadata.arr",
-        #     relation_field="ref-arr",
-        # ),
+        internal_array_ref_array_item=InternalListRelation(
+            "metadata.internal-array-ref-array",
+            keys=["id", "test"],
+            pid_field="metadata.arr",
+        ),
+        ref=InternalListRelation(
+            "metadata.internal-array-nested",
+            keys=["id", "test"],
+            pid_field="metadata.arr",
+            relation_field="ref",
+        ),
         invenio_ref=PIDRelation(
             "metadata.invenio-ref",
             keys=["id", "metadata.title"],
@@ -157,7 +81,7 @@ class ReferrerRecord(Record):
             pid_field=ReferredRecord.pid,
             relation_field="ref",
         ),
-        ref_arr_item_1=PIDNestedListRelation(
+        ref_arr_item=PIDNestedListRelation(
             "metadata.invenio-array-nested",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
@@ -179,7 +103,7 @@ class ReferrerRecord(Record):
             pid_field=ReferredRecord.pid,
             relation_field="ref",
         ),
-        ref_arr_item_2=MetadataPIDNestedListRelation(
+        ref_arr_item_1=MetadataPIDNestedListRelation(
             "metadata.array-nested",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,

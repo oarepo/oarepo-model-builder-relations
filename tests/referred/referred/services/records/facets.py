@@ -41,6 +41,18 @@ metadata_hint = TermsFacet(field="metadata.hint")
 metadata_price = TermsFacet(field="metadata.price")
 
 
+metadata_arr = TermsFacet(field="metadata.arr")
+
+
+metadata_objarr = TermsFacet(field="metadata.objarr")
+
+
+metadata_arrarr_title = TermsFacet(field="metadata.arrarr.title")
+
+
+metadata_arrarr = TermsFacet(field="metadata.arrarr")
+
+
 _id = TermsFacet(field="id")
 
 
