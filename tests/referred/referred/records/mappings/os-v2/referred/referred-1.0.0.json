@@ -3,6 +3,7 @@
         "dynamic": true,
         "properties": {
             "metadata": {
+                "type": "object",
                 "properties": {
                     "title": {
                         "type": "text"
@@ -20,28 +21,27 @@
                         "type": "keyword"
                     },
                     "objarr": {
+                        "type": "object",
                         "properties": {
                             "title": {
                                 "type": "text"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "arrarr": {
+                        "type": "object",
                         "properties": {
                             "title": {
+                                "type": "object",
                                 "properties": {
                                     "title": {
                                         "type": "text"
                                     }
-                                },
-                                "type": "object"
+                                }
                             }
-                        },
-                        "type": "object"
+                        }
                     }
-                },
-                "type": "object"
+                }
             },
             "id": {
                 "type": "keyword"

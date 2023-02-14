@@ -29,18 +29,40 @@ class ReferrerSearchOptions(InvenioSearchOptions):
         "metadata_internal-ref-arrobj_id": facets.metadata_internal_ref_arrobj_id,
         "metadata_internal-ref-arrobj_test": facets.metadata_internal_ref_arrobj_test,
         "metadata_internal-ref-arrobj_@v": facets.metadata_internal_ref_arrobj__version,
-        "metadata_internal-array-ref-array_id": facets.metadata_internal_array_ref_array_id,
-        "metadata_internal-array-ref-array_test": facets.metadata_internal_array_ref_array_test,
-        "metadata_internal-array-ref-array_@v": facets.metadata_internal_array_ref_array__version,
+        "metadata_internal-array-ref-array_id": (
+            facets.metadata_internal_array_ref_array_id
+        ),
+        "metadata_internal-array-ref-array_test": (
+            facets.metadata_internal_array_ref_array_test
+        ),
+        "metadata_internal-array-ref-array_@v": (
+            facets.metadata_internal_array_ref_array__version
+        ),
         "metadata_internal-array-ref-array": facets.metadata_internal_array_ref_array,
-        "metadata_internal-array-object-ref-array_ref_id": facets.metadata_internal_array_object_ref_array_ref_id,
-        "metadata_internal-array-object-ref-array_ref_test": facets.metadata_internal_array_object_ref_array_ref_test,
-        "metadata_internal-array-object-ref-array_ref_@v": facets.metadata_internal_array_object_ref_array_ref__version,
-        "metadata_internal-array-object-ref-array": facets.metadata_internal_array_object_ref_array,
-        "metadata_internal-array-nested_ref-arr_id": facets.metadata_internal_array_nested_ref_arr_id,
-        "metadata_internal-array-nested_ref-arr_test": facets.metadata_internal_array_nested_ref_arr_test,
-        "metadata_internal-array-nested_ref-arr_@v": facets.metadata_internal_array_nested_ref_arr__version,
-        "metadata_internal-array-nested_ref-arr": facets.metadata_internal_array_nested_ref_arr,
+        "metadata_internal-array-object-ref-array_ref_id": (
+            facets.metadata_internal_array_object_ref_array_ref_id
+        ),
+        "metadata_internal-array-object-ref-array_ref_test": (
+            facets.metadata_internal_array_object_ref_array_ref_test
+        ),
+        "metadata_internal-array-object-ref-array_ref_@v": (
+            facets.metadata_internal_array_object_ref_array_ref__version
+        ),
+        "metadata_internal-array-object-ref-array": (
+            facets.metadata_internal_array_object_ref_array
+        ),
+        "metadata_internal-array-nested_ref-arr_id": (
+            facets.metadata_internal_array_nested_ref_arr_id
+        ),
+        "metadata_internal-array-nested_ref-arr_test": (
+            facets.metadata_internal_array_nested_ref_arr_test
+        ),
+        "metadata_internal-array-nested_ref-arr_@v": (
+            facets.metadata_internal_array_nested_ref_arr__version
+        ),
+        "metadata_internal-array-nested_ref-arr": (
+            facets.metadata_internal_array_nested_ref_arr
+        ),
         "metadata_internal-array-nested": facets.metadata_internal_array_nested,
         "metadata_internal-cf_id": facets.metadata_internal_cf_id,
         "metadata_internal-cf_test": facets.metadata_internal_cf_test,
@@ -53,9 +75,15 @@ class ReferrerSearchOptions(InvenioSearchOptions):
         "metadata_invenio-nested_ref_id": facets.metadata_invenio_nested_ref_id,
         "metadata_invenio-nested_ref_@v": facets.metadata_invenio_nested_ref__version,
         "metadata_invenio-nested": facets.metadata_invenio_nested,
-        "metadata_invenio-array-nested_ref-arr_id": facets.metadata_invenio_array_nested_ref_arr_id,
-        "metadata_invenio-array-nested_ref-arr_@v": facets.metadata_invenio_array_nested_ref_arr__version,
-        "metadata_invenio-array-nested_ref-arr": facets.metadata_invenio_array_nested_ref_arr,
+        "metadata_invenio-array-nested_ref-arr_id": (
+            facets.metadata_invenio_array_nested_ref_arr_id
+        ),
+        "metadata_invenio-array-nested_ref-arr_@v": (
+            facets.metadata_invenio_array_nested_ref_arr__version
+        ),
+        "metadata_invenio-array-nested_ref-arr": (
+            facets.metadata_invenio_array_nested_ref_arr
+        ),
         "metadata_invenio-array-nested": facets.metadata_invenio_array_nested,
         "metadata_ref_id": facets.metadata_ref_id,
         "metadata_ref_@v": facets.metadata_ref__version,
@@ -66,7 +94,9 @@ class ReferrerSearchOptions(InvenioSearchOptions):
         "metadata_nested_ref_@v": facets.metadata_nested_ref__version,
         "metadata_nested": facets.metadata_nested,
         "metadata_array-nested_ref-arr_id": facets.metadata_array_nested_ref_arr_id,
-        "metadata_array-nested_ref-arr_@v": facets.metadata_array_nested_ref_arr__version,
+        "metadata_array-nested_ref-arr_@v": (
+            facets.metadata_array_nested_ref_arr__version
+        ),
         "metadata_array-nested_ref-arr": facets.metadata_array_nested_ref_arr,
         "metadata_array-nested": facets.metadata_array_nested,
         "metadata_cf_id": facets.metadata_cf_id,

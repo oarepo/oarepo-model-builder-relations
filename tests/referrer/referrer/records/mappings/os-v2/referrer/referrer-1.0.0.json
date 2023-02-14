@@ -3,8 +3,10 @@
         "dynamic": true,
         "properties": {
             "metadata": {
+                "type": "object",
                 "properties": {
                     "obj": {
+                        "type": "object",
                         "properties": {
                             "test": {
                                 "type": "keyword"
@@ -12,10 +14,10 @@
                             "id": {
                                 "type": "keyword"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "arr": {
+                        "type": "object",
                         "properties": {
                             "test": {
                                 "type": "keyword"
@@ -23,10 +25,10 @@
                             "id": {
                                 "type": "keyword"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "arrobj": {
+                        "type": "object",
                         "properties": {
                             "test": {
                                 "type": "keyword"
@@ -34,8 +36,7 @@
                             "id": {
                                 "type": "keyword"
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "internal-ref": {
                         "type": "object",
@@ -94,6 +95,7 @@
                         }
                     },
                     "internal-array-object-ref-array": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -109,10 +111,10 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "internal-array-nested": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -128,8 +130,7 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "internal-cf": {
                         "type": "object",
@@ -184,6 +185,7 @@
                         }
                     },
                     "invenio-nested": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -204,10 +206,10 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "invenio-array-nested": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -228,8 +230,7 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "ref": {
                         "type": "object",
@@ -260,6 +261,7 @@
                         }
                     },
                     "nested": {
+                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -275,10 +277,10 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "array-nested": {
+                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -294,8 +296,7 @@
                                     }
                                 }
                             }
-                        },
-                        "type": "object"
+                        }
                     },
                     "cf": {
                         "type": "object",
@@ -314,8 +315,7 @@
                             }
                         }
                     }
-                },
-                "type": "object"
+                }
             },
             "id": {
                 "type": "keyword"
