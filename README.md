@@ -84,10 +84,43 @@ primary-article:
 |------------------|---------------|
 | name             | Relation name, will be used as param name inside RelationsField |
 | model            | Name of the referenced model - from oarepo.models entrypoint or passed on commandline via --include parameter |
-| keys             | Array of paths that will be copied from the referenced model |
+| keys             | Array of paths or dicts. If item is a path, that path will be copied from the referenced model. If it is dict it must contain the whole model definition. |
 | model-class      | Class representing the related model |
 | relation-classes | If the field is not an array and not nested inside an array, "single" is used. If the field is an array "list" is used. If the field is inside an array field, "nested" is used |
 | relation-class   | can be used to override relation-classes |
 | relation-args    | A dictionary of arguments that will be passes to the relation class |
 | imports          | You can define your own imports/aliases here. The defaults are thise for list, nested and single relation classes |
 
+
+## Internal relations
+
+Sometimes it you might want to reference part of your document for indexing purposes etc. and not split the document into two records.
+For these, internal relations can be used:
+
+```yaml
+
+properties:
+    metadata:
+        properties:
+            obj{}:
+                ^id: anchor-obj
+                test: keyword
+                id: keyword
+```
+
+On object/array item, define the "id" field containing your "symbolic" name of the target of the relation.
+Then the definition of the relation will look like:
+
+```yaml
+properties:
+    metadata:
+        properties:
+            internal-ref:
+                type: relation
+                model: "#anchor-obj"
+                keys: [id, test]
+```
+
+## Supported relations
+
+See [referrer.yaml](https://github.com/oarepo/oarepo-model-builder-relations/blob/main/tests/referrer.yaml) for a list of supported relations.
