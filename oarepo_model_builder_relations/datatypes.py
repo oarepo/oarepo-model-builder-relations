@@ -211,7 +211,10 @@ class RelationDataType(ObjectDataType):
     def get_model(self, model_name):
         if model_name.startswith("#"):
             reference_id = model_name[1:]
-            referenced_elements = list(find_reference(self.model, reference_id))
+            if reference_id == "":
+                referenced_elements = [("", {"properties": self.model["properties"]})]
+            else:
+                referenced_elements = list(find_reference(self.model, reference_id))
             if not referenced_elements:
                 raise InvalidModelException(
                     f"Reference {reference_id} used from {self.stack.path} not found in the document"

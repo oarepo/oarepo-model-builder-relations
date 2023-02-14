@@ -208,3 +208,14 @@ def test_internal_array_nested_relation(app, db, search_clear):
         ]
         == referrer_record.data["metadata"]["arr"][1]["test"]
     )
+
+
+def test_custom_fields(app, db, search_clear):
+    referrer_record = referrer_service.create(
+        system_identity,
+        {"metadata": {"internal-cf": {"id": ""}}, "test": "blah"},
+    )
+    assert (
+        referrer_record.data["metadata"]["internal-cf"]["test"]
+        == referrer_record.data["test"]
+    )

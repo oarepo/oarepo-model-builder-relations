@@ -2,6 +2,7 @@ from invenio_pidstore.providers.recordid_v2 import RecordIdProviderV2
 from invenio_records.dumpers.relations import RelationDumperExt
 from invenio_records.systemfields import ConstantField, RelationsField
 from invenio_records_resources.records.api import Record
+from invenio_records_resources.records.dumpers import CustomFieldsDumperExt
 from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
 from invenio_records_resources.records.systemfields.relations import (
@@ -9,6 +10,7 @@ from invenio_records_resources.records.systemfields.relations import (
     PIDNestedListRelation,
     PIDRelation,
 )
+from oarepo_runtime.cf import CustomFields, InlinedCustomFields
 from oarepo_runtime.relations import (
     InternalListRelation,
     InternalNestedListRelation,
@@ -34,9 +36,12 @@ class ReferrerRecord(Record):
     )
 
     dumper_extensions = [
+        CustomFieldsDumperExt("TEST_CF"),
         RelationDumperExt("relations"),
     ]
     dumper = ReferrerDumper(extensions=dumper_extensions)
+
+    inlined_custom_fields = InlinedCustomFields("TEST_CF")
 
     relations = RelationsField(
         internal_ref=InternalRelation(
@@ -70,6 +75,11 @@ class ReferrerRecord(Record):
             keys=["id", "test"],
             pid_field="metadata.arr",
             relation_field="ref-arr",
+        ),
+        internal_cf=InternalRelation(
+            "metadata.internal-cf",
+            keys=["id", "test"],
+            pid_field="",
         ),
         invenio_ref=PIDRelation(
             "metadata.invenio-ref",

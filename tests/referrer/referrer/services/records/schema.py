@@ -7,6 +7,7 @@ from marshmallow import fields as ma_fields
 from marshmallow import validates as ma_validates
 from marshmallow_utils import fields as mu_fields
 from marshmallow_utils import schemas as mu_schemas
+from oarepo_runtime.cf import InlinedCustomFieldsSchemaMixin
 from oarepo_runtime.validation import validate_date
 
 
@@ -93,6 +94,14 @@ class InternalArrayNestedItemSchema(ma.Schema):
         data_key="ref-arr",
         attribute="ref-arr",
     )
+
+
+class InternalCfSchema(ma.Schema):
+    """InternalCfSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
 class InvenioRefReferredMetadataSchema(ma.Schema):
@@ -258,6 +267,9 @@ class ReferrerMetadataSchema(ma.Schema):
         data_key="internal-array-nested",
         attribute="internal-array-nested",
     )
+    internal_cf = ma_fields.Nested(
+        lambda: InternalCfSchema(), data_key="internal-cf", attribute="internal-cf"
+    )
     invenio_ref = ma_fields.Nested(
         lambda: InvenioRefSchema(), data_key="invenio-ref", attribute="invenio-ref"
     )
@@ -287,9 +299,10 @@ class ReferrerMetadataSchema(ma.Schema):
     cf = ma_fields.Nested(lambda: CfSchema())
 
 
-class ReferrerSchema(InvenioBaseRecordSchema):
+class ReferrerSchema(InlinedCustomFieldsSchemaMixin, InvenioBaseRecordSchema):
     """ReferrerSchema schema."""
 
+    CUSTOM_FIELDS_VAR = "TEST_CF"
     metadata = ma_fields.Nested(lambda: ReferrerMetadataSchema())
     created = ma_fields.String(validate=[validate_date("%Y-%m-%d")], dump_only=True)
     updated = ma_fields.String(validate=[validate_date("%Y-%m-%d")], dump_only=True)

@@ -153,6 +153,15 @@ metadata_internal_array_nested_ref_arr = TermsFacet(
 metadata_internal_array_nested = TermsFacet(field="metadata.internal-array-nested")
 
 
+metadata_internal_cf_id = TermsFacet(field="metadata.internal-cf.id")
+
+
+metadata_internal_cf_test = TermsFacet(field="metadata.internal-cf.test")
+
+
+metadata_internal_cf__version = TermsFacet(field="metadata.internal-cf.@v")
+
+
 metadata_invenio_ref_id = TermsFacet(field="metadata.invenio-ref.id")
 
 

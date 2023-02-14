@@ -4,7 +4,8 @@ model:
     plugins:
         builder:
             disable: [script_sample_data]
-                
+    custom-fields:
+    - config: TEST_CF                
     properties:
         metadata:
             properties:
@@ -66,6 +67,16 @@ model:
                             model: "#anchor-arr"
                             keys: [id, test]
 
+                internal-cf:
+                    type: relation
+                    model: "#"
+                    keys: 
+                    - id
+                    - key: test
+                      model: 
+                          type: keyword
+
+
                 invenio-ref:
                     type: relation
                     model: referred
@@ -119,22 +130,3 @@ model:
                     - key: test
                       model: 
                           type: keyword
-                # internal-ref:
-                #     type: relation
-                #     model: referred
-                # internal-array[]:
-                #     type: relation
-                #     model: referred
-                # internal-nested[]:
-                #     type: "object"
-                #     properties:
-                #         ref:
-                #             type: relation
-                #             model: referred
-                #             name: invenio-nested
-                # internal-array-nested[]:
-                #     type: "object"
-                #     properties:
-                #         ref-arr[]:
-                #             type: relation
-                #             model: referred

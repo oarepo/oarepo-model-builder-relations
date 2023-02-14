@@ -4,6 +4,7 @@ from invenio_records_resources.services import (
     RecordServiceConfig as InvenioRecordServiceConfig,
 )
 from invenio_records_resources.services import pagination_links
+from invenio_records_resources.services.records.components import DataComponent
 from referrer.records.api import ReferrerRecord
 from referrer.services.records.permissions import ReferrerPermissionPolicy
 from referrer.services.records.schema import ReferrerSchema
@@ -24,7 +25,7 @@ class ReferrerServiceConfig(RecordServiceConfig):
     # todo should i leave this here?
     service_id = "referrer"
 
-    components = [*RecordServiceConfig.components]
+    components = [*RecordServiceConfig.components, DataComponent]
 
     model = "referrer"
 
