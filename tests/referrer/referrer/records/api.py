@@ -60,10 +60,16 @@ class ReferrerRecord(Record):
             pid_field="metadata.arr",
         ),
         ref=InternalListRelation(
-            "metadata.internal-array-nested",
+            "metadata.internal-array-object-ref-array",
             keys=["id", "test"],
             pid_field="metadata.arr",
             relation_field="ref",
+        ),
+        ref_arr_item=InternalNestedListRelation(
+            "metadata.internal-array-nested",
+            keys=["id", "test"],
+            pid_field="metadata.arr",
+            relation_field="ref-arr",
         ),
         invenio_ref=PIDRelation(
             "metadata.invenio-ref",
@@ -81,7 +87,7 @@ class ReferrerRecord(Record):
             pid_field=ReferredRecord.pid,
             relation_field="ref",
         ),
-        ref_arr_item=PIDNestedListRelation(
+        ref_arr_item_1=PIDNestedListRelation(
             "metadata.invenio-array-nested",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
@@ -103,7 +109,7 @@ class ReferrerRecord(Record):
             pid_field=ReferredRecord.pid,
             relation_field="ref",
         ),
-        ref_arr_item_1=MetadataPIDNestedListRelation(
+        ref_arr_item_2=MetadataPIDNestedListRelation(
             "metadata.array-nested",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,

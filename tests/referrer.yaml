@@ -49,10 +49,19 @@ model:
                     keys: [id, test]
 
                 # object inside array
-                internal-array-nested[]:
+                internal-array-object-ref-array[]:
                     type: "object"
                     properties:
                         ref:
+                            type: relation
+                            model: "#anchor-arr"
+                            keys: [id, test]
+
+                # array inside array
+                internal-array-nested[]:
+                    type: "object"
+                    properties:
+                        ref-arr[]:
                             type: relation
                             model: "#anchor-arr"
                             keys: [id, test]

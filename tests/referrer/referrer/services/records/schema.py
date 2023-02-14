@@ -71,10 +71,28 @@ class RefSchema(ma.Schema):
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
+class InternalArrayObjectRefArrayItemSchema(ma.Schema):
+    """InternalArrayObjectRefArrayItemSchema schema."""
+
+    ref = ma_fields.Nested(lambda: RefSchema())
+
+
+class RefArrItemSchema(ma.Schema):
+    """RefArrItemSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
 class InternalArrayNestedItemSchema(ma.Schema):
     """InternalArrayNestedItemSchema schema."""
 
-    ref = ma_fields.Nested(lambda: RefSchema())
+    ref_arr = ma_fields.List(
+        ma_fields.Nested(lambda: RefArrItemSchema()),
+        data_key="ref-arr",
+        attribute="ref-arr",
+    )
 
 
 class InvenioRefReferredMetadataSchema(ma.Schema):
@@ -131,8 +149,8 @@ class RefArrItemReferredMetadataSchema(ma.Schema):
     title = ma_fields.String()
 
 
-class RefArrItemSchema(ma.Schema):
-    """RefArrItemSchema schema."""
+class RefArrRefArrItemSchema(ma.Schema):
+    """RefArrRefArrItemSchema schema."""
 
     id = ma_fields.String()
     metadata = ma_fields.Nested(lambda: RefArrItemReferredMetadataSchema())
@@ -143,7 +161,7 @@ class InvenioArrayNestedItemSchema(ma.Schema):
     """InvenioArrayNestedItemSchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrItemSchema()),
+        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
@@ -179,8 +197,8 @@ class NestedItemSchema(ma.Schema):
     ref = ma_fields.Nested(lambda: NestedRefSchema())
 
 
-class RefArrRefArrItemSchema(ma.Schema):
-    """RefArrRefArrItemSchema schema."""
+class ArrayNestedRefArrRefArrItemSchema(ma.Schema):
+    """ArrayNestedRefArrRefArrItemSchema schema."""
 
     id = ma_fields.String()
     title = ma_fields.String()
@@ -191,7 +209,7 @@ class ArrayNestedItemSchema(ma.Schema):
     """ArrayNestedItemSchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
+        ma_fields.Nested(lambda: ArrayNestedRefArrRefArrItemSchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
@@ -229,6 +247,11 @@ class ReferrerMetadataSchema(ma.Schema):
         ma_fields.Nested(lambda: InternalArrayRefArrayItemSchema()),
         data_key="internal-array-ref-array",
         attribute="internal-array-ref-array",
+    )
+    internal_array_object_ref_array = ma_fields.List(
+        ma_fields.Nested(lambda: InternalArrayObjectRefArrayItemSchema()),
+        data_key="internal-array-object-ref-array",
+        attribute="internal-array-object-ref-array",
     )
     internal_array_nested = ma_fields.List(
         ma_fields.Nested(lambda: InternalArrayNestedItemSchema()),

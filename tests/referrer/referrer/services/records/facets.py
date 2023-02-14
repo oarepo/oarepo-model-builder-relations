@@ -110,18 +110,43 @@ metadata_internal_array_ref_array = TermsFacet(
 )
 
 
-metadata_internal_array_nested_ref_id = TermsFacet(
-    field="metadata.internal-array-nested.ref.id"
+metadata_internal_array_object_ref_array_ref_id = TermsFacet(
+    field="metadata.internal-array-object-ref-array.ref.id"
 )
 
 
-metadata_internal_array_nested_ref_test = TermsFacet(
-    field="metadata.internal-array-nested.ref.test"
+metadata_internal_array_object_ref_array_ref_test = TermsFacet(
+    field="metadata.internal-array-object-ref-array.ref.test"
 )
 
 
-metadata_internal_array_nested_ref__version = TermsFacet(
-    field="metadata.internal-array-nested.ref.@v"
+metadata_internal_array_object_ref_array_ref__version = TermsFacet(
+    field="metadata.internal-array-object-ref-array.ref.@v"
+)
+
+
+metadata_internal_array_object_ref_array = TermsFacet(
+    field="metadata.internal-array-object-ref-array"
+)
+
+
+metadata_internal_array_nested_ref_arr_id = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.id"
+)
+
+
+metadata_internal_array_nested_ref_arr_test = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.test"
+)
+
+
+metadata_internal_array_nested_ref_arr__version = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.@v"
+)
+
+
+metadata_internal_array_nested_ref_arr = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr"
 )
 
 

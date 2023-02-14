@@ -138,23 +138,73 @@ def test_internal_array_object_to_array_relation(app, db, search_clear):
                     {"id": "1", "test": "blah"},
                     {"id": "2", "test": "abc"},
                 ],
-                "internal-array-nested": [{"ref": {"id": "1"}}, {"ref": {"id": "2"}}],
+                "internal-array-object-ref-array": [
+                    {"ref": {"id": "1"}},
+                    {"ref": {"id": "2"}},
+                ],
             }
         },
     )
     assert (
-        referrer_record.data["metadata"]["internal-array-nested"][0]["ref"]["id"]
+        referrer_record.data["metadata"]["internal-array-object-ref-array"][0]["ref"][
+            "id"
+        ]
         == referrer_record.data["metadata"]["arr"][0]["id"]
     )
     assert (
-        referrer_record.data["metadata"]["internal-array-nested"][0]["ref"]["test"]
+        referrer_record.data["metadata"]["internal-array-object-ref-array"][0]["ref"][
+            "test"
+        ]
         == referrer_record.data["metadata"]["arr"][0]["test"]
     )
     assert (
-        referrer_record.data["metadata"]["internal-array-nested"][1]["ref"]["id"]
+        referrer_record.data["metadata"]["internal-array-object-ref-array"][1]["ref"][
+            "id"
+        ]
         == referrer_record.data["metadata"]["arr"][1]["id"]
     )
     assert (
-        referrer_record.data["metadata"]["internal-array-nested"][1]["ref"]["test"]
+        referrer_record.data["metadata"]["internal-array-object-ref-array"][1]["ref"][
+            "test"
+        ]
+        == referrer_record.data["metadata"]["arr"][1]["test"]
+    )
+
+
+def test_internal_array_nested_relation(app, db, search_clear):
+
+    referrer_record = referrer_service.create(
+        system_identity,
+        {
+            "metadata": {
+                "arr": [
+                    {"id": "1", "test": "blah"},
+                    {"id": "2", "test": "abc"},
+                ],
+                "internal-array-nested": [
+                    {"ref-arr": [{"id": "1"}]},
+                    {"ref-arr": [{"id": "2"}]},
+                ],
+            }
+        },
+    )
+    assert (
+        referrer_record.data["metadata"]["internal-array-nested"][0]["ref-arr"][0]["id"]
+        == referrer_record.data["metadata"]["arr"][0]["id"]
+    )
+    assert (
+        referrer_record.data["metadata"]["internal-array-nested"][0]["ref-arr"][0][
+            "test"
+        ]
+        == referrer_record.data["metadata"]["arr"][0]["test"]
+    )
+    assert (
+        referrer_record.data["metadata"]["internal-array-nested"][1]["ref-arr"][0]["id"]
+        == referrer_record.data["metadata"]["arr"][1]["id"]
+    )
+    assert (
+        referrer_record.data["metadata"]["internal-array-nested"][1]["ref-arr"][0][
+            "test"
+        ]
         == referrer_record.data["metadata"]["arr"][1]["test"]
     )
