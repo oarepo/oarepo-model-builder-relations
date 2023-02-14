@@ -1,4 +1,5 @@
 import copy
+import json
 import re
 
 import marshmallow as ma
@@ -14,6 +15,7 @@ from oarepo_model_builder.validation.model_validation import model_validator
 from oarepo_model_builder.validation.property import StrictString
 import lazy_object_proxy
 from munch import unmunchify
+from oarepo_model_builder.stack.stack import ModelBuilderStack
 
 
 class StringOrSchema(fields.Field):
@@ -59,7 +61,7 @@ class RelationSchema(ma.Schema):
         )
 
     name = fields.String(required=False)
-    model = fields.String(required=False)
+    model = fields.String(required=True)
     keys_field = fields.List(
         StringOrSchema(StrictString(), fields.Nested(KeySchema)),
         data_key="keys",
@@ -92,7 +94,7 @@ class RelationDataType(ObjectDataType):
                 name = self.stack[-2].key + "_item"
             else:
                 name = self.key
-        model_name = data.pop("model", None)
+        model_name = data.pop("model")
         keys = data.pop("keys", ["id", "metadata.title"])
         model_class = data.pop("model-class", None)
         schema_prefix = data.pop("schema-prefix", None)
@@ -102,7 +104,15 @@ class RelationDataType(ObjectDataType):
             schema_prefix = self.key.title()
         schema_prefix = re.sub("\W", "", schema_prefix)
         flatten = data.pop("flatten", False)
-        if flatten:
+        internal_link = model_name.startswith("#")
+        if internal_link:
+            base_relation_classes = {
+                "list": "InternalListRelation",
+                "nested": "InternalListRelation",
+                "single": "InternalRelation",
+                "nested-array": "InternalNestedListRelation",
+            }
+        elif flatten:
             base_relation_classes = {
                 "list": "MetadataPIDListRelation",
                 "nested": "MetadataPIDListRelation",
@@ -129,7 +139,7 @@ class RelationDataType(ObjectDataType):
         # import oarepo classes but only if used
         for rc_type, rc in base_relation_classes.items():
             if relation_classes[rc_type] == rc:
-                if flatten:
+                if flatten or internal_link:
                     imports.append({"import": f"oarepo_runtime.relations.{rc}"})
                 else:
                     imports.append(
@@ -139,15 +149,32 @@ class RelationDataType(ObjectDataType):
                     )
 
         model_data = lazy_object_proxy.Proxy(lambda: self.get_model(model_name))
-        model_properties = lazy_object_proxy.Proxy(
-            lambda: model_data["model"]["properties"]
-        )
+
+        def get_properties():
+            props_container = model_data["model"]
+            if "properties" not in props_container:
+                if "items" in props_container:
+                    props_container = props_container["items"]
+
+            if "properties" not in props_container:
+                raise InvalidModelException(
+                    f"Reference {model_name} can only point to object, it is pointing to {json.dumps(model_data['model'], indent=4)}"
+                )
+
+            return props_container["properties"]
+
+        model_properties = lazy_object_proxy.Proxy(get_properties)
 
         if not model_class:
-            model_class = split_base_name(model_data["model"]["record-class"])
-            imports.append({"import": model_data["model"]["record-class"]})
+            model_class = model_data["model"].get("record-class")
+            if model_class:
+                model_class = split_base_name(model_class)
+                imports.append({"import": model_data["model"]["record-class"]})
         if not pid_field:
-            pid_field = f"{model_class}.pid"
+            if model_class:
+                pid_field = f"{model_class}.pid"
+            elif model_name.startswith("#"):
+                pid_field = repr(model_data["id"])
 
         # insert properties
         props = {}
@@ -182,6 +209,17 @@ class RelationDataType(ObjectDataType):
         raise ReplaceElement({self.key: data})
 
     def get_model(self, model_name):
+        if model_name.startswith("#"):
+            reference_id = model_name[1:]
+            referenced_elements = list(find_reference(self.model, reference_id))
+            if not referenced_elements:
+                raise InvalidModelException(
+                    f"Reference {reference_id} used from {self.stack.path} not found in the document"
+                )
+            if len(referenced_elements) > 1:
+                raise InvalidModelException(f"Duplicated reference {reference_id}!")
+            path, reference = referenced_elements[0]
+            return {"model": reference, "id": path}
         try:
             return self.schema._load(model_name)
         except Exception as e:
@@ -254,4 +292,31 @@ class RelationDataType(ObjectDataType):
         relation = fields.Nested(RelationSchema, required=False)
 
 
+def find_reference(model, reference_id):
+    stack = ModelBuilderStack()
+
+    def _find_reference_internal(key, value, path):
+        stack.push(key, value)
+        if isinstance(value, dict):
+            if stack.top.schema_element_type == "property":
+                if path:
+                    path += "."
+                path += key
+            if stack.top.schema_element_type in ("property", "items"):
+                if value.get("id", None) == reference_id:
+                    yield path, value
+            for k, v in value.items():
+                yield from _find_reference_internal(k, v, path)
+        stack.pop()
+
+    yield from _find_reference_internal("model", model, "")
+
+
+class PropertyIDSchema(ma.Schema):
+    id = fields.String(required=False)
+
+
 DATATYPES = [RelationDataType]
+VALIDATORS = {
+    "property": [PropertyIDSchema],
+}

@@ -8,6 +8,53 @@ model:
     properties:
         metadata:
             properties:
+                obj{}:
+                    ^id: anchor-obj
+                    test: keyword
+                    id: keyword
+                arr[]:
+                    type: object
+                    ^id: anchor-arr
+                    properties:
+                        test: keyword
+                        id: keyword
+                arrobj[]:
+                    type: object
+                    id: anchor-arrobj
+                    properties:
+                        test: keyword
+                        id: keyword
+                internal-ref:
+                    type: relation
+                    model: "#anchor-obj"
+                    keys: [id, test]
+
+                internal-ref-arr:
+                    type: relation
+                    model: "#anchor-arr"
+                    keys: [id, test]
+
+                internal-ref-arrobj:
+                    type: relation
+                    model: "#anchor-arrobj"
+                    keys: [id, test]
+
+                internal-nested[]:
+                    type: "object"
+                    properties:
+                        ref:
+                            type: relation
+                            model: "#anchor-arr"
+                            keys: [id, test]
+
+                internal-array-nested[]:
+                    type: "object"
+                    properties:
+                        ref-arr[]:
+                            type: relation
+                            model: "#anchor-arr"
+                            keys: [id, test]
+
                 invenio-ref:
                     type: relation
                     model: referred
@@ -61,3 +108,22 @@ model:
                     - key: test
                       model: 
                           type: keyword
+                # internal-ref:
+                #     type: relation
+                #     model: referred
+                # internal-array[]:
+                #     type: relation
+                #     model: referred
+                # internal-nested[]:
+                #     type: "object"
+                #     properties:
+                #         ref:
+                #             type: relation
+                #             model: referred
+                #             name: invenio-nested
+                # internal-array-nested[]:
+                #     type: "object"
+                #     properties:
+                #         ref-arr[]:
+                #             type: relation
+                #             model: referred

@@ -10,6 +10,83 @@ from marshmallow_utils import schemas as mu_schemas
 from oarepo_runtime.validation import validate_date
 
 
+class ObjSchema(ma.Schema):
+    """ObjSchema schema."""
+
+    test = ma_fields.String()
+    id = ma_fields.String()
+
+
+class ArrItemSchema(ma.Schema):
+    """ArrItemSchema schema."""
+
+    test = ma_fields.String()
+    id = ma_fields.String()
+
+
+class ArrobjItemSchema(ma.Schema):
+    """ArrobjItemSchema schema."""
+
+    test = ma_fields.String()
+    id = ma_fields.String()
+
+
+class InternalRefSchema(ma.Schema):
+    """InternalRefSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InternalRefArrSchema(ma.Schema):
+    """InternalRefArrSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InternalRefArrobjSchema(ma.Schema):
+    """InternalRefArrobjSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class RefSchema(ma.Schema):
+    """RefSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InternalNestedItemSchema(ma.Schema):
+    """InternalNestedItemSchema schema."""
+
+    ref = ma_fields.Nested(lambda: RefSchema())
+
+
+class RefArrItemSchema(ma.Schema):
+    """RefArrItemSchema schema."""
+
+    id = ma_fields.String()
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InternalArrayNestedItemSchema(ma.Schema):
+    """InternalArrayNestedItemSchema schema."""
+
+    ref_arr = ma_fields.List(
+        ma_fields.Nested(lambda: RefArrItemSchema()),
+        data_key="ref-arr",
+        attribute="ref-arr",
+    )
+
+
 class InvenioRefReferredMetadataSchema(ma.Schema):
     """InvenioRefReferredMetadataSchema schema."""
 
@@ -44,8 +121,8 @@ class RefReferredMetadataSchema(ma.Schema):
     title = ma_fields.String()
 
 
-class RefSchema(ma.Schema):
-    """RefSchema schema."""
+class InvenioNestedRefSchema(ma.Schema):
+    """InvenioNestedRefSchema schema."""
 
     id = ma_fields.String()
     metadata = ma_fields.Nested(lambda: RefReferredMetadataSchema())
@@ -55,7 +132,7 @@ class RefSchema(ma.Schema):
 class InvenioNestedItemSchema(ma.Schema):
     """InvenioNestedItemSchema schema."""
 
-    ref = ma_fields.Nested(lambda: RefSchema())
+    ref = ma_fields.Nested(lambda: InvenioNestedRefSchema())
 
 
 class RefArrItemReferredMetadataSchema(ma.Schema):
@@ -64,8 +141,8 @@ class RefArrItemReferredMetadataSchema(ma.Schema):
     title = ma_fields.String()
 
 
-class RefArrItemSchema(ma.Schema):
-    """RefArrItemSchema schema."""
+class RefArrRefArrItemSchema(ma.Schema):
+    """RefArrRefArrItemSchema schema."""
 
     id = ma_fields.String()
     metadata = ma_fields.Nested(lambda: RefArrItemReferredMetadataSchema())
@@ -76,7 +153,7 @@ class InvenioArrayNestedItemSchema(ma.Schema):
     """InvenioArrayNestedItemSchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrItemSchema()),
+        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
@@ -112,8 +189,8 @@ class NestedItemSchema(ma.Schema):
     ref = ma_fields.Nested(lambda: NestedRefSchema())
 
 
-class RefArrRefArrItemSchema(ma.Schema):
-    """RefArrRefArrItemSchema schema."""
+class ArrayNestedRefArrRefArrItemSchema(ma.Schema):
+    """ArrayNestedRefArrRefArrItemSchema schema."""
 
     id = ma_fields.String()
     title = ma_fields.String()
@@ -124,7 +201,7 @@ class ArrayNestedItemSchema(ma.Schema):
     """ArrayNestedItemSchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
+        ma_fields.Nested(lambda: ArrayNestedRefArrRefArrItemSchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
@@ -142,6 +219,32 @@ class CfSchema(ma.Schema):
 class ReferrerMetadataSchema(ma.Schema):
     """ReferrerMetadataSchema schema."""
 
+    obj = ma_fields.Nested(lambda: ObjSchema())
+    arr = ma_fields.List(ma_fields.Nested(lambda: ArrItemSchema()))
+    arrobj = ma_fields.List(ma_fields.Nested(lambda: ArrobjItemSchema()))
+    internal_ref = ma_fields.Nested(
+        lambda: InternalRefSchema(), data_key="internal-ref", attribute="internal-ref"
+    )
+    internal_ref_arr = ma_fields.Nested(
+        lambda: InternalRefArrSchema(),
+        data_key="internal-ref-arr",
+        attribute="internal-ref-arr",
+    )
+    internal_ref_arrobj = ma_fields.Nested(
+        lambda: InternalRefArrobjSchema(),
+        data_key="internal-ref-arrobj",
+        attribute="internal-ref-arrobj",
+    )
+    internal_nested = ma_fields.List(
+        ma_fields.Nested(lambda: InternalNestedItemSchema()),
+        data_key="internal-nested",
+        attribute="internal-nested",
+    )
+    internal_array_nested = ma_fields.List(
+        ma_fields.Nested(lambda: InternalArrayNestedItemSchema()),
+        data_key="internal-array-nested",
+        attribute="internal-array-nested",
+    )
     invenio_ref = ma_fields.Nested(
         lambda: InvenioRefSchema(), data_key="invenio-ref", attribute="invenio-ref"
     )

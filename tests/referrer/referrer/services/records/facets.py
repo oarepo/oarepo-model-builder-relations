@@ -35,6 +35,100 @@ class NestedLabeledFacet(dsl.Facet):
         return {"buckets": out, "label": str(self._label)}
 
 
+metadata_obj_test = TermsFacet(field="metadata.obj.test")
+
+
+metadata_obj_id = TermsFacet(field="metadata.obj.id")
+
+
+metadata_arr_test = TermsFacet(field="metadata.arr.test")
+
+
+metadata_arr_id = TermsFacet(field="metadata.arr.id")
+
+
+metadata_arr = TermsFacet(field="metadata.arr")
+
+
+metadata_arrobj_test = TermsFacet(field="metadata.arrobj.test")
+
+
+metadata_arrobj_id = TermsFacet(field="metadata.arrobj.id")
+
+
+metadata_arrobj = TermsFacet(field="metadata.arrobj")
+
+
+metadata_internal_ref_id = TermsFacet(field="metadata.internal-ref.id")
+
+
+metadata_internal_ref_test = TermsFacet(field="metadata.internal-ref.test")
+
+
+metadata_internal_ref__version = TermsFacet(field="metadata.internal-ref.@v")
+
+
+metadata_internal_ref_arr_id = TermsFacet(field="metadata.internal-ref-arr.id")
+
+
+metadata_internal_ref_arr_test = TermsFacet(field="metadata.internal-ref-arr.test")
+
+
+metadata_internal_ref_arr__version = TermsFacet(field="metadata.internal-ref-arr.@v")
+
+
+metadata_internal_ref_arrobj_id = TermsFacet(field="metadata.internal-ref-arrobj.id")
+
+
+metadata_internal_ref_arrobj_test = TermsFacet(
+    field="metadata.internal-ref-arrobj.test"
+)
+
+
+metadata_internal_ref_arrobj__version = TermsFacet(
+    field="metadata.internal-ref-arrobj.@v"
+)
+
+
+metadata_internal_nested_ref_id = TermsFacet(field="metadata.internal-nested.ref.id")
+
+
+metadata_internal_nested_ref_test = TermsFacet(
+    field="metadata.internal-nested.ref.test"
+)
+
+
+metadata_internal_nested_ref__version = TermsFacet(
+    field="metadata.internal-nested.ref.@v"
+)
+
+
+metadata_internal_nested = TermsFacet(field="metadata.internal-nested")
+
+
+metadata_internal_array_nested_ref_arr_id = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.id"
+)
+
+
+metadata_internal_array_nested_ref_arr_test = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.test"
+)
+
+
+metadata_internal_array_nested_ref_arr__version = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr.@v"
+)
+
+
+metadata_internal_array_nested_ref_arr = TermsFacet(
+    field="metadata.internal-array-nested.ref-arr"
+)
+
+
+metadata_internal_array_nested = TermsFacet(field="metadata.internal-array-nested")
+
+
 metadata_invenio_ref_id = TermsFacet(field="metadata.invenio-ref.id")
 
 

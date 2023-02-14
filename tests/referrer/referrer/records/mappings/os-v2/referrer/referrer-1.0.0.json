@@ -2,8 +2,120 @@
     "mappings": {
         "properties": {
             "metadata": {
-                "type": "object",
                 "properties": {
+                    "obj": {
+                        "properties": {
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "type": "keyword"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "arr": {
+                        "properties": {
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "type": "keyword"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "arrobj": {
+                        "properties": {
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "type": "keyword"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "internal-ref": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "internal-ref-arr": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "internal-ref-arrobj": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "test": {
+                                "type": "keyword"
+                            },
+                            "@v": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "internal-nested": {
+                        "properties": {
+                            "ref": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "test": {
+                                        "type": "keyword"
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "internal-array-nested": {
+                        "properties": {
+                            "ref-arr": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "keyword"
+                                    },
+                                    "test": {
+                                        "type": "keyword"
+                                    },
+                                    "@v": {
+                                        "type": "keyword"
+                                    }
+                                }
+                            }
+                        },
+                        "type": "object"
+                    },
                     "invenio-ref": {
                         "type": "object",
                         "properties": {
@@ -43,7 +155,6 @@
                         }
                     },
                     "invenio-nested": {
-                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -64,10 +175,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "invenio-array-nested": {
-                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -88,7 +199,8 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "ref": {
                         "type": "object",
@@ -119,7 +231,6 @@
                         }
                     },
                     "nested": {
-                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -135,10 +246,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "array-nested": {
-                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "type": "object",
@@ -154,7 +265,8 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "cf": {
                         "type": "object",
@@ -173,7 +285,8 @@
                             }
                         }
                     }
-                }
+                },
+                "type": "object"
             },
             "id": {
                 "type": "keyword"
