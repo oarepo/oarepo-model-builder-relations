@@ -1,9 +1,8 @@
-from invenio_records_resources.services import RecordLink
-from invenio_records_resources.services import RecordServiceConfig
 from invenio_records_resources.services import (
-    RecordServiceConfig as InvenioRecordServiceConfig,
+    RecordLink,
+    RecordServiceConfig,
+    pagination_links,
 )
-from invenio_records_resources.services import pagination_links
 from invenio_records_resources.services.records.components import DataComponent
 from referrer.records.api import ReferrerRecord
 from referrer.services.records.permissions import ReferrerPermissionPolicy
@@ -17,6 +16,7 @@ class ReferrerServiceConfig(RecordServiceConfig):
     url_prefix = "/referrer/"
 
     permission_policy_cls = ReferrerPermissionPolicy
+
     schema = ReferrerSchema
 
     search = ReferrerSearchOptions

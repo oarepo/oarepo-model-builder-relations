@@ -17,6 +17,7 @@
                     }
                 },
                 "arr": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -27,10 +28,10 @@
                                 "type": "string"
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "arrobj": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -41,8 +42,7 @@
                                 "type": "string"
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "internal-ref": {
                     "type": "object",
@@ -87,6 +87,7 @@
                     }
                 },
                 "internal-array-ref-array": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -100,10 +101,10 @@
                                 "type": "string"
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "internal-array-object-ref-array": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -122,14 +123,15 @@
                                 }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "internal-array-nested": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
                             "ref-arr": {
+                                "type": "array",
                                 "items": {
                                     "type": "object",
                                     "properties": {
@@ -143,12 +145,10 @@
                                             "type": "string"
                                         }
                                     }
-                                },
-                                "type": "array"
+                                }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "internal-cf": {
                     "type": "object",
@@ -184,6 +184,7 @@
                     }
                 },
                 "invenio-array": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -202,10 +203,10 @@
                                 "type": "string"
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "invenio-nested": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -229,14 +230,15 @@
                                 }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "invenio-array-nested": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
                             "ref-arr": {
+                                "type": "array",
                                 "items": {
                                     "type": "object",
                                     "properties": {
@@ -255,12 +257,10 @@
                                             "type": "string"
                                         }
                                     }
-                                },
-                                "type": "array"
+                                }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "ref": {
                     "type": "object",
@@ -277,6 +277,7 @@
                     }
                 },
                 "array": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -290,10 +291,10 @@
                                 "type": "string"
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "nested": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -312,14 +313,15 @@
                                 }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "array-nested": {
+                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
                             "ref-arr": {
+                                "type": "array",
                                 "items": {
                                     "type": "object",
                                     "properties": {
@@ -333,12 +335,10 @@
                                             "type": "string"
                                         }
                                     }
-                                },
-                                "type": "array"
+                                }
                             }
                         }
-                    },
-                    "type": "array"
+                    }
                 },
                 "cf": {
                     "type": "object",

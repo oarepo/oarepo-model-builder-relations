@@ -1,7 +1,7 @@
+import pytest
 from invenio_access.permissions import system_identity
 from referred.proxies import current_service as referred_service
 from referrer.proxies import current_service as referrer_service
-import pytest
 
 
 @pytest.fixture
@@ -51,7 +51,6 @@ def test_invenio_relation(app, db, search_clear, referred_record):
 
 
 def test_invenio_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -74,7 +73,6 @@ def test_invenio_list_relation(app, db, search_clear, referred_records):
 
 
 def test_invenio_nested_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -111,7 +109,6 @@ def test_metadata_relation(app, db, search_clear, referred_record):
 
 
 def test_metadata_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -133,7 +130,6 @@ def test_metadata_list_relation(app, db, search_clear, referred_records):
 
 
 def test_metadata_nested_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -157,7 +153,6 @@ def test_metadata_nested_list_relation(app, db, search_clear, referred_records):
 
 
 def test_invenio_nested_list_in_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -185,7 +180,6 @@ def test_invenio_nested_list_in_list_relation(app, db, search_clear, referred_re
 
 
 def test_metadata_nested_list_in_list_relation(app, db, search_clear, referred_records):
-
     referrer_record = referrer_service.create(
         system_identity,
         {

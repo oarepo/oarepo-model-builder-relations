@@ -1,24 +1,11 @@
 from invenio_pidstore.providers.recordid_v2 import RecordIdProviderV2
-from invenio_records.dumpers.relations import RelationDumperExt
 from invenio_records.systemfields import ConstantField, RelationsField
 from invenio_records_resources.records.api import Record
 from invenio_records_resources.records.dumpers import CustomFieldsDumperExt
 from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
-from invenio_records_resources.records.systemfields.relations import (
-    PIDListRelation,
-    PIDNestedListRelation,
-    PIDRelation,
-)
-from oarepo_runtime.cf import CustomFields, InlinedCustomFields
-from oarepo_runtime.relations import (
-    InternalListRelation,
-    InternalNestedListRelation,
-    InternalRelation,
-    MetadataPIDListRelation,
-    MetadataPIDNestedListRelation,
-    MetadataPIDRelation,
-)
+from oarepo_runtime.cf import InlinedCustomFields
+from oarepo_runtime.relations import InternalRelation, PIDRelation, RelationsField
 from referred.records.api import ReferredRecord
 from referrer.records.dumper import ReferrerDumper
 from referrer.records.models import ReferrerMetadata
@@ -37,7 +24,6 @@ class ReferrerRecord(Record):
 
     dumper_extensions = [
         CustomFieldsDumperExt("TEST_CF"),
-        RelationDumperExt("relations"),
     ]
     dumper = ReferrerDumper(extensions=dumper_extensions)
 
@@ -47,87 +33,81 @@ class ReferrerRecord(Record):
         internal_ref=InternalRelation(
             "metadata.internal-ref",
             keys=["id", "test"],
-            pid_field="metadata.obj",
+            related_part="metadata.obj",
         ),
         internal_ref_arr=InternalRelation(
             "metadata.internal-ref-arr",
             keys=["id", "test"],
-            pid_field="metadata.arr",
+            related_part="metadata.arr",
         ),
         internal_ref_arrobj=InternalRelation(
             "metadata.internal-ref-arrobj",
             keys=["id", "test"],
-            pid_field="metadata.arrobj",
+            related_part="metadata.arrobj",
         ),
-        internal_array_ref_array_item=InternalListRelation(
+        internal_array_ref_array_item=InternalRelation(
             "metadata.internal-array-ref-array",
             keys=["id", "test"],
-            pid_field="metadata.arr",
+            related_part="metadata.arr",
         ),
-        ref=InternalListRelation(
-            "metadata.internal-array-object-ref-array",
+        ref=InternalRelation(
+            "metadata.internal-array-object-ref-array.ref",
             keys=["id", "test"],
-            pid_field="metadata.arr",
-            relation_field="ref",
+            related_part="metadata.arr",
         ),
-        ref_arr_item=InternalNestedListRelation(
-            "metadata.internal-array-nested",
+        ref_arr_item=InternalRelation(
+            "metadata.internal-array-nested.ref-arr",
             keys=["id", "test"],
-            pid_field="metadata.arr",
-            relation_field="ref-arr",
+            related_part="metadata.arr",
         ),
         internal_cf=InternalRelation(
             "metadata.internal-cf",
             keys=["id", "test"],
-            pid_field="",
+            related_part="",
         ),
         invenio_ref=PIDRelation(
             "metadata.invenio-ref",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
         ),
-        invenio_array_item=PIDListRelation(
+        invenio_array_item=PIDRelation(
             "metadata.invenio-array",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
         ),
-        invenio_nested=PIDListRelation(
-            "metadata.invenio-nested",
+        invenio_nested=PIDRelation(
+            "metadata.invenio-nested.ref",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
-            relation_field="ref",
         ),
-        ref_arr_item_1=PIDNestedListRelation(
-            "metadata.invenio-array-nested",
+        ref_arr_item_1=PIDRelation(
+            "metadata.invenio-array-nested.ref-arr",
             keys=["id", "metadata.title"],
             pid_field=ReferredRecord.pid,
-            relation_field="ref-arr",
         ),
-        ref_1=MetadataPIDRelation(
+        ref_1=PIDRelation(
             "metadata.ref",
-            keys=["id", "metadata.title"],
+            keys=["id", {"key": "metadata.title", "target": "title"}],
             pid_field=ReferredRecord.pid,
         ),
-        array=MetadataPIDListRelation(
+        array=PIDRelation(
             "metadata.array",
-            keys=["id", "metadata.title"],
+            keys=["id", {"key": "metadata.title", "target": "title"}],
             pid_field=ReferredRecord.pid,
         ),
-        nested=MetadataPIDListRelation(
-            "metadata.nested",
-            keys=["id", "metadata.title"],
+        nested=PIDRelation(
+            "metadata.nested.ref",
+            keys=["id", {"key": "metadata.title", "target": "title"}],
             pid_field=ReferredRecord.pid,
-            relation_field="ref",
         ),
-        ref_arr_item_2=MetadataPIDNestedListRelation(
-            "metadata.array-nested",
-            keys=["id", "metadata.title"],
+        ref_arr_item_2=PIDRelation(
+            "metadata.array-nested.ref-arr",
+            keys=["id", {"key": "metadata.title", "target": "title"}],
             pid_field=ReferredRecord.pid,
-            relation_field="ref-arr",
         ),
-        cf=MetadataPIDRelation(
+        cf=PIDRelation(
             "metadata.cf",
-            keys=["id", "metadata.title", "test"],
+            keys=["id", {"key": "metadata.title", "target": "title"}, "test"],
             pid_field=ReferredRecord.pid,
         ),
     )

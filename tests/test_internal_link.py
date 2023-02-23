@@ -1,7 +1,7 @@
+import pytest
 from invenio_access.permissions import system_identity
 from referred.proxies import current_service as referred_service
 from referrer.proxies import current_service as referrer_service
-import pytest
 
 
 @pytest.fixture
@@ -55,7 +55,6 @@ def test_internal_relation(app, db, search_clear):
 
 
 def test_internal_list_relation(app, db, search_clear):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -76,7 +75,6 @@ def test_internal_list_relation(app, db, search_clear):
 
 
 def test_internal_listobj_relation(app, db, search_clear):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -97,7 +95,6 @@ def test_internal_listobj_relation(app, db, search_clear):
 
 
 def test_internal_array_to_array_relation(app, db, search_clear):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -129,7 +126,6 @@ def test_internal_array_to_array_relation(app, db, search_clear):
 
 
 def test_internal_array_object_to_array_relation(app, db, search_clear):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
@@ -172,7 +168,6 @@ def test_internal_array_object_to_array_relation(app, db, search_clear):
 
 
 def test_internal_array_nested_relation(app, db, search_clear):
-
     referrer_record = referrer_service.create(
         system_identity,
         {
