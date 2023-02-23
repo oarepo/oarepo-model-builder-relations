@@ -2,11 +2,7 @@ import marshmallow as ma
 from invenio_records_resources.services.records.schema import (
     BaseRecordSchema as InvenioBaseRecordSchema,
 )
-from marshmallow import ValidationError
 from marshmallow import fields as ma_fields
-from marshmallow import validates as ma_validates
-from marshmallow_utils import fields as mu_fields
-from marshmallow_utils import schemas as mu_schemas
 from oarepo_runtime.cf import InlinedCustomFieldsSchemaMixin
 from oarepo_runtime.validation import validate_date
 
@@ -15,27 +11,27 @@ class ObjSchema(ma.Schema):
     """ObjSchema schema."""
 
     test = ma_fields.String()
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
 
 
 class ArrItemSchema(ma.Schema):
     """ArrItemSchema schema."""
 
     test = ma_fields.String()
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
 
 
 class ArrobjItemSchema(ma.Schema):
     """ArrobjItemSchema schema."""
 
     test = ma_fields.String()
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
 
 
 class InternalRefSchema(ma.Schema):
     """InternalRefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -43,7 +39,7 @@ class InternalRefSchema(ma.Schema):
 class InternalRefArrSchema(ma.Schema):
     """InternalRefArrSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -51,7 +47,7 @@ class InternalRefArrSchema(ma.Schema):
 class InternalRefArrobjSchema(ma.Schema):
     """InternalRefArrobjSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -59,7 +55,7 @@ class InternalRefArrobjSchema(ma.Schema):
 class InternalArrayRefArrayItemSchema(ma.Schema):
     """InternalArrayRefArrayItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -67,7 +63,7 @@ class InternalArrayRefArrayItemSchema(ma.Schema):
 class RefSchema(ma.Schema):
     """RefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -81,7 +77,7 @@ class InternalArrayObjectRefArrayItemSchema(ma.Schema):
 class RefArrItemSchema(ma.Schema):
     """RefArrItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -99,7 +95,7 @@ class InternalArrayNestedItemSchema(ma.Schema):
 class InternalCfSchema(ma.Schema):
     """InternalCfSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -113,7 +109,7 @@ class MetadataSchema(ma.Schema):
 class InvenioRefSchema(ma.Schema):
     """InvenioRefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -121,7 +117,7 @@ class InvenioRefSchema(ma.Schema):
 class InvenioArrayItemSchema(ma.Schema):
     """InvenioArrayItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -129,7 +125,7 @@ class InvenioArrayItemSchema(ma.Schema):
 class InvenioNestedRefSchema(ma.Schema):
     """InvenioNestedRefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -143,7 +139,7 @@ class InvenioNestedItemSchema(ma.Schema):
 class RefArrRefArrItemSchema(ma.Schema):
     """RefArrRefArrItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -161,7 +157,7 @@ class InvenioArrayNestedItemSchema(ma.Schema):
 class MetadataRefSchema(ma.Schema):
     """MetadataRefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -169,7 +165,7 @@ class MetadataRefSchema(ma.Schema):
 class ArrayItemSchema(ma.Schema):
     """ArrayItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -177,7 +173,7 @@ class ArrayItemSchema(ma.Schema):
 class NestedRefSchema(ma.Schema):
     """NestedRefSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -191,7 +187,7 @@ class NestedItemSchema(ma.Schema):
 class ArrayNestedRefArrRefArrItemSchema(ma.Schema):
     """ArrayNestedRefArrRefArrItemSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
@@ -209,7 +205,7 @@ class ArrayNestedItemSchema(ma.Schema):
 class CfSchema(ma.Schema):
     """CfSchema schema."""
 
-    id = ma_fields.String()
+    _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
