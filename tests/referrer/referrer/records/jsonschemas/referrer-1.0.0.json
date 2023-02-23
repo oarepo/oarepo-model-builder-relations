@@ -3,10 +3,8 @@
     "additionalProperties": true,
     "properties": {
         "metadata": {
-            "type": "object",
             "properties": {
                 "obj": {
-                    "type": "object",
                     "properties": {
                         "test": {
                             "type": "string"
@@ -14,11 +12,11 @@
                         "id": {
                             "type": "string"
                         }
-                    }
+                    },
+                    "type": "object"
                 },
                 "arr": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "test": {
                                 "type": "string"
@@ -26,13 +24,13 @@
                             "id": {
                                 "type": "string"
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
                 "arrobj": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "test": {
                                 "type": "string"
@@ -40,7 +38,8 @@
                             "id": {
                                 "type": "string"
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
@@ -105,7 +104,6 @@
                 },
                 "internal-array-object-ref-array": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -121,13 +119,13 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
                 "internal-array-nested": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "items": {
@@ -146,7 +144,8 @@
                                 },
                                 "type": "array"
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
@@ -207,7 +206,6 @@
                 },
                 "invenio-nested": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -228,13 +226,13 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
                 "invenio-array-nested": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "items": {
@@ -258,7 +256,8 @@
                                 },
                                 "type": "array"
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
@@ -295,7 +294,6 @@
                 },
                 "nested": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref": {
                                 "type": "object",
@@ -311,13 +309,13 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
                 "array-nested": {
                     "items": {
-                        "type": "object",
                         "properties": {
                             "ref-arr": {
                                 "items": {
@@ -336,7 +334,8 @@
                                 },
                                 "type": "array"
                             }
-                        }
+                        },
+                        "type": "object"
                     },
                     "type": "array"
                 },
@@ -357,7 +356,8 @@
                         }
                     }
                 }
-            }
+            },
+            "type": "object"
         },
         "id": {
             "type": "string"

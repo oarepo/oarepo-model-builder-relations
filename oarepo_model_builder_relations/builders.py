@@ -1,7 +1,6 @@
+from munch import unmunchify
 from oarepo_model_builder.builders import process
 from oarepo_model_builder.invenio.invenio_base import InvenioBaseClassPythonBuilder
-from oarepo_model_builder.validation import InvalidModelException
-from munch import unmunchify
 from oarepo_model_builder.utils.python_name import convert_name_to_python
 
 
@@ -33,21 +32,24 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
 
         keys = relation["keys"]
         model_class = relation["model_class"]
-        relation_classes = relation["relation_classes"]
-        relation_class = relation["relation_class"]
         relation_args = relation["relation_args"]
-        pid_field = relation["pid_field"]
+        pid_field = relation.get("pid_field")
+        related_part = relation.get("related_part")
 
-        keys = [x if isinstance(x, str) else x.key for x in keys]
-        relation_args.setdefault("keys", repr(keys))
+        written_keys = []
+        for k in keys:
+            if k["key"] == k["target"]:
+                written_keys.append(k["key"])
+            else:
+                written_keys.append({"key": k["key"], "target": k["target"]})
+
+        relation_args.setdefault("keys", repr(written_keys))
 
         if pid_field or model_class:
             relation_args.setdefault("pid_field", pid_field or f"{model_class}.pid")
+        if related_part:
+            relation_args.setdefault("related_part", related_part)
 
-        if not relation_class:
-            relation["relation_class"] = self._get_relation_class(
-                relation_classes, relation, relation_args
-            )
         relation.setdefault("path", self._property_path(self.stack))
         relation = {k.replace("-", "_"): v for k, v in unmunchify(relation).items()}
         relation["relation_args"] = {
@@ -64,48 +66,6 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
                 break
 
         self.relations.append(relation)
-
-    def _get_relation_class(self, relation_classes, relation, relation_args):
-        # check if not path of an array
-        array_paths = []
-        path = ""
-        top_is_array = False
-        for stack_entry in self.stack.stack:
-            if stack_entry.schema_element_type == "property":
-                if path:
-                    path = f"{path}."
-                path += stack_entry.key
-
-            if stack_entry.schema_element_type != "items":
-                top_is_array = False
-            else:
-                array_paths.append(path)
-                top_is_array = True
-        if len(array_paths) > 1:
-            # array inside array => return nested array relation
-            if top_is_array:
-                relation_args.setdefault(
-                    "relation_field", repr(path[len(array_paths[0]) + 1 :])
-                )
-                relation.setdefault("path", array_paths[0])
-                return relation_classes["nested-array"]
-
-            raise InvalidModelException(
-                "Related items in double arrays are not supported yet"
-            )
-        # not in array => return single relation
-        if not array_paths:
-            return relation_classes["single"]
-
-        # array itself => return list relation
-        if top_is_array:
-            return relation_classes["list"]
-        # inside an array => return nested relation
-        relation_args.setdefault(
-            "relation_field", repr(path[len(array_paths[0]) + 1 :])
-        )
-        relation.setdefault("path", array_paths[0])
-        return relation_classes["nested"]
 
     def process_template(self, python_path, template, **extra_kwargs):
         if self.relations:

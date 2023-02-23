@@ -1,6 +1,7 @@
+import os
+
 import pytest
 from invenio_app.factory import create_api
-import os
 
 
 @pytest.fixture(scope="module")

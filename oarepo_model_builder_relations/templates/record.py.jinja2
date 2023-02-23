@@ -10,13 +10,7 @@ from {{ imp["import"]|package_name }} import {{imp["import"]|base_name}}
 {% endfor %}
 {% endfor %}
 
-from invenio_records.dumpers.relations import RelationDumperExt
-
 class {{ current_model.record_class|base_name }}:
-
-    dumper_extensions = [
-        RelationDumperExt("relations"),
-    ]
 
     relations = RelationsField(
         {% for rel in invenio_relations %}

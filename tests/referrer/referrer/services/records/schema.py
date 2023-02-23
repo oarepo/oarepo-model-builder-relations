@@ -104,8 +104,8 @@ class InternalCfSchema(ma.Schema):
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InvenioRefReferredMetadataSchema(ma.Schema):
-    """InvenioRefReferredMetadataSchema schema."""
+class MetadataSchema(ma.Schema):
+    """MetadataSchema schema."""
 
     title = ma_fields.String()
 
@@ -114,35 +114,23 @@ class InvenioRefSchema(ma.Schema):
     """InvenioRefSchema schema."""
 
     id = ma_fields.String()
-    metadata = ma_fields.Nested(lambda: InvenioRefReferredMetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
-
-
-class InvenioArrayItemReferredMetadataSchema(ma.Schema):
-    """InvenioArrayItemReferredMetadataSchema schema."""
-
-    title = ma_fields.String()
 
 
 class InvenioArrayItemSchema(ma.Schema):
     """InvenioArrayItemSchema schema."""
 
     id = ma_fields.String()
-    metadata = ma_fields.Nested(lambda: InvenioArrayItemReferredMetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
-
-
-class RefReferredMetadataSchema(ma.Schema):
-    """RefReferredMetadataSchema schema."""
-
-    title = ma_fields.String()
 
 
 class InvenioNestedRefSchema(ma.Schema):
     """InvenioNestedRefSchema schema."""
 
     id = ma_fields.String()
-    metadata = ma_fields.Nested(lambda: RefReferredMetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
@@ -152,17 +140,11 @@ class InvenioNestedItemSchema(ma.Schema):
     ref = ma_fields.Nested(lambda: InvenioNestedRefSchema())
 
 
-class RefArrItemReferredMetadataSchema(ma.Schema):
-    """RefArrItemReferredMetadataSchema schema."""
-
-    title = ma_fields.String()
-
-
 class RefArrRefArrItemSchema(ma.Schema):
     """RefArrRefArrItemSchema schema."""
 
     id = ma_fields.String()
-    metadata = ma_fields.Nested(lambda: RefArrItemReferredMetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataSchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
