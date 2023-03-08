@@ -38,7 +38,7 @@ class ReferredExt:
     def init_config(self, app):
         """Initialize configuration."""
         for identifier in dir(config):
-            if re.match("^[A-Z_]*$", identifier) and not identifier.startswith("_"):
+            if re.match("^[A-Z_0-9]*$", identifier) and not identifier.startswith("_"):
                 app.config.setdefault(identifier, getattr(config, identifier))
 
     def is_inherited(self):

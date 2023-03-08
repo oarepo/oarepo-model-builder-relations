@@ -1,5 +1,7 @@
 import importlib_metadata
+from flask_resources import ResponseHandler
 from invenio_records_resources.resources import RecordResourceConfig
+from referrer.resources.records.ui import ReferrerUIJSONSerializer
 
 
 class ReferrerResourceConfig(RecordResourceConfig):
@@ -15,4 +17,10 @@ class ReferrerResourceConfig(RecordResourceConfig):
             group="invenio.referrer.response_handlers"
         ):
             entrypoint_response_handlers.update(x.load())
-        return {**super().response_handlers, **entrypoint_response_handlers}
+        return {
+            "application/vnd.inveniordm.v1+json": ResponseHandler(
+                ReferrerUIJSONSerializer()
+            ),
+            **super().response_handlers,
+            **entrypoint_response_handlers,
+        }

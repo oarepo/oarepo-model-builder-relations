@@ -1,14 +1,16 @@
 """Facet definitions."""
 
 from invenio_records_resources.services.records.facets import TermsFacet
+from invenio_search.engine import dsl
+from oarepo_runtime.facets.nested_facet import NestedLabeledFacet
 
-hint = TermsFacet(field="hint")
+metadata_hint = TermsFacet(field="metadata.hint")
 
 
-price = TermsFacet(field="price")
+metadata_price = TermsFacet(field="metadata.price")
 
 
-arr = TermsFacet(field="arr")
+metadata_arr = TermsFacet(field="metadata.arr")
 
 
 _id = TermsFacet(field="id")

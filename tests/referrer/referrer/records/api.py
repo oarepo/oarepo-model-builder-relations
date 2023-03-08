@@ -4,7 +4,7 @@ from invenio_records_resources.records.api import Record
 from invenio_records_resources.records.dumpers import CustomFieldsDumperExt
 from invenio_records_resources.records.systemfields import IndexField
 from invenio_records_resources.records.systemfields.pid import PIDField, PIDFieldContext
-from oarepo_runtime.cf import InlinedCustomFields
+from oarepo_runtime.cf import CustomFields, InlinedCustomFields
 from oarepo_runtime.relations import InternalRelation, PIDRelation, RelationsField
 from referred.records.api import ReferredRecord
 from referrer.records.dumper import ReferrerDumper

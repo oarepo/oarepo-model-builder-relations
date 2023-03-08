@@ -7,208 +7,207 @@ from marshmallow import fields as ma_fields
 from marshmallow import validate as ma_validate
 from marshmallow_utils import fields as mu_fields
 from marshmallow_utils import schemas as mu_schemas
-from oarepo_runtime.cf import InlinedCustomFieldsSchemaMixin
 from oarepo_runtime.ui import marshmallow as l10n
 from oarepo_runtime.validation import validate_date
 
 
-class ObjSchema(ma.Schema):
-    """ObjSchema schema."""
+class ObjUISchema(ma.Schema):
+    """ObjUISchema schema."""
 
     test = ma_fields.String()
     _id = ma_fields.String(data_key="id", attribute="id")
 
 
-class ArrItemSchema(ma.Schema):
-    """ArrItemSchema schema."""
+class ArrItemUISchema(ma.Schema):
+    """ArrItemUISchema schema."""
 
     test = ma_fields.String()
     _id = ma_fields.String(data_key="id", attribute="id")
 
 
-class ArrobjItemSchema(ma.Schema):
-    """ArrobjItemSchema schema."""
+class ArrobjItemUISchema(ma.Schema):
+    """ArrobjItemUISchema schema."""
 
     test = ma_fields.String()
     _id = ma_fields.String(data_key="id", attribute="id")
 
 
-class InternalRefSchema(ma.Schema):
-    """InternalRefSchema schema."""
-
-    _id = ma_fields.String(data_key="id", attribute="id")
-    test = ma_fields.String()
-    _version = ma_fields.String(data_key="@v", attribute="@v")
-
-
-class InternalRefArrSchema(ma.Schema):
-    """InternalRefArrSchema schema."""
+class InternalRefUISchema(ma.Schema):
+    """InternalRefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InternalRefArrobjSchema(ma.Schema):
-    """InternalRefArrobjSchema schema."""
+class InternalRefArrUISchema(ma.Schema):
+    """InternalRefArrUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InternalArrayRefArrayItemSchema(ma.Schema):
-    """InternalArrayRefArrayItemSchema schema."""
+class InternalRefArrobjUISchema(ma.Schema):
+    """InternalRefArrobjUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class RefSchema(ma.Schema):
-    """RefSchema schema."""
+class InternalArrayRefArrayItemUISchema(ma.Schema):
+    """InternalArrayRefArrayItemUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InternalArrayObjectRefArrayItemSchema(ma.Schema):
-    """InternalArrayObjectRefArrayItemSchema schema."""
-
-    ref = ma_fields.Nested(lambda: RefSchema())
-
-
-class RefArrRefArrItemSchema(ma.Schema):
-    """RefArrRefArrItemSchema schema."""
+class RefUISchema(ma.Schema):
+    """RefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InternalArrayNestedItemSchema(ma.Schema):
-    """InternalArrayNestedItemSchema schema."""
+class InternalArrayObjectRefArrayItemUISchema(ma.Schema):
+    """InternalArrayObjectRefArrayItemUISchema schema."""
+
+    ref = ma_fields.Nested(lambda: RefUISchema())
+
+
+class RefArrRefArrItemUISchema(ma.Schema):
+    """RefArrRefArrItemUISchema schema."""
+
+    _id = ma_fields.String(data_key="id", attribute="id")
+    test = ma_fields.String()
+    _version = ma_fields.String(data_key="@v", attribute="@v")
+
+
+class InternalArrayNestedItemUISchema(ma.Schema):
+    """InternalArrayNestedItemUISchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrRefArrItemSchema()),
+        ma_fields.Nested(lambda: RefArrRefArrItemUISchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
 
 
-class InternalCfSchema(ma.Schema):
-    """InternalCfSchema schema."""
+class InternalCfUISchema(ma.Schema):
+    """InternalCfUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     test = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class MetadataSchema(ma.Schema):
-    """MetadataSchema schema."""
+class MetadataUISchema(ma.Schema):
+    """MetadataUISchema schema."""
 
     title = ma_fields.String()
 
 
-class InvenioRefSchema(ma.Schema):
-    """InvenioRefSchema schema."""
+class InvenioRefUISchema(ma.Schema):
+    """InvenioRefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
-    metadata = ma_fields.Nested(lambda: MetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataUISchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InvenioArrayItemSchema(ma.Schema):
-    """InvenioArrayItemSchema schema."""
+class InvenioArrayItemUISchema(ma.Schema):
+    """InvenioArrayItemUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
-    metadata = ma_fields.Nested(lambda: MetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataUISchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InvenioNestedRefSchema(ma.Schema):
-    """InvenioNestedRefSchema schema."""
+class InvenioNestedRefUISchema(ma.Schema):
+    """InvenioNestedRefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
-    metadata = ma_fields.Nested(lambda: MetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataUISchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InvenioNestedItemSchema(ma.Schema):
-    """InvenioNestedItemSchema schema."""
+class InvenioNestedItemUISchema(ma.Schema):
+    """InvenioNestedItemUISchema schema."""
 
-    ref = ma_fields.Nested(lambda: InvenioNestedRefSchema())
+    ref = ma_fields.Nested(lambda: InvenioNestedRefUISchema())
 
 
-class InvenioArrayNestedRefArrRefArrItemSchema(ma.Schema):
-    """InvenioArrayNestedRefArrRefArrItemSchema schema."""
+class InvenioArrayNestedRefArrRefArrItemUISchema(ma.Schema):
+    """InvenioArrayNestedRefArrRefArrItemUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
-    metadata = ma_fields.Nested(lambda: MetadataSchema())
+    metadata = ma_fields.Nested(lambda: MetadataUISchema())
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class InvenioArrayNestedItemSchema(ma.Schema):
-    """InvenioArrayNestedItemSchema schema."""
+class InvenioArrayNestedItemUISchema(ma.Schema):
+    """InvenioArrayNestedItemUISchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: InvenioArrayNestedRefArrRefArrItemSchema()),
+        ma_fields.Nested(lambda: InvenioArrayNestedRefArrRefArrItemUISchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
 
 
-class MetadataRefSchema(ma.Schema):
-    """MetadataRefSchema schema."""
+class MetadataRefUISchema(ma.Schema):
+    """MetadataRefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class ArrayItemSchema(ma.Schema):
-    """ArrayItemSchema schema."""
+class ArrayItemUISchema(ma.Schema):
+    """ArrayItemUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class NestedRefSchema(ma.Schema):
-    """NestedRefSchema schema."""
+class NestedRefUISchema(ma.Schema):
+    """NestedRefUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class NestedItemSchema(ma.Schema):
-    """NestedItemSchema schema."""
+class NestedItemUISchema(ma.Schema):
+    """NestedItemUISchema schema."""
 
-    ref = ma_fields.Nested(lambda: NestedRefSchema())
+    ref = ma_fields.Nested(lambda: NestedRefUISchema())
 
 
-class RefArrItemSchema(ma.Schema):
-    """RefArrItemSchema schema."""
+class RefArrItemUISchema(ma.Schema):
+    """RefArrItemUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class ArrayNestedItemSchema(ma.Schema):
-    """ArrayNestedItemSchema schema."""
+class ArrayNestedItemUISchema(ma.Schema):
+    """ArrayNestedItemUISchema schema."""
 
     ref_arr = ma_fields.List(
-        ma_fields.Nested(lambda: RefArrItemSchema()),
+        ma_fields.Nested(lambda: RefArrItemUISchema()),
         data_key="ref-arr",
         attribute="ref-arr",
     )
 
 
-class CfSchema(ma.Schema):
-    """CfSchema schema."""
+class CfUISchema(ma.Schema):
+    """CfUISchema schema."""
 
     _id = ma_fields.String(data_key="id", attribute="id")
     title = ma_fields.String()
@@ -216,76 +215,77 @@ class CfSchema(ma.Schema):
     _version = ma_fields.String(data_key="@v", attribute="@v")
 
 
-class ReferrerMetadataSchema(ma.Schema):
-    """ReferrerMetadataSchema schema."""
+class ReferrerMetadataUISchema(ma.Schema):
+    """ReferrerMetadataUISchema schema."""
 
-    obj = ma_fields.Nested(lambda: ObjSchema())
-    arr = ma_fields.List(ma_fields.Nested(lambda: ArrItemSchema()))
-    arrobj = ma_fields.List(ma_fields.Nested(lambda: ArrobjItemSchema()))
+    obj = ma_fields.Nested(lambda: ObjUISchema())
+    arr = ma_fields.List(ma_fields.Nested(lambda: ArrItemUISchema()))
+    arrobj = ma_fields.List(ma_fields.Nested(lambda: ArrobjItemUISchema()))
     internal_ref = ma_fields.Nested(
-        lambda: InternalRefSchema(), data_key="internal-ref", attribute="internal-ref"
+        lambda: InternalRefUISchema(), data_key="internal-ref", attribute="internal-ref"
     )
     internal_ref_arr = ma_fields.Nested(
-        lambda: InternalRefArrSchema(),
+        lambda: InternalRefArrUISchema(),
         data_key="internal-ref-arr",
         attribute="internal-ref-arr",
     )
     internal_ref_arrobj = ma_fields.Nested(
-        lambda: InternalRefArrobjSchema(),
+        lambda: InternalRefArrobjUISchema(),
         data_key="internal-ref-arrobj",
         attribute="internal-ref-arrobj",
     )
     internal_array_ref_array = ma_fields.List(
-        ma_fields.Nested(lambda: InternalArrayRefArrayItemSchema()),
+        ma_fields.Nested(lambda: InternalArrayRefArrayItemUISchema()),
         data_key="internal-array-ref-array",
         attribute="internal-array-ref-array",
     )
     internal_array_object_ref_array = ma_fields.List(
-        ma_fields.Nested(lambda: InternalArrayObjectRefArrayItemSchema()),
+        ma_fields.Nested(lambda: InternalArrayObjectRefArrayItemUISchema()),
         data_key="internal-array-object-ref-array",
         attribute="internal-array-object-ref-array",
     )
     internal_array_nested = ma_fields.List(
-        ma_fields.Nested(lambda: InternalArrayNestedItemSchema()),
+        ma_fields.Nested(lambda: InternalArrayNestedItemUISchema()),
         data_key="internal-array-nested",
         attribute="internal-array-nested",
     )
     internal_cf = ma_fields.Nested(
-        lambda: InternalCfSchema(), data_key="internal-cf", attribute="internal-cf"
+        lambda: InternalCfUISchema(), data_key="internal-cf", attribute="internal-cf"
     )
     invenio_ref = ma_fields.Nested(
-        lambda: InvenioRefSchema(), data_key="invenio-ref", attribute="invenio-ref"
+        lambda: InvenioRefUISchema(), data_key="invenio-ref", attribute="invenio-ref"
     )
     invenio_array = ma_fields.List(
-        ma_fields.Nested(lambda: InvenioArrayItemSchema()),
+        ma_fields.Nested(lambda: InvenioArrayItemUISchema()),
         data_key="invenio-array",
         attribute="invenio-array",
     )
     invenio_nested = ma_fields.List(
-        ma_fields.Nested(lambda: InvenioNestedItemSchema()),
+        ma_fields.Nested(lambda: InvenioNestedItemUISchema()),
         data_key="invenio-nested",
         attribute="invenio-nested",
     )
     invenio_array_nested = ma_fields.List(
-        ma_fields.Nested(lambda: InvenioArrayNestedItemSchema()),
+        ma_fields.Nested(lambda: InvenioArrayNestedItemUISchema()),
         data_key="invenio-array-nested",
         attribute="invenio-array-nested",
     )
-    ref = ma_fields.Nested(lambda: MetadataRefSchema())
-    array = ma_fields.List(ma_fields.Nested(lambda: ArrayItemSchema()))
-    nested = ma_fields.List(ma_fields.Nested(lambda: NestedItemSchema()))
+    ref = ma_fields.Nested(lambda: MetadataRefUISchema())
+    array = ma_fields.List(ma_fields.Nested(lambda: ArrayItemUISchema()))
+    nested = ma_fields.List(ma_fields.Nested(lambda: NestedItemUISchema()))
     array_nested = ma_fields.List(
-        ma_fields.Nested(lambda: ArrayNestedItemSchema()),
+        ma_fields.Nested(lambda: ArrayNestedItemUISchema()),
         data_key="array-nested",
         attribute="array-nested",
     )
-    cf = ma_fields.Nested(lambda: CfSchema())
+    cf = ma_fields.Nested(lambda: CfUISchema())
 
 
-class ReferrerSchema(InlinedCustomFieldsSchemaMixin, InvenioBaseRecordSchema):
-    """ReferrerSchema schema."""
+class ReferrerUISchema(ma.Schema):
+    """ReferrerUISchema schema."""
 
-    CUSTOM_FIELDS_VAR = "TEST_CF"
-    metadata = ma_fields.Nested(lambda: ReferrerMetadataSchema())
-    created = ma_fields.String(validate=[validate_date("%Y-%m-%d")], dump_only=True)
-    updated = ma_fields.String(validate=[validate_date("%Y-%m-%d")], dump_only=True)
+    metadata = ma_fields.Nested(lambda: ReferrerMetadataUISchema())
+    _id = ma_fields.String(data_key="id", attribute="id")
+    created = l10n.LocalizedDate()
+    updated = l10n.LocalizedDate()
+    _schema = ma_fields.String(data_key="$schema", attribute="$schema")
