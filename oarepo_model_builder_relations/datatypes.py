@@ -164,7 +164,19 @@ class RelationDataType(ObjectDataType):
                 self._copy_direct_field(props, fld)
             else:
                 self._copy_field_definition(props, model_properties, fld, model_name)
-        props["@v"] = {"type": "keyword", "marshmallow": {"field-name": "_version"}}
+        props["@v"] = {
+            "type": "keyword",
+            "marshmallow": {
+                "field-name": "_version",
+                "field-class": "ma_fields.String",
+            },
+            "ui": {
+                "marshmallow": {
+                    "field-name": "_version",
+                    "field-class": "ma_fields.String",
+                }
+            },
+        }
 
         self._prefix_marshmallow_classes(props, schema_prefix)
 
@@ -251,6 +263,13 @@ class RelationDataType(ObjectDataType):
                 if schema_class:
                     schema_class = schema_class.rsplit(".", maxsplit=1)[-1]
                     props["marshmallow"]["schema-class"] = schema_prefix + schema_class
+            if "ui" in props and "marshmallow" in props["ui"]:
+                schema_class = props["ui"]["marshmallow"].get("schema-class", None)
+                if schema_class:
+                    schema_class = schema_class.rsplit(".", maxsplit=1)[-1]
+                    props["ui"]["marshmallow"]["schema-class"] = (
+                        schema_prefix + schema_class
+                    )
         for v in props.values():
             self._prefix_marshmallow_classes(v, schema_prefix)
 
