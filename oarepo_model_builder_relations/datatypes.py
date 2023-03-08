@@ -12,6 +12,12 @@ from oarepo_model_builder.utils.jinja import split_base_name
 from oarepo_model_builder.validation import InvalidModelException
 from oarepo_model_builder.validation.model_validation import model_validator
 from oarepo_model_builder.validation.property import StrictString
+from oarepo_model_builder.validation.property_marshmallow import (
+    ObjectPropertyMarshmallowSchema,
+)
+from oarepo_model_builder.validation.ui import (
+    ObjectPropertyUISchema,
+)
 
 
 class StringOrSchema(fields.Field):
@@ -47,7 +53,7 @@ class RelationSchema(ma.Schema):
     class KeySchema(ma.Schema):
         key = fields.String(required=True)
         model = fields.Nested(
-            lambda: model_validator.validator_class("object-field")(), required=True
+            lambda: model_validator.validator_class("object-field")(), required=False
         )
         target = fields.String(required=False)
 
@@ -63,7 +69,12 @@ class RelationSchema(ma.Schema):
     relation_class = fields.String(data_key="relation-class", required=False)
     pid_field = fields.String(data_key="pid-field", required=False)
     related_part = fields.String(data_key="related-part", required=False)
-    # TODO: relation-args
+    relation_args = fields.Dict(
+        fields.String(),
+        fields.String(),
+        required=False,
+        data_key="relation-args",
+    )
     imports = fields.List(fields.Nested(ImportSchema), required=False)
     flatten = fields.Boolean(required=False)
 
@@ -74,9 +85,8 @@ class RelationSchema(ma.Schema):
 class RelationDataType(ObjectDataType):
     model_type = "relation"
 
-    def model_schema(self, **extras):
-        data = copy.deepcopy(self.definition)
-        data.pop("type", None)
+    def prepare(self, context):
+        data = self.definition
         name = data.pop("name", None)
         model_name = data.pop("model")
         keys = data.pop("keys", ["id", "metadata.title"])
@@ -149,13 +159,11 @@ class RelationDataType(ObjectDataType):
                 model_class = split_base_name(model_class)
                 imports.append({"import": model_data["model"]["record-class"]})
 
-        if not pid_field:
-            if model_class:
-                pid_field = f"{model_class}.pid"
+        if not pid_field and model_class:
+            pid_field = f"{model_class}.pid"
 
-        if not related_part and not pid_field:
-            if internal_link:
-                related_part = repr(model_data["id"])
+        if not related_part and not pid_field and internal_link:
+            related_part = repr(model_data["id"])
 
         # insert properties
         props = {}
@@ -180,26 +188,23 @@ class RelationDataType(ObjectDataType):
 
         self._prefix_marshmallow_classes(props, schema_prefix)
 
-        data["type"] = "object"
-        data["properties"] = props
+        set_if_not_none(data, "properties", props)
 
-        relation_extension = data.setdefault("relation", {})
-        relation_extension["name"] = name
-        relation_extension["model"] = model_name
-        relation_extension["keys"] = keys
-        relation_extension["model-class"] = model_class
-        relation_extension["schema-prefix"] = schema_prefix
-        relation_extension["relation-class"] = relation_class
-        relation_extension["relation-args"] = relation_args
-        relation_extension["imports"] = imports
+        set_if_not_none(data, "name", name)
+        set_if_not_none(data, "model", model_name)
+        set_if_not_none(data, "keys", keys)
+        set_if_not_none(data, "model-class", model_class)
+        set_if_not_none(data, "schema-prefix", schema_prefix)
+        set_if_not_none(data, "relation-class", relation_class)
+        set_if_not_none(data, "relation-args", relation_args)
+        set_if_not_none(data, "imports", imports)
         if pid_field:
-            relation_extension["pid-field"] = pid_field
+            set_if_not_none(data, "pid-field", pid_field)
         if related_part:
-            relation_extension["related-part"] = related_part
+            set_if_not_none(data, "related-part", related_part)
 
         self._remove_mapping_incompatibilities(data)
-
-        raise ReplaceElement({self.key: data})
+        super().prepare(context)
 
     def get_model(self, model_name):
         if model_name.startswith("#"):
@@ -287,8 +292,13 @@ class RelationDataType(ObjectDataType):
                 v, mapping_in_parent or k == "mapping"
             )
 
-    class ModelSchema(RelationSchema, ObjectDataType.ModelSchema):
-        relation = fields.Nested(RelationSchema, required=False)
+    class ModelSchema(
+        RelationSchema,
+        ObjectPropertyMarshmallowSchema,
+        ObjectPropertyUISchema,
+        ObjectDataType.ModelSchema,
+    ):
+        pass
 
 
 def find_reference(model, reference_id):
@@ -319,3 +329,8 @@ DATATYPES = [RelationDataType]
 VALIDATORS = {
     "property": [PropertyIDSchema],
 }
+
+
+def set_if_not_none(data, key, value):
+    if value is not None:
+        data[key] = value

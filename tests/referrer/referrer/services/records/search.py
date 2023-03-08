@@ -13,57 +13,79 @@ class ReferrerSearchOptions(InvenioSearchOptions):
 
     facets = {
         "metadata_obj_test": facets.metadata_obj_test,
-        "metadata_obj__id": facets.metadata_obj__id,
+        "metadata_obj_id": facets.metadata_obj_id,
         "metadata_arr_test": facets.metadata_arr_test,
-        "metadata_arr__id": facets.metadata_arr__id,
-        "arrobj_test": facets.arrobj_test,
-        "arrobj__id": facets.arrobj__id,
-        "internal_ref__id": facets.internal_ref__id,
-        "internal_ref_test": facets.internal_ref_test,
-        "internal_ref__version": facets.internal_ref__version,
-        "internal_ref_arr__id": facets.internal_ref_arr__id,
-        "internal_ref_arr_test": facets.internal_ref_arr_test,
-        "internal_ref_arr__version": facets.internal_ref_arr__version,
-        "internal_ref_arrobj__id": facets.internal_ref_arrobj__id,
-        "internal_ref_arrobj_test": facets.internal_ref_arrobj_test,
-        "internal_ref_arrobj__version": facets.internal_ref_arrobj__version,
-        "_id": facets._id,
-        "test": facets.test,
-        "_version": facets._version,
-        "internal_array_object_ref_array_ref__id": (
-            facets.internal_array_object_ref_array_ref__id
+        "metadata_arr_id": facets.metadata_arr_id,
+        "metadata_arrobj_test": facets.metadata_arrobj_test,
+        "metadata_arrobj_id": facets.metadata_arrobj_id,
+        "metadata_internal_ref_id": facets.metadata_internal_ref_id,
+        "metadata_internal_ref_test": facets.metadata_internal_ref_test,
+        "metadata_internal_ref__version": facets.metadata_internal_ref__version,
+        "metadata_internal_ref_arr_id": facets.metadata_internal_ref_arr_id,
+        "metadata_internal_ref_arr_test": facets.metadata_internal_ref_arr_test,
+        "metadata_internal_ref_arr__version": facets.metadata_internal_ref_arr__version,
+        "metadata_internal_ref_arrobj_id": facets.metadata_internal_ref_arrobj_id,
+        "metadata_internal_ref_arrobj_test": facets.metadata_internal_ref_arrobj_test,
+        "metadata_internal_ref_arrobj__version": (
+            facets.metadata_internal_ref_arrobj__version
         ),
-        "internal_array_object_ref_array_ref_test": (
-            facets.internal_array_object_ref_array_ref_test
+        "metadata_internal_array_ref_array_id": (
+            facets.metadata_internal_array_ref_array_id
         ),
-        "internal_array_object_ref_array_ref__version": (
-            facets.internal_array_object_ref_array_ref__version
+        "metadata_internal_array_ref_array_test": (
+            facets.metadata_internal_array_ref_array_test
         ),
-        "internal_array_nested__id": facets.internal_array_nested__id,
-        "test": facets.test,
-        "_version": facets._version,
-        "internal_cf__id": facets.internal_cf__id,
-        "internal_cf_test": facets.internal_cf_test,
-        "internal_cf__version": facets.internal_cf__version,
-        "invenio_ref__id": facets.invenio_ref__id,
-        "_version": facets._version,
-        "_id": facets._id,
-        "_version": facets._version,
-        "invenio_nested_ref__id": facets.invenio_nested_ref__id,
-        "_version": facets._version,
-        "invenio_array_nested__id": facets.invenio_array_nested__id,
-        "_version": facets._version,
-        "ref__id": facets.ref__id,
-        "_version": facets._version,
-        "_id": facets._id,
-        "_version": facets._version,
-        "nested_ref__id": facets.nested_ref__id,
-        "_version": facets._version,
-        "array_nested__id": facets.array_nested__id,
-        "_version": facets._version,
-        "cf__id": facets.cf__id,
-        "test": facets.test,
-        "_version": facets._version,
+        "metadata_internal_array_ref_array__version": (
+            facets.metadata_internal_array_ref_array__version
+        ),
+        "metadata_internal_array_object_ref_array_ref_id": (
+            facets.metadata_internal_array_object_ref_array_ref_id
+        ),
+        "metadata_internal_array_object_ref_array_ref_test": (
+            facets.metadata_internal_array_object_ref_array_ref_test
+        ),
+        "metadata_internal_array_object_ref_array_ref__version": (
+            facets.metadata_internal_array_object_ref_array_ref__version
+        ),
+        "metadata_internal_array_nested_ref_arr_id": (
+            facets.metadata_internal_array_nested_ref_arr_id
+        ),
+        "metadata_internal_array_nested_ref_arr_test": (
+            facets.metadata_internal_array_nested_ref_arr_test
+        ),
+        "metadata_internal_array_nested_ref_arr__version": (
+            facets.metadata_internal_array_nested_ref_arr__version
+        ),
+        "metadata_internal_cf_id": facets.metadata_internal_cf_id,
+        "metadata_internal_cf_test": facets.metadata_internal_cf_test,
+        "metadata_internal_cf__version": facets.metadata_internal_cf__version,
+        "metadata_invenio_ref_id": facets.metadata_invenio_ref_id,
+        "metadata_invenio_ref__version": facets.metadata_invenio_ref__version,
+        "metadata_invenio_array_id": facets.metadata_invenio_array_id,
+        "metadata_invenio_array__version": facets.metadata_invenio_array__version,
+        "metadata_invenio_nested_ref_id": facets.metadata_invenio_nested_ref_id,
+        "metadata_invenio_nested_ref__version": (
+            facets.metadata_invenio_nested_ref__version
+        ),
+        "metadata_invenio_array_nested_ref_arr_id": (
+            facets.metadata_invenio_array_nested_ref_arr_id
+        ),
+        "metadata_invenio_array_nested_ref_arr__version": (
+            facets.metadata_invenio_array_nested_ref_arr__version
+        ),
+        "metadata_ref_id": facets.metadata_ref_id,
+        "metadata_ref__version": facets.metadata_ref__version,
+        "metadata_array_id": facets.metadata_array_id,
+        "metadata_array__version": facets.metadata_array__version,
+        "metadata_nested_ref_id": facets.metadata_nested_ref_id,
+        "metadata_nested_ref__version": facets.metadata_nested_ref__version,
+        "metadata_array_nested_ref_arr_id": facets.metadata_array_nested_ref_arr_id,
+        "metadata_array_nested_ref_arr__version": (
+            facets.metadata_array_nested_ref_arr__version
+        ),
+        "metadata_cf_id": facets.metadata_cf_id,
+        "metadata_cf_test": facets.metadata_cf_test,
+        "metadata_cf__version": facets.metadata_cf__version,
         "_id": facets._id,
         "created": facets.created,
         "updated": facets.updated,

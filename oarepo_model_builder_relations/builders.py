@@ -3,6 +3,9 @@ from oarepo_model_builder.builders import process
 from oarepo_model_builder.invenio.invenio_base import InvenioBaseClassPythonBuilder
 from oarepo_model_builder.utils.python_name import convert_name_to_python
 
+from oarepo_model_builder_relations.datatypes import RelationDataType
+from oarepo_model_builder.datatypes import datatypes
+
 
 class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
     TYPE = "invenio_record_relations"
@@ -22,17 +25,21 @@ class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):
             "items",
         ) or not isinstance(data, dict):
             return
-        if "relation" not in data:
+        datatype = datatypes.get_datatype(
+            self.stack.top.data,
+            self.stack.top.key,
+            self.schema.model,
+            self.schema,
+            self.stack,
+        )
+        if not isinstance(datatype, RelationDataType):
             return
-        relation_extension = data["relation"]
 
-        relation = {
-            x.replace("-", "_"): relation_extension[x] for x in relation_extension
-        }
+        relation = {x.replace("-", "_"): v for x, v in data.items()}
 
         keys = relation["keys"]
-        model_class = relation["model_class"]
-        relation_args = relation["relation_args"]
+        model_class = relation.get("model_class")
+        relation_args = relation.get("relation_args")
         pid_field = relation.get("pid_field")
         related_part = relation.get("related_part")
 

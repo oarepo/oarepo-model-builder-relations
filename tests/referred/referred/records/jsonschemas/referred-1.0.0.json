@@ -18,13 +18,12 @@
                     "type": "number"
                 },
                 "arr": {
-                    "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "type": "array"
                 },
                 "objarr": {
-                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
@@ -32,15 +31,14 @@
                                 "type": "string"
                             }
                         }
-                    }
+                    },
+                    "type": "array"
                 },
                 "arrarr": {
-                    "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
                             "title": {
-                                "type": "array",
                                 "items": {
                                     "type": "object",
                                     "properties": {
@@ -48,10 +46,12 @@
                                             "type": "string"
                                         }
                                     }
-                                }
+                                },
+                                "type": "array"
                             }
                         }
-                    }
+                    },
+                    "type": "array"
                 }
             }
         },

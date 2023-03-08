@@ -12,9 +12,9 @@ class ReferredSearchOptions(InvenioSearchOptions):
     """ReferredRecord search options."""
 
     facets = {
-        "hint": facets.hint,
-        "price": facets.price,
-        "arr": facets.arr,
+        "metadata_hint": facets.metadata_hint,
+        "metadata_price": facets.metadata_price,
+        "metadata_arr": facets.metadata_arr,
         "_id": facets._id,
         "created": facets.created,
         "updated": facets.updated,
