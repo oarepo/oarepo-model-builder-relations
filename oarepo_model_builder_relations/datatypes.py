@@ -245,11 +245,17 @@ class RelationDataType(ObjectDataType):
         if field_path[-1] in included_props:
             included_model = copy.deepcopy(included_props[field_path[-1]])
             self._make_field_serializable(included_model.get("marshmallow", None))
+            self._make_field_serializable(
+                included_model.get("ui", {}).get("marshmallow", None)
+            )
             props[target_path[-1]] = included_model
 
     def _copy_direct_field(self, props, fld):
         included_model = copy.deepcopy(fld.model)
         self._make_field_serializable(included_model.get("marshmallow", None))
+        self._make_field_serializable(
+            included_model.get("ui", {}).get("marshmallow", None)
+        )
         props[fld.key] = included_model
 
     def _make_field_serializable(self, marshmallow):
