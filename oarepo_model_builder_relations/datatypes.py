@@ -271,12 +271,14 @@ class RelationDataType(ObjectDataType):
             # i am an object or nested
             if "marshmallow" in props:
                 schema_class = props["marshmallow"].get("schema-class", None)
-                if schema_class:
+                generate = props["marshmallow"].get("generate", True)
+                if schema_class and generate:
                     schema_class = schema_class.rsplit(".", maxsplit=1)[-1]
                     props["marshmallow"]["schema-class"] = schema_prefix + schema_class
             if "ui" in props and "marshmallow" in props["ui"]:
                 schema_class = props["ui"]["marshmallow"].get("schema-class", None)
-                if schema_class:
+                generate = props["ui"]["marshmallow"].get("generate", True)
+                if schema_class and generate:
                     schema_class = schema_class.rsplit(".", maxsplit=1)[-1]
                     props["ui"]["marshmallow"]["schema-class"] = (
                         schema_prefix + schema_class
