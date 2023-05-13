@@ -1,5 +1,4 @@
-model:
-    schema-server: 'local://'
+record:
     use: invenio
     plugins:
         builder:
@@ -130,3 +129,6 @@ model:
                     - key: test
                       model: 
                           type: keyword
+
+settings:
+    schema-server: 'local://'

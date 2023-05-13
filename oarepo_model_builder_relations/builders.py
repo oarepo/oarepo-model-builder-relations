@@ -1,10 +1,10 @@
 from munch import unmunchify
 from oarepo_model_builder.builders import process
+from oarepo_model_builder.datatypes import datatypes
 from oarepo_model_builder.invenio.invenio_base import InvenioBaseClassPythonBuilder
 from oarepo_model_builder.utils.python_name import convert_name_to_python
 
 from oarepo_model_builder_relations.datatypes import RelationDataType
-from oarepo_model_builder.datatypes import datatypes
 
 
 class InvenioRecordRelationsBuilder(InvenioBaseClassPythonBuilder):

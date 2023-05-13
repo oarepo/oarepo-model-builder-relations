@@ -71,3 +71,7 @@ target/
 .*.sw?
 .DS_Store
 oarepo-vocabularies-monorepo.code-workspace
+
+model-referred
+model-referrer
+

@@ -1,9 +1,0 @@
-from referrer.resources.records.config import ReferrerResourceConfig
-from referrer.resources.records.resource import ReferrerResource
-from referrer.services.records.config import ReferrerServiceConfig
-from referrer.services.records.service import ReferrerService
-
-REFERRER_RESOURCE_CONFIG_REFERRER = ReferrerResourceConfig
-REFERRER_RESOURCE_CLASS_REFERRER = ReferrerResource
-REFERRER_SERVICE_CONFIG_REFERRER = ReferrerServiceConfig
-REFERRER_SERVICE_CLASS_REFERRER = ReferrerService
