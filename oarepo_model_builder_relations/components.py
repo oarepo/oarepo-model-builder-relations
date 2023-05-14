@@ -7,7 +7,7 @@ from oarepo_model_builder.datatypes import (
     datatypes,
 )
 from oarepo_model_builder.datatypes.components import DefaultsModelComponent
-from oarepo_model_builder.utils.python_name import convert_name_to_python
+from oarepo_model_builder.utils.python_name import convert_name_to_python, base_name
 from oarepo_model_builder.validation import InvalidModelException
 
 from oarepo_model_builder_relations.datatypes import RelationDataType
@@ -35,6 +35,10 @@ class RelationModelComponent(DataTypeComponent):
         for dt in relation_datatypes:
             datatypes.call_components(
                 dt, "set_relation_names", relation_names=relation_names
+            )
+        for dt in relation_datatypes:
+            datatypes.call_components(
+                dt, "set_relation_arguments"
             )
 
 
@@ -158,9 +162,10 @@ class RelationComponent(DataTypeComponent):
             if top_key not in child_tree:
                 top_dt = top_dt.copy(without_children=True)
                 child_tree[top_key] = top_dt
+                self.fix_marshmallow(top_dt)
             else:
                 top_dt = child_tree[top_key]
-            self.fix_marshmallow(top_dt)
+
             ret = top_dt
             for stack_key, stack_dt, stack_level in stack[1:]:
                 if stack_key in top_dt.children:
@@ -175,7 +180,8 @@ class RelationComponent(DataTypeComponent):
                     created = dt.copy()
 
                 self.fix_marshmallow(created)
-
+                if not ret:
+                    ret = created
                 if stack_key:
                     # add created to object
                     top_dt.children[stack_key] = created
@@ -190,17 +196,21 @@ class RelationComponent(DataTypeComponent):
             # nothing to fix if there is no marshmallow section
             if 'marshmallow' not in base:
                 return
+            marshmallow = {**base['marshmallow']}
+            base['marshmallow'] = marshmallow
+            if marshmallow.get('read') is False:
+                marshmallow.pop('read')
+            if marshmallow.get('write') is False:
+                marshmallow.pop('write')
+
             # if not generating the class, nothing to fix
-            marshmallow = base['marshmallow']
             if marshmallow.get('generate', None) is False:
                 return
             if 'class' not in marshmallow:
                 return
             # duplicate the marshmallow section so that we do not modify the referenced definition
-            marshmallow = {**marshmallow}
             marshmallow['class'] = marshmallow['class'].rsplit('.', maxsplit=1)[-1]
             marshmallow.pop('module', None)
-            base['marshmallow'] = marshmallow
 
         fix(dt.definition)
         if 'ui' in dt.definition:
@@ -246,6 +256,25 @@ class RelationComponent(DataTypeComponent):
             "Could not generate relation name for {datatype.path}: "
             'please specify "name" yourself.'
         )
+
+
+    def set_relation_arguments(self, datatype, **kwargs):
+
+        if datatype.internal_link:
+            if not datatype.related_part:
+                if datatype.related_data_type:
+                    datatype.related_part = datatype.related_data_type.path
+            if datatype.related_part:
+                datatype.relation_args.setdefault("related_part", repr(datatype.related_part))
+        else:
+            if not datatype.pid_field and not datatype.model_class:
+                model_class = datatype.related_data_type.definition.get('record', {}).get('class')
+                datatype.model_class = base_name(model_class)
+                datatype.imports.append({"import": model_class})
+            if datatype.pid_field or datatype.model_class:
+                datatype.relation_args.setdefault("pid_field", datatype.pid_field or f"{datatype.model_class}.pid")
+            else:
+                raise InvalidModelException(f'Either pid-field or model-class must be set at {self.path}')
 
 
 COMPONENTS = [RelationComponent, RelationModelComponent]

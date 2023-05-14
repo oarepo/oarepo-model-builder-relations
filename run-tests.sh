@@ -23,8 +23,8 @@ source .venv-tests/bin/activate
 
 pip install -U setuptools pip wheel
 pip install pyyaml opensearch-dsl 
-pip install -e tests/referred
-pip install -e tests/referrer
+pip install -e model-referred
+pip install -e model-referrer
 pip install pytest-invenio
 
 pytest tests

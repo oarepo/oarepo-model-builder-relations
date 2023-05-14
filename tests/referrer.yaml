@@ -71,10 +71,10 @@ record:
                 internal-cf:
                     type: relation
                     model: "#"
-                    keys: 
+                    keys:
                     - id
                     - key: test
-                      model: 
+                      model:
                           type: keyword
 
 
@@ -125,11 +125,11 @@ record:
                     type: relation
                     model: referred
                     flatten: true
-                    keys: 
+                    keys:
                     - id
                     - metadata.title
                     - key: test
-                      model: 
+                      model:
                           type: keyword
 
 settings:

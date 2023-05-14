@@ -4,6 +4,7 @@ import marshmallow as ma
 from marshmallow import fields
 from oarepo_model_builder.datatypes.containers.object import FieldSchema, ObjectDataType
 from oarepo_model_builder.utils.python_name import convert_name_to_python
+from oarepo_model_builder.validation import InvalidModelException
 from oarepo_model_builder.validation.utils import ImportSchema
 
 # model.setdefault("record-service-config-components", []).append(
@@ -126,13 +127,7 @@ class RelationDataType(ObjectDataType):
             else:
                 written_keys.append({"key": k["key"], "target": k["target"]})
 
-        self.relation_args['key'] = written_keys
-        if self.internal_link:
-            if self.related_part:
-                self.relation_args.setdefault("related_part", self.related_part)
-        else:
-            if self.pid_field or self.model_class:
-                self.relation_args.setdefault("pid_field", self.pid_field or f"{self.model_class}.pid")
+        self.relation_args['keys'] = written_keys
         super().prepare(context)
 
     def _transform_keys(self, keys, flatten):
