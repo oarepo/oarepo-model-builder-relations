@@ -1,8 +1,9 @@
-from typing import Any, List
+from typing import Any, List, Dict
 
 import marshmallow as ma
 from marshmallow import fields
 from oarepo_model_builder.datatypes.containers.object import FieldSchema, ObjectDataType
+from oarepo_model_builder.utils.python_name import convert_name_to_python
 from oarepo_model_builder.validation.utils import ImportSchema
 
 # model.setdefault("record-service-config-components", []).append(
@@ -35,18 +36,6 @@ class StringOrSchema(fields.Field):
             return self.schema_field._validate(value)
 
 
-class RelationLinkSchema(ma.Schema):
-    class Meta:
-        unknown = ma.RAISE
-
-    class_ = fields.String(data_key="class", attribute="class", required=False)
-    args = fields.Dict(
-        fields.String(),
-        fields.String(),
-        required=False,
-    )
-
-
 class RelationSchema(ma.Schema):
     class KeySchema(ma.Schema):
         key = fields.String(required=True)
@@ -57,10 +46,18 @@ class RelationSchema(ma.Schema):
     model = fields.String(required=True)
     keys_field = fields.List(
         StringOrSchema(ma.fields.String(), fields.Nested(KeySchema)),
-        data_key="keys", attribute="keys",
+        data_key="keys",
+        attribute="keys",
         required=False,
     )
-    link = ma.fields.Nested(RelationLinkSchema)
+    class_ = fields.String(data_key="class", attribute="class", required=False)
+    model_class = fields.String(data_key="model-class", attribute="model-class", required=False)
+    related_part = fields.String(data_key="related-part", attribute="related-part", required=False)
+    args = fields.Dict(
+        fields.String(),
+        fields.String(),
+        required=False,
+    )
     imports = fields.List(fields.Nested(ImportSchema), required=False)
     flatten = fields.Boolean(required=False)
 
@@ -73,11 +70,25 @@ class RelationDataType(ObjectDataType):
     flatten: bool
     model_name: str
     relation_name: str
+    relation_class: str
     internal_link: bool
+    relation_args: Dict[str, str]
+    imports: List[Dict[str, str]]
+    pid_field: str
     keys: List[Any]
 
     class ModelSchema(RelationSchema, ObjectDataType.ModelSchema):
         pass
+
+    @property
+    def relation(self):
+        return {
+            'name': self.relation_name,
+            'relation_class': self.relation_class,
+            'imports': self.imports,
+            'path': self.path,
+            'relation_args': self.relation_args
+        }
 
     def prepare(self, context):
         data = self.definition
@@ -87,7 +98,41 @@ class RelationDataType(ObjectDataType):
         self.keys = self._transform_keys(
             data.get("keys", ["id", "metadata.title"]), self.flatten
         )
-        self.relation_name = data.get("name")
+        self.relation_name = convert_name_to_python(data.get("name"))
+        self.relation_class = data.get('class')
+        self.imports = [*data.get('imports', [])]
+        self.pid_field = data.get("pid-field")
+        self.model_class = data.get("model-class")
+        self.related_part = data.get('related-part')
+
+        self.imports.append({"import": f"oarepo_runtime.relations.RelationsField"})
+
+        if not self.relation_class:
+            if self.internal_link:
+                self.relation_class = "InternalRelation"
+                self.imports.append({"import": f"oarepo_runtime.relations.InternalRelation"})
+            else:
+                self.relation_class = "PIDRelation"
+                self.imports.append({"import": f"oarepo_runtime.relations.PIDRelation"})
+
+        self.relation_args = {
+            **data.get('args', {})
+        }
+
+        written_keys = []
+        for k in self.keys:
+            if k["key"] == k["target"]:
+                written_keys.append(k["key"])
+            else:
+                written_keys.append({"key": k["key"], "target": k["target"]})
+
+        self.relation_args['key'] = written_keys
+        if self.internal_link:
+            if self.related_part:
+                self.relation_args.setdefault("related_part", self.related_part)
+        else:
+            if self.pid_field or self.model_class:
+                self.relation_args.setdefault("pid_field", self.pid_field or f"{self.model_class}.pid")
         super().prepare(context)
 
     def _transform_keys(self, keys, flatten):
@@ -101,5 +146,6 @@ class RelationDataType(ObjectDataType):
                 k["target"] = k["target"][len("metadata.") :]
             transformed_keys.append(k)
         return transformed_keys
+
 
 DATATYPES = [RelationDataType]

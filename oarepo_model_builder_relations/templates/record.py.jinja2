@@ -1,19 +1,11 @@
 from invenio_records.systemfields import RelationsField
 
-{% for rel in invenio_relations %}
-{% for imp in rel.imports or [] %}
-{% if imp.alias %}
-import {{ imp["import"] }} as {{ imp.alias }}
-{% else %}
-from {{ imp["import"]|package_name }} import {{imp["import"]|base_name}}
-{% endif %}
-{% endfor %}
-{% endfor %}
+{{ relation_imports|generate_import }}
 
-class {{ current_model.record_class|base_name }}:
+class {{ vars.record|class_header }}:
 
     relations = RelationsField(
-        {% for rel in invenio_relations %}
+        {% for rel in relations %}
         {{ rel.name }}={{ rel.relation_class }}("{{rel.path}}",
             {% for param, val in rel.relation_args.items() %}
                 {{ param }} = {{ val }},
