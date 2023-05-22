@@ -135,6 +135,7 @@ class RelationComponent(DataTypeComponent):
 
     def find_child(self, datatype, fld, child_tree, flatten):
         target = fld["key"].split(".")
+        flatten = fld.get('flatten', flatten)
         dt = datatype
         stack = []
         for tidx, t in enumerate(target):
