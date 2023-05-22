@@ -50,7 +50,7 @@ class RelationComponent(DataTypeComponent):
             root_datatype = datatype.stack[0]
             dt_id = datatype.model_name[1:]
         else:
-            loaded_schema = datatype.schema._load("referred")
+            loaded_schema = datatype.schema._load(datatype.model_name)
             root_datatype = datatypes.get_datatype(
                 datatype, loaded_schema["model"], None, datatype.model, datatype.schema
             )
