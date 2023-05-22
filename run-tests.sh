@@ -2,13 +2,12 @@
 
 set -e
 
-python3 -m venv .venv
-.venv/bin/pip install -U setuptools pip wheel
-.venv/bin/pip install -e .
-.venv/bin/pip install oarepo-model-builder-cf
+python3 -m venv .venv-builder
+.venv-builder/bin/pip install -U setuptools pip wheel
+.venv-builder/bin/pip install -e .
 
 
-BUILDER=.venv/bin/oarepo-compile-model
+BUILDER=.venv-builder/bin/oarepo-compile-model
 
 
 if true ; then
