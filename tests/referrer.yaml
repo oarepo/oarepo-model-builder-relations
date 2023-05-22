@@ -1,11 +1,12 @@
-model:
-    schema-server: 'local://'
+record:
     use: invenio
     plugins:
         builder:
             disable: [script_sample_data]
     custom-fields:
-    - config: TEST_CF                
+    - config: TEST_CF
+    module:
+        qualified: referrer
     properties:
         metadata:
             properties:
@@ -70,10 +71,10 @@ model:
                 internal-cf:
                     type: relation
                     model: "#"
-                    keys: 
+                    keys:
                     - id
                     - key: test
-                      model: 
+                      model:
                           type: keyword
 
 
@@ -124,9 +125,12 @@ model:
                     type: relation
                     model: referred
                     flatten: true
-                    keys: 
+                    keys:
                     - id
                     - metadata.title
                     - key: test
-                      model: 
+                      model:
                           type: keyword
+
+settings:
+    schema-server: 'local://'

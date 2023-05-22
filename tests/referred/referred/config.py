@@ -1,9 +1,0 @@
-from referred.resources.records.config import ReferredResourceConfig
-from referred.resources.records.resource import ReferredResource
-from referred.services.records.config import ReferredServiceConfig
-from referred.services.records.service import ReferredService
-
-REFERRED_RESOURCE_CONFIG_REFERRED = ReferredResourceConfig
-REFERRED_RESOURCE_CLASS_REFERRED = ReferredResource
-REFERRED_SERVICE_CONFIG_REFERRED = ReferredServiceConfig
-REFERRED_SERVICE_CLASS_REFERRED = ReferredService
