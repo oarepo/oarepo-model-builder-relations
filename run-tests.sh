@@ -2,6 +2,10 @@
 
 set -e
 
+if [ -d .venv-builder ] ; then
+    rm -rf .venv-builder
+fi
+
 python3 -m venv .venv-builder
 .venv-builder/bin/pip install -U setuptools pip wheel
 .venv-builder/bin/pip install -e .
@@ -16,6 +20,11 @@ if true ; then
     ${BUILDER} tests/referred.yaml --output-directory model-referred -vvv
     ${BUILDER} tests/referrer.yaml --output-directory model-referrer -vvv --include referred=model-referred/referred/models/model.json
 fi
+
+if [ -d .venv-tests ] ; then
+    rm -rf .venv-tests
+fi
+
 
 python3 -m venv .venv-tests
 source .venv-tests/bin/activate
