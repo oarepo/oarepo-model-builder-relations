@@ -18,7 +18,7 @@ if true ; then
     test -d model-referred && rm -rf model-referred
     test -d model-referrer && rm -rf model-referrer
     ${BUILDER} tests/referred.yaml --output-directory model-referred -vvv
-    ${BUILDER} tests/referrer.yaml --output-directory model-referrer -vvv --include referred=model-referred/referred/models/model.json
+    ${BUILDER} tests/referrer.yaml --output-directory model-referrer -vvv --include referred=model-referred/referred/models/records.json
 fi
 
 if [ -d .venv-tests ] ; then
