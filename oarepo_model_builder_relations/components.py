@@ -110,12 +110,12 @@ class RelationComponent(DataTypeComponent):
                 "type": "keyword",
                 "marshmallow": {
                     "field-name": "_version",
-                    "field-class": "ma_fields.String",
+                    "field-class": "ma.fields.String",
                 },
                 "ui": {
                     "marshmallow": {
                         "field-name": "_version",
-                        "field-class": "ma_fields.String",
+                        "field-class": "ma.fields.String",
                     }
                 },
             },
