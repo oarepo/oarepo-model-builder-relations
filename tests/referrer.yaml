@@ -1,8 +1,5 @@
 record:
     use: invenio
-    plugins:
-        builder:
-            disable: [script_sample_data]
     custom-fields:
     - config: TEST_CF
     module:
@@ -134,3 +131,6 @@ record:
 
 settings:
     schema-server: 'local://'
+plugins:
+    builder:
+        disable: [script_sample_data]
