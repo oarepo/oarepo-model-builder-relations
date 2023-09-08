@@ -1,5 +1,6 @@
 import pytest
 from invenio_access.permissions import system_identity
+from oarepo_runtime.relations.errors import InvalidRelationError
 from referred.proxies import current_service as referred_service
 from referrer.proxies import current_service as referrer_service
 
@@ -210,3 +211,14 @@ def test_custom_fields(app, db, search_clear, referred_record):
     assert (
         referrer_record.data["metadata"]["cf"]["test"] == referred_record.data["test"]
     )
+
+def test_invalid_reference(app, db, search_clear):
+    try:
+        referrer_record = referrer_service.create(
+            system_identity, {"metadata": {"invenio-ref": {"id": "invalid_identifier"}}}
+        )
+        raise AssertionError('Should not get here')
+    except InvalidRelationError as e:
+        assert e.related_id == 'invalid_identifier'
+        assert e.location == 'metadata.invenio-ref'
+        assert 'has not been found or there was an exception accessing it' in str(e)
