@@ -5,6 +5,7 @@ from oarepo_model_builder.datatypes import (
     DataTypeComponent,
     ModelDataType,
     datatypes,
+    ObjectDataType,
 )
 from oarepo_model_builder.datatypes.components import DefaultsModelComponent
 from oarepo_model_builder.utils.python_name import convert_name_to_python, base_name
@@ -26,6 +27,7 @@ class RelationModelComponent(DataTypeComponent):
         for dt in relation_datatypes:
             datatypes.call_components(dt, "resolve_relation", context=context)
             datatypes.call_components(dt, "prepare_relation_children", context=context)
+            datatypes.call_components(dt, "set_permissive_marshmallow", context=context)
 
         relation_names = {}
         for dt in relation_datatypes:
@@ -37,9 +39,7 @@ class RelationModelComponent(DataTypeComponent):
                 dt, "set_relation_names", relation_names=relation_names
             )
         for dt in relation_datatypes:
-            datatypes.call_components(
-                dt, "set_relation_arguments"
-            )
+            datatypes.call_components(dt, "set_relation_arguments")
 
 
 class RelationComponent(DataTypeComponent):
@@ -99,9 +99,11 @@ class RelationComponent(DataTypeComponent):
                     datatype.schema,
                 )
                 child.prepare(context)
-                child_tree[fld['target']] = child
+                child_tree[fld["target"]] = child
             else:
-                child = self.find_child(datatype.related_data_type, fld, child_tree, datatype.flatten)
+                child = self.find_child(
+                    datatype.related_data_type, fld, child_tree, datatype.flatten
+                )
             children[child.key] = child
 
         children["@v"] = datatypes.get_datatype(
@@ -133,9 +135,20 @@ class RelationComponent(DataTypeComponent):
 
         datatype.children = children
 
+    def set_permissive_marshmallow(
+        self, datatype: RelationDataType, *, context, **kwargs
+    ):
+        marshmallow = datatype.definition.setdefault("marshmallow", {})
+        marshmallow.setdefault("unknown", "INCLUDE")
+
+        ui_marshmallow = datatype.definition.setdefault("ui", {}).setdefault(
+            "marshmallow", {}
+        )
+        ui_marshmallow.setdefault("unknown", "INCLUDE")
+
     def find_child(self, datatype, fld, child_tree, flatten):
         target = fld["key"].split(".")
-        flatten = fld.get('flatten', flatten)
+        flatten = fld.get("flatten", flatten)
         dt = datatype
         stack = []
         for tidx, t in enumerate(target):
@@ -156,7 +169,7 @@ class RelationComponent(DataTypeComponent):
             stack.append((t, dt, len(target) - tidx - 1))
         if flatten:
             ret = dt.copy()
-            ret.key = fld["target"].rsplit('.', maxsplit=1)[-1]
+            ret.key = fld["target"].rsplit(".", maxsplit=1)[-1]
             self.fix_marshmallow(ret)
         else:
             top_key, top_dt, top_level = stack[0]
@@ -195,31 +208,31 @@ class RelationComponent(DataTypeComponent):
     def fix_marshmallow(self, dt):
         def fix(base):
             # nothing to fix if there is no marshmallow section
-            if 'marshmallow' not in base:
+            if "marshmallow" not in base:
                 return
-            marshmallow = {**base['marshmallow']}
-            base['marshmallow'] = marshmallow
-            if marshmallow.get('read') is False:
-                marshmallow.pop('read')
-            if marshmallow.get('write') is False:
-                marshmallow.pop('write')
+            marshmallow = {**base["marshmallow"]}
+            base["marshmallow"] = marshmallow
+            if marshmallow.get("read") is False:
+                marshmallow.pop("read")
+            if marshmallow.get("write") is False:
+                marshmallow.pop("write")
 
             # if not generating the class, nothing to fix
-            if marshmallow.get('generate', None) is False:
+            if marshmallow.get("generate", None) is False:
                 return
-            if 'class' not in marshmallow:
+            if "class" not in marshmallow:
                 return
             # duplicate the marshmallow section so that we do not modify the referenced definition
-            marshmallow['class'] = marshmallow['class'].rsplit('.', maxsplit=1)[-1]
-            marshmallow.pop('module', None)
+            marshmallow["class"] = marshmallow["class"].rsplit(".", maxsplit=1)[-1]
+            marshmallow.pop("module", None)
 
         fix(dt.definition)
-        if 'ui' in dt.definition:
+        if "ui" in dt.definition:
             # duplicate ui section as well so that we do not modify the referenced definition
-            dt.definition['ui'] = {
-                **dt.definition['ui'],
+            dt.definition["ui"] = {
+                **dt.definition["ui"],
             }
-            fix(dt.definition['ui'])
+            fix(dt.definition["ui"])
 
     def get_declared_relation_names(self, datatype, *, relation_names, **kwargs):
         if datatype.relation_name and datatype.relation_name not in relation_names:
@@ -258,24 +271,30 @@ class RelationComponent(DataTypeComponent):
             'please specify "name" yourself.'
         )
 
-
     def set_relation_arguments(self, datatype, **kwargs):
-
         if datatype.internal_link:
             if not datatype.related_part:
                 if datatype.related_data_type:
                     datatype.related_part = datatype.related_data_type.path
             if datatype.related_part:
-                datatype.relation_args.setdefault("related_part", repr(datatype.related_part))
+                datatype.relation_args.setdefault(
+                    "related_part", repr(datatype.related_part)
+                )
         else:
             if not datatype.pid_field and not datatype.model_class:
-                model_class = datatype.related_data_type.definition.get('record', {}).get('class')
+                model_class = datatype.related_data_type.definition.get(
+                    "record", {}
+                ).get("class")
                 datatype.model_class = base_name(model_class)
                 datatype.imports.append({"import": model_class})
             if datatype.pid_field or datatype.model_class:
-                datatype.relation_args.setdefault("pid_field", datatype.pid_field or f"{datatype.model_class}.pid")
+                datatype.relation_args.setdefault(
+                    "pid_field", datatype.pid_field or f"{datatype.model_class}.pid"
+                )
             else:
-                raise InvalidModelException(f'Either pid-field or model-class must be set at {self.path}')
+                raise InvalidModelException(
+                    f"Either pid-field or model-class must be set at {self.path}"
+                )
 
 
 COMPONENTS = [RelationComponent, RelationModelComponent]
