@@ -51,6 +51,25 @@ def test_invenio_relation(app, db, search_clear, referred_record):
     )
 
 
+def test_invenio_relation_with_extra_data(app, db, search_clear, referred_record):
+    referrer_record = referrer_service.create(
+        system_identity,
+        {
+            "metadata": {
+                "invenio-ref": {
+                    "id": referred_record.id,
+                    "extra-data": {"some extra": "data here"},
+                }
+            }
+        },
+    )
+    assert referrer_record.data["metadata"]["invenio-ref"]["id"] == referred_record.id
+    assert (
+        referrer_record.data["metadata"]["invenio-ref"]["metadata"]["title"]
+        == referred_record.data["metadata"]["title"]
+    )
+
+
 def test_invenio_list_relation(app, db, search_clear, referred_records):
     referrer_record = referrer_service.create(
         system_identity,
@@ -212,13 +231,14 @@ def test_custom_fields(app, db, search_clear, referred_record):
         referrer_record.data["metadata"]["cf"]["test"] == referred_record.data["test"]
     )
 
+
 def test_invalid_reference(app, db, search_clear):
     try:
         referrer_record = referrer_service.create(
             system_identity, {"metadata": {"invenio-ref": {"id": "invalid_identifier"}}}
         )
-        raise AssertionError('Should not get here')
+        raise AssertionError("Should not get here")
     except InvalidRelationError as e:
-        assert e.related_id == 'invalid_identifier'
-        assert e.location == 'metadata.invenio-ref'
-        assert 'has not been found or there was an exception accessing it' in str(e)
+        assert e.related_id == "invalid_identifier"
+        assert e.location == "metadata.invenio-ref"
+        assert "has not been found or there was an exception accessing it" in str(e)
