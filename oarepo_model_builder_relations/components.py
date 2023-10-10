@@ -1,3 +1,4 @@
+import copy
 import json
 
 from oarepo_model_builder.datatypes import (
@@ -210,7 +211,9 @@ class RelationComponent(DataTypeComponent):
 
         if ret.key in datatype_properties:
             ret = ret.copy()
-            deepmerge(ret.definition, datatype_properties[ret.key])
+            ret.definition = deepmerge(
+                copy.deepcopy(datatype_properties[ret.key]), ret.definition
+            )
 
         return ret
 
