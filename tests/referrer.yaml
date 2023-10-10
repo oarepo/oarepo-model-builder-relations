@@ -50,6 +50,10 @@ record:
                     type: relation
                     model: "#anchor-arr"
                     keys: [id, test]
+                    extras:
+                        test:
+                            mapping:
+                                copy_to: blah
 
                 # object inside array
                 internal-array-object-ref-array[]:
