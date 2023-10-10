@@ -12,6 +12,7 @@ from oarepo_model_builder.utils.python_name import convert_name_to_python, base_
 from oarepo_model_builder.validation import InvalidModelException
 
 from oarepo_model_builder_relations.datatypes import RelationDataType
+from oarepo_model_builder.utils.deepmerge import deepmerge
 
 
 class RelationModelComponent(DataTypeComponent):
@@ -102,7 +103,11 @@ class RelationComponent(DataTypeComponent):
                 child_tree[fld["target"]] = child
             else:
                 child = self.find_child(
-                    datatype.related_data_type, fld, child_tree, datatype.flatten
+                    datatype.related_data_type,
+                    fld,
+                    child_tree,
+                    datatype.flatten,
+                    datatype.definition.get("extras", {}),
                 )
             children[child.key] = child
 
@@ -146,7 +151,7 @@ class RelationComponent(DataTypeComponent):
         )
         ui_marshmallow.setdefault("unknown", "INCLUDE")
 
-    def find_child(self, datatype, fld, child_tree, flatten):
+    def find_child(self, datatype, fld, child_tree, flatten, datatype_properties):
         target = fld["key"].split(".")
         flatten = fld.get("flatten", flatten)
         dt = datatype
@@ -202,6 +207,10 @@ class RelationComponent(DataTypeComponent):
                 else:
                     # add created to array
                     top_dt.item = created
+
+        if ret.key in datatype_properties:
+            ret = ret.copy()
+            deepmerge(ret.definition, datatype_properties[ret.key])
 
         return ret
 

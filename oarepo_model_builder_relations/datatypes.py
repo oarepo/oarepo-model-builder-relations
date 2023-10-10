@@ -52,8 +52,12 @@ class RelationSchema(ma.Schema):
         required=False,
     )
     class_ = fields.String(data_key="class", attribute="class", required=False)
-    model_class = fields.String(data_key="model-class", attribute="model-class", required=False)
-    related_part = fields.String(data_key="related-part", attribute="related-part", required=False)
+    model_class = fields.String(
+        data_key="model-class", attribute="model-class", required=False
+    )
+    related_part = fields.String(
+        data_key="related-part", attribute="related-part", required=False
+    )
     args = fields.Dict(
         fields.String(),
         fields.String(),
@@ -61,6 +65,7 @@ class RelationSchema(ma.Schema):
     )
     imports = fields.List(fields.Nested(ImportSchema), required=False)
     flatten = fields.Boolean(required=False)
+    extras = fields.Raw(required=False)
 
     class Meta:
         unknown = ma.RAISE
@@ -84,11 +89,11 @@ class RelationDataType(ObjectDataType):
     @property
     def relation(self):
         return {
-            'name': self.relation_name,
-            'relation_class': self.relation_class,
-            'imports': self.imports,
-            'path': self.path,
-            'relation_args': self.relation_args
+            "name": self.relation_name,
+            "relation_class": self.relation_class,
+            "imports": self.imports,
+            "path": self.path,
+            "relation_args": self.relation_args,
         }
 
     def prepare(self, context):
@@ -100,25 +105,25 @@ class RelationDataType(ObjectDataType):
             data.get("keys", ["id", "metadata.title"]), self.flatten
         )
         self.relation_name = convert_name_to_python(data.get("name"))
-        self.relation_class = data.get('class')
-        self.imports = [*data.get('imports', [])]
+        self.relation_class = data.get("class")
+        self.imports = [*data.get("imports", [])]
         self.pid_field = data.get("pid-field")
         self.model_class = data.get("model-class")
-        self.related_part = data.get('related-part')
+        self.related_part = data.get("related-part")
 
         self.imports.append({"import": f"oarepo_runtime.relations.RelationsField"})
 
         if not self.relation_class:
             if self.internal_link:
                 self.relation_class = "InternalRelation"
-                self.imports.append({"import": f"oarepo_runtime.relations.InternalRelation"})
+                self.imports.append(
+                    {"import": f"oarepo_runtime.relations.InternalRelation"}
+                )
             else:
                 self.relation_class = "PIDRelation"
                 self.imports.append({"import": f"oarepo_runtime.relations.PIDRelation"})
 
-        self.relation_args = {
-            **data.get('args', {})
-        }
+        self.relation_args = {**data.get("args", {})}
 
         written_keys = []
         for k in self.keys:
@@ -127,7 +132,7 @@ class RelationDataType(ObjectDataType):
             else:
                 written_keys.append({"key": k["key"], "target": k["target"]})
 
-        self.relation_args['keys'] = written_keys
+        self.relation_args["keys"] = written_keys
         super().prepare(context)
 
     def _transform_keys(self, keys, flatten):

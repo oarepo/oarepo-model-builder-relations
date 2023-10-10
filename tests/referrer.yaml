@@ -30,6 +30,10 @@ record:
                     type: relation
                     model: "#anchor-obj"
                     keys: [id, test]
+                    extras:
+                        test:
+                            mapping:
+                                copy_to: blah
 
                 internal-ref-arr:
                     type: relation
