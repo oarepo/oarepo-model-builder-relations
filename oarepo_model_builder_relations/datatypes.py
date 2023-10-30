@@ -111,17 +111,11 @@ class RelationDataType(ObjectDataType):
         self.model_class = data.get("model-class")
         self.related_part = data.get("related-part")
 
-        self.imports.append({"import": f"oarepo_runtime.relations.RelationsField"})
-
         if not self.relation_class:
             if self.internal_link:
-                self.relation_class = "InternalRelation"
-                self.imports.append(
-                    {"import": f"oarepo_runtime.relations.InternalRelation"}
-                )
+                self.relation_class = "oarepo_runtime.relations.InternalRelation"
             else:
-                self.relation_class = "PIDRelation"
-                self.imports.append({"import": f"oarepo_runtime.relations.PIDRelation"})
+                self.relation_class = "oarepo_runtime.relations.PIDRelation"
 
         self.relation_args = {**data.get("args", {})}
 
