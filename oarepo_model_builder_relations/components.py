@@ -6,7 +6,6 @@ from oarepo_model_builder.datatypes import (
     DataTypeComponent,
     ModelDataType,
     datatypes,
-    ObjectDataType,
 )
 from oarepo_model_builder.datatypes.components import DefaultsModelComponent
 from oarepo_model_builder.utils.python_name import convert_name_to_python, base_name
@@ -118,12 +117,12 @@ class RelationComponent(DataTypeComponent):
                 "type": "keyword",
                 "marshmallow": {
                     "field-name": "_version",
-                    "field-class": "ma.fields.String",
+                    "field-class": "marshmallow.fields.String",
                 },
                 "ui": {
                     "marshmallow": {
                         "field-name": "_version",
-                        "field-class": "ma.fields.String",
+                        "field-class": "marshmallow.fields.String",
                     }
                 },
             },
@@ -297,11 +296,11 @@ class RelationComponent(DataTypeComponent):
                 model_class = datatype.related_data_type.definition.get(
                     "record", {}
                 ).get("class")
-                datatype.model_class = base_name(model_class)
-                datatype.imports.append({"import": model_class})
+                datatype.model_class = model_class
             if datatype.pid_field or datatype.model_class:
                 datatype.relation_args.setdefault(
-                    "pid_field", datatype.pid_field or f"{datatype.model_class}.pid"
+                    "pid_field",
+                    datatype.pid_field or f"{{{{ {datatype.model_class} }}}}.pid",
                 )
             else:
                 raise InvalidModelException(
