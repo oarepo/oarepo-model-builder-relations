@@ -1,6 +1,6 @@
 import pytest
 from invenio_access.permissions import system_identity
-from oarepo_runtime.relations.errors import InvalidRelationError
+from oarepo_runtime.services.relations.errors import InvalidRelationError
 from referred.proxies import current_service as referred_service
 from referrer.proxies import current_service as referrer_service
 
