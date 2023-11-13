@@ -8,7 +8,7 @@ from oarepo_model_builder.validation import InvalidModelException
 from oarepo_model_builder.validation.utils import ImportSchema
 
 # model.setdefault("record-service-config-components", []).append(
-#     "oarepo_runtime.relations.components.CachingRelationsComponent"
+#     "oarepo_runtime.services.relations.components.CachingRelationsComponent"
 # )
 
 
@@ -113,9 +113,9 @@ class RelationDataType(ObjectDataType):
 
         if not self.relation_class:
             if self.internal_link:
-                self.relation_class = "oarepo_runtime.relations.InternalRelation"
+                self.relation_class = "oarepo_runtime.records.relations.InternalRelation"
             else:
-                self.relation_class = "oarepo_runtime.relations.PIDRelation"
+                self.relation_class = "oarepo_runtime.records.relations.PIDRelation"
 
         self.relation_args = {**data.get("args", {})}
 
