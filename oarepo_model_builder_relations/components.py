@@ -125,6 +125,7 @@ class RelationComponent(DataTypeComponent):
                         "field-class": "marshmallow.fields.String",
                     }
                 },
+                "facets": {"facet": False},
             },
             "@v",
             datatype.model,
