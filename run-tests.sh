@@ -33,7 +33,7 @@ source .venv-tests/bin/activate
 
 pip install -U setuptools pip wheel
 pip install pyyaml opensearch-dsl
-pip install "oarepo[tests]==${OAREPO_VERSION}.*"
+pip install "oarepo[tests,rdm]==${OAREPO_VERSION}.*"
 pip install -e model-referred
 pip install -e model-referrer
 
