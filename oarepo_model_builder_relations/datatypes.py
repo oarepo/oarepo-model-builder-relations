@@ -1,10 +1,9 @@
-from typing import Any, List, Dict
+from typing import Any, Dict, List
 
 import marshmallow as ma
 from marshmallow import fields
 from oarepo_model_builder.datatypes.containers.object import FieldSchema, ObjectDataType
 from oarepo_model_builder.utils.python_name import convert_name_to_python
-from oarepo_model_builder.validation import InvalidModelException
 from oarepo_model_builder.validation.utils import ImportSchema
 
 # model.setdefault("record-service-config-components", []).append(
@@ -44,7 +43,7 @@ class RelationSchema(ma.Schema):
         target = fields.String(required=False)
 
     name = fields.String(required=False)
-    model = fields.String(required=True)
+    model = fields.String(required=False)
     keys_field = fields.List(
         StringOrSchema(ma.fields.String(), fields.Nested(KeySchema)),
         data_key="keys",
@@ -66,6 +65,9 @@ class RelationSchema(ma.Schema):
     imports = fields.List(fields.Nested(ImportSchema), required=False)
     flatten = fields.Boolean(required=False)
     extras = fields.Raw(required=False)
+    pid_field = fields.String(
+        data_key="pid-field", attribute="pid-field", required=False
+    )
 
     class Meta:
         unknown = ma.RAISE
@@ -99,7 +101,7 @@ class RelationDataType(ObjectDataType):
     def prepare(self, context):
         data = self.definition
         self.flatten = data.get("flatten", False)
-        self.model_name = data["model"]
+        self.model_name = data.get("model", "")
         self.internal_link = self.model_name.startswith("#")
         self.keys = self._transform_keys(
             data.get("keys", ["id", "metadata.title"]), self.flatten
@@ -113,7 +115,9 @@ class RelationDataType(ObjectDataType):
 
         if not self.relation_class:
             if self.internal_link:
-                self.relation_class = "oarepo_runtime.records.relations.InternalRelation"
+                self.relation_class = (
+                    "oarepo_runtime.records.relations.InternalRelation"
+                )
             else:
                 self.relation_class = "oarepo_runtime.records.relations.PIDRelation"
 
