@@ -8,11 +8,11 @@ from oarepo_model_builder.datatypes import (
     datatypes,
 )
 from oarepo_model_builder.datatypes.components import DefaultsModelComponent
-from oarepo_model_builder.utils.python_name import convert_name_to_python, base_name
+from oarepo_model_builder.utils.deepmerge import deepmerge
+from oarepo_model_builder.utils.python_name import convert_name_to_python
 from oarepo_model_builder.validation import InvalidModelException
 
 from oarepo_model_builder_relations.datatypes import RelationDataType
-from oarepo_model_builder.utils.deepmerge import deepmerge
 
 
 class RelationModelComponent(DataTypeComponent):
@@ -47,6 +47,10 @@ class RelationComponent(DataTypeComponent):
     eligible_datatypes = [RelationDataType]
 
     def resolve_relation(self, datatype: RelationDataType, *, context, **kwargs):
+        if not datatype.model_name:
+            # the relation has to be resolved at this point
+            return
+
         if datatype.internal_link:
             root_datatype = datatype.stack[0]
             dt_id = datatype.model_name[1:]
